@@ -110,7 +110,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Bootstrap\" />
     <Folder Include="Controllers\" />
+    <Folder Include="CSS\" />
+    <Folder Include="JS\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
