@@ -1,0 +1,94 @@
+﻿@model EmployeePortal.Models.CT_CreateEmployee
+
+@{
+    ViewBag.Title = "ViewEmployee";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>ViewEmployee</h2>
+<style>
+ 
+</style>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+   
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+      
+
+    <div class="form-group">
+       
+        <div>
+            <table class="table table-dark" id="t01">
+                <thead>
+                <th scope="col">FirstName</th>
+                <th scope="col">MiddleName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">Username</th>
+                <th scope="col">EmailId</th>
+                <th scope="col">DOB</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Address</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+
+                </thead>
+                @*@foreach (var item in ViewBag.userdetails)*@
+                @foreach (var item in Model.CT_CreateEmployeelist)
+                {
+
+                    <tr>
+                        <td>
+                            @item.FirstName
+                        </td>
+                        <td>
+                            @item.MiddleName
+                        </td>
+                        <td>
+                            @item.LastName
+                        </td>
+                        <td>
+                            @item.UserName
+                        </td>
+                        <td>
+                            @item.Email
+                        </td>
+                        <td>
+                            @item.DOB
+                        </td>
+                        <td>
+                            @item.Gender
+                        </td>
+                        <td>
+                            @item.Address
+                        </td>
+                        <td>
+                            @item.Status
+                        </td>
+                        <td>
+                            @Html.ActionLink("View", "ViewEmployeeById", new { EmployeePKID = item.EMP_PK_ID }) |
+                            @Html.ActionLink("Edit", "ViewEmployeeById", new { EmployeePKID = item.EMP_PK_ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { EmployeePKID = item.EMP_PK_ID }) |
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

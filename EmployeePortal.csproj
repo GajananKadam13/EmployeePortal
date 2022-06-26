@@ -88,20 +88,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CSS\Home.css" />
+    <Content Include="CSS\Login.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Logo.jpg" />
+    <Content Include="Images\Norway_Mountains_Lofoten_Trolldalstinden_Fjord_607312_1280x816.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CreateEmployeeController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="DataLayer\DL_Base.cs" />
+    <Compile Include="DataLayer\DL_CreateEmployee.cs" />
+    <Compile Include="DataLayer\DL_Login.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CT_CreateEmployee.cs" />
+    <Compile Include="Models\CT_Login.cs" />
+    <Compile Include="Models\UserRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <None Include="packages.config" />
-    <Content Include="Views\View.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutPage1.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\CreateEmployee\Index.cshtml" />
+    <Content Include="Views\CreateEmployee\ViewEmployee.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -112,10 +129,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Bootstrap\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="CSS\" />
+    <Folder Include="Filter\" />
     <Folder Include="JS\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\AddEmployee\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
