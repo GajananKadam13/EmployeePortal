@@ -32,193 +32,227 @@
 
 @using (Html.BeginForm("Index", "CreateEmployee", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    if(Model.EMP_PK_ID!=0)
+    if (Model.EMP_PK_ID != 0)
     {
-        <a href='@Url.Action("ViewEmployee", "CreateEmployee")' class="btn btn-primary">Back</a>
-    }     
+<a href='@Url.Action("ViewEmployee", "CreateEmployee")' class="btn btn-primary">Back</a>
+    }
 
-    
-    <input type="hidden" id="hdn_Message" name="hdn_Message" />
-    <!-- Name Section -->
-    <div class="row">
-        <div style="position: absolute; left: -110px;" class="col-md-8 col-md-offset-1">
-            <form class="form-horizontal" role="form">
-                <fieldset>
 
-                    <!-- Form Name -->
-                    <legend>Personal Information Details</legend>
+<input type="hidden" id="hdn_Message" name="hdn_Message" />
+<input type="hidden" id="hdn_Emp_pkid" value="@Model.EMP_PK_ID" name="hdn_Emp_pkid" />
+ <!-- Name Section -->
+<div class="row">
+    <div class="col-md-8 col-md-offset-1">
+        <form class="form-horizontal" role="form">
+            <fieldset>
 
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.FirstName)
-                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "FirstName" } })
-                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.MiddleName)
-                            @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @id = "MiddleName", @placeholder = "MiddleName" } })
-                            @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.LastName)
-                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "LastName" } })
-                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                        </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @*<input id="Full Name" name="Full Name" placeholder="Full Name" class="form-control" type="text">*@
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "FirstName", @autocomplete = "off" } })
                     </div>
-                    <div class="form-group">
-                        @*<div class="col-md-4 mb-3 dropdown">
-
-                                <div class="dropdown">
-                                    <button id="ddlGender" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                        --Select Gender--
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Male</a></li>
-                                        <li><a href="#">Female</a></li>
-                                    </ul>
-                                </div>
-
-                            </div>*@
-                        <div class="col-md-4 mb-3 dropdown">
-                            @Html.LabelFor(model => model.Gender)
-                            @Html.DropDownList("ddlGender", new List<SelectListItem>
-                             {
-                                new SelectListItem{ Text="Male", Value = "Male" },
-                                new SelectListItem{ Text="Female", Value = "Female" }
-
-                            }, "Select Gender", new { @class = "btn btn-primary dropdown-toggle", @id = "ddlGender" })
-                        </div>
-                        @*<div class="col-md-4 mb-3 dropdown">
-                                    <select id="ddlGender" class="btn btn-primary dropdown-toggle" name="projectKey">
-                                        <div class="dropdown-menu">
-                                        <option value="0">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                </div>
-                                </select>
-                            </div>*@
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.DOB)
-                            @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @id = "DOB", @placeholder = "DOB" } })
-                            @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.Nationality)
-                            @Html.EditorFor(model => model.Nationality, new { htmlAttributes = new { @class = "form-control", @id = "Nationality", @placeholder = "Nationality" } })
-                            @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="form-group col-md-6">
+                        @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
+                        @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @id = "MiddleName", @placeholder = "MiddleName", @autocomplete = "off" } })
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.Email)
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email", @placeholder = "Email" } })
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.Landline)
-                            @Html.EditorFor(model => model.Landline, new { htmlAttributes = new { @class = "form-control", @id = "Landline", @placeholder = "Landline" } })
-                            @Html.ValidationMessageFor(model => model.Landline, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.Mobile)
-                            @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @id = "Mobile", @placeholder = "Mobile" } })
-                            @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
-                        </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input id="Mobile No." name="Mobile No." placeholder="Mobile No." class="form-control" required="required" type="text">
+                    </div>
+                    <div class="form-group col-md-6">
+
+                        <select id="inputState" class="form-control">
+                            <option selected>Choose ...</option>
+                            <option> New Buyer</option>
+                            <option> Auction</option>
+                            <option> Complaint</option>
+                            <option> Feedback</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <textarea id="comment" name="comment" cols="40" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <!-- Form Name -->
+                <legend>Personal Information Details</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.FirstName)
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "FirstName", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.MiddleName)
+                        @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @id = "MiddleName", @placeholder = "MiddleName", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.LastName)
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "LastName", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @*<div class="col-md-4 mb-3 dropdown">
+
+                <div class="dropdown">
+                    <button id="ddlGender" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        --Select Gender--
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Male</a></li>
+                        <li><a href="#">Female</a></li>
+                    </ul>
+                </div>
+
+            </div>*@
+                    <div class="col-md-4 mb-3 dropdown">
+                        @Html.LabelFor(model => model.Gender)
+                        @Html.DropDownList("ddlGender", new List<SelectListItem>
+                         {
+                            new SelectListItem{ Text="Male", Value = "Male" },
+                            new SelectListItem{ Text="Female", Value = "Female" }
+
+                        }, "Select Gender", new { @class = "btn btn-primary dropdown-toggle", @id = "ddlGender" })
+                    </div>
+                    @*<div class="col-md-4 mb-3 dropdown">
+                    <select id="ddlGender" class="btn btn-primary dropdown-toggle" name="projectKey">
+                        <div class="dropdown-menu">
+                        <option value="0">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                </div>
+                </select>
+            </div>*@
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.DOB)
+                        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @id = "DOB", @placeholder = "DOB", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.Nationality)
+                        @Html.EditorFor(model => model.Nationality, new { htmlAttributes = new { @class = "form-control", @id = "Nationality", @placeholder = "Nationality", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email", @placeholder = "Email", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.Landline)
+                        @Html.EditorFor(model => model.Landline, new { htmlAttributes = new { @class = "form-control", @id = "Landline", @placeholder = "Landline", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.Landline, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.Mobile)
+                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @id = "Mobile", @placeholder = "Mobile", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                &nbsp;
+                <legend>Employer Address Details</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.Country)
+                        @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @id = "Country", @placeholder = "Country", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.City)
+                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "City", @placeholder = "City", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.State)
+                        @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", @id = "State", @placeholder = "State", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
                     </div>
 
-                    &nbsp;
-                    <legend>Employer Address Details</legend>
+                </div>
 
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.Country)
-                            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @id = "Country", @placeholder = "Country" } })
-                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.City)
-                            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "City", @placeholder = "City" } })
-                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.State)
-                            @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", @id = "State", @placeholder = "State" } })
-                            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
-                        </div>
 
+                <div class="form-group">
+
+
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.Role)
+                        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+
+                        @Html.DropDownList("ddlRole", new List<SelectListItem>
+                       {
+                          new SelectListItem{ Text="Admin", Value = "1" },
+                          new SelectListItem{ Text="HR", Value = "2" },
+                          new SelectListItem{ Text="Employee", Value = "3" },
+                          new SelectListItem{ Text="Manager", Value = "4" },
+                            new SelectListItem{ Text="Accountant", Value = "5" }
+                      }, "Select Role", new { @class = "btn btn-primary dropdown-toggle", @id = "ddlRole" })
                     </div>
-
-
-                    <div class="form-group">
-
-
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.Role)
-                            @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
-
-                            @Html.DropDownList("ddlRole", new List<SelectListItem>
-                           {
-                              new SelectListItem{ Text="Admin", Value = "1" },
-                              new SelectListItem{ Text="HR", Value = "2" },
-                              new SelectListItem{ Text="Employee", Value = "3" },
-                              new SelectListItem{ Text="Manager", Value = "4" },
-                                new SelectListItem{ Text="Accountant", Value = "5" }
-                          }, "Select Role", new { @class = "btn btn-primary dropdown-toggle", @id = "ddlRole" })
-                        </div>
-                        <div class="col-md-8 mb-6">
-                            @Html.LabelFor(model => model.Address)
-                            @*@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "Address", @placeholder = "Address", @style = "Padding:70px" } })*@
-                            <textarea class="form-control" id="Address" name="Address" rows="3"></textarea>
-                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="col-md-8 mb-6">
+                        @Html.LabelFor(model => model.Address)
+                        @*@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "Address", @placeholder = "Address", @style = "Padding:70px" } })*@
+                        <textarea class="form-control" id="Address" name="Address" rows="3"></textarea>
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                     </div>
+                </div>
 
 
 
-                    @*----------------*@
+                @*----------------*@
 
-                    &nbsp;
-                    <legend>Employer Login Details</legend>
+                &nbsp;
+                <legend>Employer Login Details</legend>
 
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.UserName)
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "UserName", @placeholder = "UserName" } })
-                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.Password)
-                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "Password", @placeholder = "Password" } })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            @Html.LabelFor(model => model.ConfirmPassword)
-                            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @id = "ConfirmPassword", @placeholder = "ConfirmPassword" } })
-                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                        </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.UserName)
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "UserName", @placeholder = "UserName", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                     </div>
-                    &nbsp;
-                    &nbsp;
-                    <br />
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.Password)
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "Password", @placeholder = "Password", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        @Html.LabelFor(model => model.ConfirmPassword)
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @id = "ConfirmPassword", @placeholder = "ConfirmPassword", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                &nbsp;
+                &nbsp;
+                <br />
 
-                    <button type="submit" text="Submit" id="btn_submit" style="position: relative; left: 16px;" class="btn btn-primary">Submit</button>
-                </fieldset>
-            </form>
-        </div><!-- /.col-lg-12 -->
-    </div><!-- /.row --> <!-- Has Sibling Modal -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                <button type="submit" text="Submit" id="btn_submit" style="position: relative; left: 16px;" class="btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+    </div><!-- /.col-lg-12 -->
+</div><!-- /.row -->  <!-- Has Sibling Modal -->
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
 
 }
 
 <div>
     @*@Html.ActionLink("Back to List", "Index")*@
 </div>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+@*<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
+
+
+

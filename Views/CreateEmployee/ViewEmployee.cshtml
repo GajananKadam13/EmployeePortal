@@ -32,7 +32,7 @@
                 <th scope="col">EmailId</th>
                 <th scope="col">DOB</th>
                 <th scope="col">Gender</th>
-                <th scope="col">Address</th>
+                
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
 
@@ -63,16 +63,14 @@
                         <td>
                             @item.Gender
                         </td>
-                        <td>
-                            @item.Address
-                        </td>
+                       
                         <td>
                             @item.Status
                         </td>
                         <td>
                             @Html.ActionLink("View", "ViewEmployeeById", new { EmployeePKID = item.EMP_PK_ID }) |
                             @Html.ActionLink("Edit", "ViewEmployeeById", new { EmployeePKID = item.EMP_PK_ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { EmployeePKID = item.EMP_PK_ID }) |
+                            @Html.ActionLink("Delete", "DeleteEmployeeById", new { EmployeePKID = item.EMP_PK_ID }) |
                         </td>
                     </tr>
                 }
@@ -83,12 +81,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @*@Html.ActionLink("Back to List", "Index")*@
 </div>

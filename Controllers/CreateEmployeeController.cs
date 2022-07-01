@@ -28,12 +28,13 @@ namespace EmployeePortal.Controllers
             return View(Obj_CE);
         }
         [HttpPost]
-        public ActionResult Index(CT_CreateEmployee obj, string ddlGender,int ddlRole,string Address)
+        public ActionResult Index(CT_CreateEmployee obj, string ddlGender,int ddlRole,string Address,int hdn_Emp_pkid)
         {
             string returntype = "";
             obj.Gender = ddlGender;
             obj.Role = ddlRole;
             obj.Address = Address;
+            obj.EMP_PK_ID = hdn_Emp_pkid;
             if (ModelState.IsValid)
             {
                 if (obj.EMP_PK_ID==0)
@@ -78,6 +79,15 @@ namespace EmployeePortal.Controllers
             obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
             return RedirectToAction("Index", obj);
         }
+
+        public ActionResult DeleteEmployeeById(int EmployeePKID)
+        {
+            string returnType = "";
+            //ViewBag.userdetails = objdl_CreateUser.FnGetEmployees();
+            returnType= objdl_CreateUser.FnDeleteEmployeeById(EmployeePKID).ToString();
+            return RedirectToAction("Index", returnType);
+        }
+
 
     }
 }

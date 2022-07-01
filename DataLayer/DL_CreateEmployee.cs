@@ -159,5 +159,36 @@ namespace EmployeePortal.DataLayer
                 throw;
             }
         }
+        public string FnDeleteEmployeeById(int EmployeePKID)
+        {
+            string returntype = "";
+            CT_CreateEmployee obj = new CT_CreateEmployee();
+            try
+            {
+                using (con)
+                {
+                    using (cmd = new System.Data.SqlClient.SqlCommand("DeleteEmployeebyId", con))
+                    {
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@EMP_PKID", EmployeePKID);
+                        cmd.Parameters.Add("@msg", SqlDbType.VarChar, 40);
+                        cmd.Parameters["@msg"].Direction = ParameterDirection.Output;
+                        con.Open();
+                        Convert.ToString(cmd.ExecuteNonQuery());
+                        returntype = (string)cmd.Parameters["@msg"].Value;
+                        con.Close();
+
+                    }
+
+                }
+                return returntype;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

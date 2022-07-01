@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\Home.css" />
+    <Content Include="CSS\Home2.css" />
     <Content Include="CSS\Login.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\Logo.jpg" />
