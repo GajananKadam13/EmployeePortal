@@ -43,7 +43,7 @@
         $(document).ready(function () {
             var msg = $("#hdnFlag").val();
             if (msg != undefined && msg != "") {
-                alert(msg)
+                $("#LoginFiledMessge").show();
             }
         });
     </script>
@@ -81,10 +81,13 @@
                                 </div>
                                 @*<input type="password" class="form-control" placeholder="password">*@
                                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder = "Password", @class = "form-control" } })
-                                
+
                             </div>
                             <div class="input-group form-group">
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div id="LoginFiledMessge" style="display:none;" class="input-group form-group">
+                                <span class="text-danger">Login Failed! Please check username and password are valid.</span>
                             </div>
                             <div class="row align-items-center remember">
                                 <input type="checkbox">Remember Me

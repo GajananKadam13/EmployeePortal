@@ -4,7 +4,16 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>Create Employee</h2>
+<h2>Add Employee Information</h2>
+<nav aria-label="breadcrumb" style="margin: -17px -1px -1px  -38px;">
+    <ol class="breadcrumb pmd-breadcrumb" style="background-color: white;">
+        <li class="breadcrumb-item">
+            <a href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">Employees</li>
+        <li class="breadcrumb-item active" aria-current="page">Add Employee</li>
+    </ol>
+</nav>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -19,231 +28,379 @@
             alert($('option:selected', $(this)).text());
             '@Model.Gender'=$('option:selected', $(this)).text();
         });*@
-        if (@Model.EMP_PK_ID!= 0) {
+        @*if (@Model.EMP_PK_ID!= 0) {
             $('#ddlGender').val("@Model.Gender");
             $('#ddlRole').val("@Model.Role");
         }
         if (@Model.EMP_PK_ID!= 0) {
             $('#btn_submit').text('Update');
+        }*@
+    });
+
+
+    $(document).ready(function () {
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.avatar').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
         }
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+        /*----------------*/
+
+
+        $("#FirstName,#LastName,#MiddleName,#State,#City").keypress(function (evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if ((charCode <= 93 && charCode >= 65) || (charCode <= 122 && charCode >= 97) || charCode == 8) {
+
+                return true;
+            }
+            return false;
+        });
+
+        $("#Education").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeEducation';
+        });
+
+        $("#Experience").click(function () {
+            debugger;
+            window.location.href = '/CreateEmployee/AddEmployeeExperience';
+        });
+
+        //$("#LoginForm").submit(function (e) {
+        //    alert(3);
+        //    e.preventDefault();
+        //    this.submit();
+        //    return false;
+        //});
+    //    $("#myform").submit(function (e) {
+    //        e.preventDefault();
+    //     this.submit();
+    //    return false; //I put it here as a fallback
+        //function clickloginformbtn() {
+        //    //your code here
+        //   // $("#LoginForm").submit();
+        //    alert(3);
+        //}
 
     });
 </script>
 
-@using (Html.BeginForm("Index", "CreateEmployee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Index", "CreateEmployee", new { id = "LoginForm" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    if (Model.EMP_PK_ID != 0)
-    {
-<a href='@Url.Action("ViewEmployee", "CreateEmployee")' class="btn btn-primary">Back</a>
-    }
+    @*if (Model.EMP_PK_ID != 0)
+        {
+            <a href='@Url.Action("ViewEmployee", "CreateEmployee")' class="btn btn-primary">Back</a>
+        }*@
+    <div class="">
+        <div class="col-md-8" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
+            <div class="pmd-tab-active-bar" style="width: 93.125px; left: 0px;"></div><ul class="nav nav-tabs" role="tablist" style="width: 325.578px;">
+                <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
+                <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
+                <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
+                <!--<li>-->
+                @*<a href="#">General</a>*@
+                <!--<a href="/CreateEmployee/AddEmployeeEducation"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Create Employee</span></a>
+                </li>-->
+            </ul>
+        </div>
 
 
-<input type="hidden" id="hdn_Message" name="hdn_Message" />
-<input type="hidden" id="hdn_Emp_pkid" value="@Model.EMP_PK_ID" name="hdn_Emp_pkid" />
- <!-- Name Section -->
-<div class="row">
-    <div class="col-md-8 col-md-offset-1">
-        <form class="form-horizontal" role="form">
-            <fieldset>
 
 
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        @*<input id="Full Name" name="Full Name" placeholder="Full Name" class="form-control" type="text">*@
-                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "FirstName", @autocomplete = "off" } })
-                    </div>
-                    <div class="form-group col-md-6">
-                        @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
-                        @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @id = "MiddleName", @placeholder = "MiddleName", @autocomplete = "off" } })
-                    </div>
+        <input type="hidden" id="hdn_Message" name="hdn_Message" />
+        @*<input type="hidden" id="hdn_Emp_pkid" value="@Model.EMP_PK_ID" name="hdn_Emp_pkid" />*@
+        <!-- Name Section -->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
+                <form id="myform" class="form-horizontal" role="form" onSubmit="mySubmitFunction()">
+                    <fieldset>
+                        <h5 class="card-title mb-3">Profile Picture</h5>
+                        <div class="text-center">
+                            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                            <h6>Upload a different photo...</h6>
+                            <input type="file" name="ProfilePictureFile" id="ProfilePictureFile" class="text-center center-block file-upload">
+                            @Html.ValidationMessageFor(model => model.ProfilePictureName, "", new { @class = "text-danger" })
+                        </div>
+                        <hr />
+                        <h5 class="card-title mb-3">Basic Information</h5>
+
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">First Name</label>
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "FirstName", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Middle Name</label>
+                                    @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @id = "MiddleName", @placeholder = "MiddleName", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Last Name</label>
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "LastName", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Phone</label>
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @id = "Phone", @placeholder = "Phone", @autocomplete = "off", @type = "number", onKeyDown = "if(this.value.length==10 && event.keyCode!=8) return false;" } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Personal Email</label>
+                                    @Html.EditorFor(model => model.PersonalEmail, new { htmlAttributes = new { @class = "form-control", @id = "PersonalEmail", @placeholder = "PersonalEmail", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.PersonalEmail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @*<div class="col-12 col-sm-6 col-md-6">
+                                    <label for="fn" class="col-form-label control-label">Date of Birth*</label>
+                                    <select id="inputState" class="form-control">
+                                        <option selected>Choose ...</option>
+                                        <option> New Buyer</option>
+                                        <option> Auction</option>
+                                        <option> Complaint</option>
+                                        <option> Feedback</option>
+                                    </select>
+                                </div>*@
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Date of Birth*</label>
+                                    <input type="date" id="DateofBirth" name="DateofBirth" class="form-control">
+                                    @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-sm-6 col-md-3" style="margin: 8px -13px 17px  11px">
+                                <label for="Gender" class="d-block title-label">Gender</label>
+                                <div class="custom-control custom-radio pmd-radio custom-control-inline">
+                                    <input type="radio" id="male" name="gender" value="Male" class="custom-control-input">
+                                    <label class="custom-control-label pmd-radio-ripple-effect" for="male">Male</label>
+                                </div>
+                                <div class="custom-control custom-radio pmd-radio custom-control-inline">
+                                    <input type="radio" id="female" name="gender" value="Female" class="custom-control-input">
+                                    <label class="custom-control-label pmd-radio-ripple-effect" for="female">Female</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3" style="margin:8px -13px 17px 11px ">
+                                <label class="d-block title-label">Marital Status</label>
+                                <div class="custom-control custom-radio pmd-radio custom-control-inline">
+                                    <input type="radio" id="Married" name="MaritalStatus" value="Married" class="custom-control-input">
+                                    <label class="custom-control-label pmd-radio-ripple-effect" for="Married">Married</label>
+                                </div>
+                                <div class="custom-control custom-radio pmd-radio custom-control-inline">
+                                    <input type="radio" id="Unmarried" name="MaritalStatus" value="Unmarried" class="custom-control-input">
+                                    <label class="custom-control-label pmd-radio-ripple-effect" for="Unmarried">Unmarried</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12 ">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="Description" class="d-block title-label">Description</label>
+                                    <textarea id="Description" name="Description" cols="40" rows="5" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <h5 class="card-title mb-3">Employee Information</h5>
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Employee Enrollment ID</label>
+                                    @Html.EditorFor(model => model.EmployeeEnrollmentID, new { htmlAttributes = new { @class = "form-control", @id = "EmployeeEnrollmentID", @placeholder = "Employee Enrollment ID", @autocomplete = "off", @type = "number", onKeyDown = "if(this.value.length==10 && event.keyCode!=8) return false;" } })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label class="col-form-label control-label">Date of Joining*</label>
+                                    <input type="date" id="DateofJoining" name="DateofJoining" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Company Email</label>
+                                    @Html.EditorFor(model => model.CompanyEmail, new { htmlAttributes = new { @class = "form-control", @id = "CompanyEmail", @placeholder = "Company Email", @autocomplete = "off" } })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label class="col-form-label control-label">Department</label>
+                                    <div class="">
+
+                                        <select id="ddlDepartment" name="ddlDepartment" class="form-control">
+                                            <option value="" selected>Choose ...</option>
+                                            <option value="1"> HR</option>
+                                            <option value="2"> Development</option>
+                                            <option value="3"> Accountant</option>
+                                            <option value="4"> Sales</option>
+                                            <option value="5"> Marketing</option>
+                                        </select>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label class="col-form-label control-label">Designation</label>
+                                    <div class="">
+                                        <select id="ddlDesignation" name="ddlDesignation" class="form-control">
+                                            <option value="" selected>Choose ...</option>
+                                            <option value="1"> HR</option>
+                                            <option value="2"> Software Engineer</option>
+                                            <option value="3"> Manager</option>
+                                            @*<option value="4"> Employee</option>*@
+                                            <option value="4"> Security</option>
+                                        </select>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label class="col-form-label control-label">Reporting Employee</label>
+                                    <div class="">
+
+                                        <select id="ddlReportingEmployee" name="ddlReportingEmployee" class="form-control">
+                                            <option value="" selected>Choose ...</option>
+                                            <option value="1"> Manager</option>
+                                            <option value="2"> Development</option>
+                                            <option value="3"> Accountant</option>
+                                            <option value="4"> Sales</option>
+                                            <option value="5"> Marketing</option>
+                                        </select>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ReportingEmployee, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3" style="margin:8px -13px 17px 11px ">
+                                <label class="d-block title-label">Type of Employee</label>
+                                <div class="custom-control custom-radio pmd-radio custom-control-inline">
+                                    <input type="radio" id="FullTime" name="TypeofEmployee" value="Full Time" class="custom-control-input">
+                                    <label class="custom-control-label pmd-radio-ripple-effect" for="FullTime">Full Time</label>
+                                </div>
+                                <div class="custom-control custom-radio pmd-radio custom-control-inline">
+                                    <input type="radio" id="PartTime" name="TypeofEmployee" value="Part Time" class="custom-control-input">
+                                    <label class="custom-control-label pmd-radio-ripple-effect" for="PartTime">Part Time</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <h5 class="card-title mb-3">Contact Information</h5>
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Address Line 1</label>
+                                    @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "form-control", @id = "AddressLine1", @placeholder = "Address Line 1", @autocomplete = "off" } })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">Address Line 2</label>
+                                    @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "form-control", @id = "AddressLine2", @placeholder = "Address Line 2", @autocomplete = "off" } })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">City</label>
+                                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "City", @placeholder = "City", @autocomplete = "off" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">State</label>
+                                    @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", @id = "State", @placeholder = "State", @autocomplete = "off" } })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label for="fn" class="col-form-label control-label">ZipCode</label>
+                                    @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control", @id = "ZipCode", @placeholder = "ZipCode", @autocomplete = "off", @type = "number", onKeyDown = "if(this.value.length==6 && event.keyCode!=8) return false;" } })
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    <label class="col-form-label control-label">Country</label>
+                                    <div class="">
+                                        <select id="ddlCountry" name="ddlCountry" class="form-control">
+                                            <option value="" selected>Choose ...</option>
+                                            <option value="1"> India(Bharat)</option>
+                                            <option value="2"> Japan</option>
+                                            <option value="3"> USA</option>
+                                            <option value="4"> Rashiya</option>
+                                            <option value="5"> France</option>
+                                        </select>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Form Name -->
+
+
+                        <button type="submit" text="Submit" onclick="clickloginformbtn();" id="btn_submit" style="position: relative; left: 16px;" class="btn btn-primary">Submit</button>
+                    </fieldset>
+                </form>
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row --> <!-- Has Sibling Modal -->
+        @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
+
+
+        <div class="tab-content">
+            <!-- About Tab -->
+            <div role="tabpanel" style="margin: 42px 10px 8px -32px;" class="tab-pane active show" id="about">
+                <div class="card pmd-card">
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <input id="Mobile No." name="Mobile No." placeholder="Mobile No." class="form-control" required="required" type="text">
-                    </div>
-                    <div class="form-group col-md-6">
-
-                        <select id="inputState" class="form-control">
-                            <option selected>Choose ...</option>
-                            <option> New Buyer</option>
-                            <option> Auction</option>
-                            <option> Complaint</option>
-                            <option> Feedback</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <textarea id="comment" name="comment" cols="40" rows="5" class="form-control"></textarea>
-                    </div>
-                </div>
-
-                <!-- Form Name -->
-                <legend>Personal Information Details</legend>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.FirstName)
-                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "FirstName", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.MiddleName)
-                        @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @id = "MiddleName", @placeholder = "MiddleName", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.LastName)
-                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "LastName", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @*<div class="col-md-4 mb-3 dropdown">
-
-                <div class="dropdown">
-                    <button id="ddlGender" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                        --Select Gender--
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Male</a></li>
-                        <li><a href="#">Female</a></li>
-                    </ul>
-                </div>
-
-            </div>*@
-                    <div class="col-md-4 mb-3 dropdown">
-                        @Html.LabelFor(model => model.Gender)
-                        @Html.DropDownList("ddlGender", new List<SelectListItem>
-                         {
-                            new SelectListItem{ Text="Male", Value = "Male" },
-                            new SelectListItem{ Text="Female", Value = "Female" }
-
-                        }, "Select Gender", new { @class = "btn btn-primary dropdown-toggle", @id = "ddlGender" })
-                    </div>
-                    @*<div class="col-md-4 mb-3 dropdown">
-                    <select id="ddlGender" class="btn btn-primary dropdown-toggle" name="projectKey">
-                        <div class="dropdown-menu">
-                        <option value="0">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                </div>
-                </select>
-            </div>*@
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.DOB)
-                        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @id = "DOB", @placeholder = "DOB", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.Nationality)
-                        @Html.EditorFor(model => model.Nationality, new { htmlAttributes = new { @class = "form-control", @id = "Nationality", @placeholder = "Nationality", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.Email)
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email", @placeholder = "Email", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.Landline)
-                        @Html.EditorFor(model => model.Landline, new { htmlAttributes = new { @class = "form-control", @id = "Landline", @placeholder = "Landline", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Landline, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.Mobile)
-                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @id = "Mobile", @placeholder = "Mobile", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                &nbsp;
-                <legend>Employer Address Details</legend>
-
-                <!-- Text input-->
-                <div class="form-group">
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.Country)
-                        @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @id = "Country", @placeholder = "Country", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.City)
-                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "City", @placeholder = "City", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.State)
-                        @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", @id = "State", @placeholder = "State", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
-                    </div>
-
-                </div>
-
-
-                <div class="form-group">
-
-
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.Role)
-                        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
-
-                        @Html.DropDownList("ddlRole", new List<SelectListItem>
-                       {
-                          new SelectListItem{ Text="Admin", Value = "1" },
-                          new SelectListItem{ Text="HR", Value = "2" },
-                          new SelectListItem{ Text="Employee", Value = "3" },
-                          new SelectListItem{ Text="Manager", Value = "4" },
-                            new SelectListItem{ Text="Accountant", Value = "5" }
-                      }, "Select Role", new { @class = "btn btn-primary dropdown-toggle", @id = "ddlRole" })
-                    </div>
-                    <div class="col-md-8 mb-6">
-                        @Html.LabelFor(model => model.Address)
-                        @*@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "Address", @placeholder = "Address", @style = "Padding:70px" } })*@
-                        <textarea class="form-control" id="Address" name="Address" rows="3"></textarea>
-                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+            </div>
+        </div>
+    </div>
 
 
 
-                @*----------------*@
 
-                &nbsp;
-                <legend>Employer Login Details</legend>
 
-                <!-- Text input-->
-                <div class="form-group">
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.UserName)
-                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @id = "UserName", @placeholder = "UserName", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.Password)
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "Password", @placeholder = "Password", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        @Html.LabelFor(model => model.ConfirmPassword)
-                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @id = "ConfirmPassword", @placeholder = "ConfirmPassword", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                &nbsp;
-                &nbsp;
-                <br />
 
-                <button type="submit" text="Submit" id="btn_submit" style="position: relative; left: 16px;" class="btn btn-primary">Submit</button>
-            </fieldset>
-        </form>
-    </div><!-- /.col-lg-12 -->
-</div><!-- /.row -->  <!-- Has Sibling Modal -->
-@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
@@ -251,8 +408,49 @@
     @*@Html.ActionLink("Back to List", "Index")*@
 </div>
 @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
+
+
+
+@*------------------------*@
+
+
+
+@*<div class="form-group">
+    <div class="col-md-4 mb-3 dropdown">
+        @Html.LabelFor(model => model.Gender)
+        @Html.DropDownList("ddlGender", new List<SelectListItem>
+         {
+            new SelectListItem{ Text="Male", Value = "Male" },
+            new SelectListItem{ Text="Female", Value = "Female" }
+
+        }, "Select Gender", new { @class = "btn btn-primary dropdown-toggle", @id = "ddlGender" })
+    </div>
+
+    <div class="col-md-4 mb-3">
+        @Html.LabelFor(model => model.DOB)
+        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @id = "DOB", @placeholder = "DOB", @autocomplete = "off" } })
+        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+    </div>
+
+
+
+
+
+    <div class="col-md-4 mb-3">
+        @Html.LabelFor(model => model.Role)
+        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+
+        @Html.DropDownList("ddlRole", new List<SelectListItem>
+       {
+          new SelectListItem{ Text="Admin", Value = "1" },
+          new SelectListItem{ Text="HR", Value = "2" },
+          new SelectListItem{ Text="Employee", Value = "3" },
+          new SelectListItem{ Text="Manager", Value = "4" },
+            new SelectListItem{ Text="Accountant", Value = "5" }
+      }, "Select Role", new { @class = "btn btn-primary dropdown-toggle", @id = "ddlRole" })
+    </div>*@
 
 
 

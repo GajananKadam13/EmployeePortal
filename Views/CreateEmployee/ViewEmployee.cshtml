@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>ViewEmployee</h2>
+<h2>View Employee</h2>
 <style>
  
 </style>
@@ -18,21 +18,18 @@
    
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-      
 
     <div class="form-group">
        
         <div>
-            <table class="table table-dark" id="t01">
+            <table class="table " id="t01">
                 <thead>
-                <th scope="col">FirstName</th>
-                <th scope="col">MiddleName</th>
-                <th scope="col">LastName</th>
-                <th scope="col">Username</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Middle Name</th>
+                <th scope="col">Last Name</th>
                 <th scope="col">EmailId</th>
                 <th scope="col">DOB</th>
                 <th scope="col">Gender</th>
-                
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
 
@@ -52,25 +49,21 @@
                             @item.LastName
                         </td>
                         <td>
-                            @item.UserName
+                            @item.CompanyEmail
                         </td>
                         <td>
-                            @item.Email
-                        </td>
-                        <td>
-                            @item.DOB
+                            @item.DateOfBirth
                         </td>
                         <td>
                             @item.Gender
                         </td>
-                       
                         <td>
                             @item.Status
                         </td>
                         <td>
-                            @Html.ActionLink("View", "ViewEmployeeById", new { EmployeePKID = item.EMP_PK_ID }) |
-                            @Html.ActionLink("Edit", "ViewEmployeeById", new { EmployeePKID = item.EMP_PK_ID }) |
-                            @Html.ActionLink("Delete", "DeleteEmployeeById", new { EmployeePKID = item.EMP_PK_ID }) |
+                            @Html.ActionLink("View", "ViewEmployeeById", new { EmployeePKID = item.EmployeePKID }) |
+                            @Html.ActionLink("Edit", "ViewEmployeeById", new { EmployeePKID = item.EmployeePKID }) |
+                            @Html.ActionLink("Delete", "DeleteEmployeeById", new { EmployeePKID = item.EmployeePKID }) |
                         </td>
                     </tr>
                 }

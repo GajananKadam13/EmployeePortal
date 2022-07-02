@@ -57,23 +57,19 @@ namespace EmployeePortal.DataLayer
                         //returntype = (string)cmd.Parameters["@msg"].Value;
                         //con.Close();
 
-
-
                        
                         cmd.CommandType = CommandType.StoredProcedure; 
-                        cmd.Parameters.AddWithValue("@userid", obj_CT_Log.UserName);
-                        cmd.Parameters.AddWithValue("@password", obj_CT_Log.Password);
+                        cmd.Parameters.AddWithValue("@PersonalEmail", obj_CT_Log.UserName);
+                        cmd.Parameters.AddWithValue("@Password", obj_CT_Log.Password);
                         adr = new SqlDataAdapter(cmd);
                         adr.Fill(dt);
                         return dt;
 
                     }
                 }
-
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }

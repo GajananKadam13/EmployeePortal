@@ -28,7 +28,7 @@ namespace EmployeePortal.Controllers.Login
                 dt = objdl_Log.FnCheckLogin(obj);
                 if (dt.Rows.Count> 0 )
                 {
-                    Session["Emp_PK_ID"] = dt.Rows[0]["Emp_PK_ID"].ToString();
+                    Session["EmployeePKID"] = dt.Rows[0]["EmployeePKID"].ToString();
                     Session["EmployeeName"] = dt.Rows[0]["EmployeeName"].ToString();
                     ViewBag.Message = "Login Success";
                     return RedirectToAction("Index", "Home");
