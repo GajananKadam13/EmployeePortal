@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EmployeePortal.DataLayer;
 using EmployeePortal.Models;
 
 namespace EmployeePortal.Controllers
 {
     public class EmployeeDetailController : Controller
     {
+        CT_CreateEmployee obj = new CT_CreateEmployee();
+        DL_CreateEmployee objdl_CreateUser = new DL_CreateEmployee();
         // GET: EmployeeDetail
-       
-        public ActionResult Index(CT_CreateEmployee obj_CE)
+
+        public ActionResult Index(int EmployeePKID)
         {
+            CT_CreateEmployee obj_CE = new CT_CreateEmployee();
+            obj_CE = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
             //----------Designation-------------------------
             if (obj_CE.Designation=="1")
             {

@@ -7,70 +7,72 @@
 
 <h2>View Employee</h2>
 <style>
- 
 </style>
-
-@using (Html.BeginForm()) 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-   
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-       
-        <div>
-            <table class="table " id="t01">
-                <thead>
-                <th scope="col">First Name</th>
-                <th scope="col">Middle Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">EmailId</th>
-                <th scope="col">DOB</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
+        <div class="form-group">
 
-                </thead>
-                @*@foreach (var item in ViewBag.userdetails)*@
-                @foreach (var item in Model.CT_CreateEmployeelist)
-                {
+            <div>
+                <table class="table " id="t01">
+                    <thead>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Middle Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">EmailId</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
 
-                    <tr>
-                        <td>
-                            @item.FirstName
-                        </td>
-                        <td>
-                            @item.MiddleName
-                        </td>
-                        <td>
-                            @item.LastName
-                        </td>
-                        <td>
-                            @item.CompanyEmail
-                        </td>
-                        <td>
-                            @item.DateOfBirth
-                        </td>
-                        <td>
-                            @item.Gender
-                        </td>
-                        <td>
-                            @item.Status
-                        </td>
-                        <td>
-                            @Html.ActionLink("View", "ViewEmployeeById", new { EmployeePKID = item.EmployeePKID }) |
-                            @Html.ActionLink("Edit", "ViewEmployeeById", new { EmployeePKID = item.EmployeePKID }) |
-                            @Html.ActionLink("Delete", "DeleteEmployeeById", new { EmployeePKID = item.EmployeePKID }) |
-                        </td>
-                    </tr>
-                }
+                    </thead>
+                    @*@foreach (var item in ViewBag.userdetails)*@
+                    @foreach (var item in Model.CT_CreateEmployeelist)
+                    {
 
-            </table>
+                        <tr>
+                            <td>
+                                @item.FirstName
+                            </td>
+                            <td>
+                                @item.MiddleName
+                            </td>
+                            <td>
+                                @item.LastName
+                            </td>
+                            <td>
+                                @item.CompanyEmail
+                            </td>
+                            <td>
+                                @item.DateOfBirth
+                            </td>
+                            <td>
+                                @item.Gender
+                            </td>
+                            <td>
+                                @item.Status
+                            </td>
+                            <td>
+                                @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = item.EmployeePKID }, null) |
+                                @Html.ActionLink("Edit", "EditEmployeeById", new { EmployeePKID = item.EmployeePKID }) |
+                                @*@Html.ActionLink("Delete", "CallCommanMessageModel", new { EmployeePKID = item.EmployeePKID }) |*@
+                                @*DeleteEmployeeById*@
+                                @*@Html.ActionLink("Delete", new { onclick = "someFunction();" }) |*@
+                                <input type="button" id="btnDelete" value="Delete" onclick="someFunction(@item.EmployeePKID)" /> |
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
         </div>
-    </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -79,7 +81,73 @@
         </div>
     </div>
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+       
 
+    });
+
+    function someFunction(EmployeePKID) {
+
+        alert(4);
+       // $("#CommanMessageModel").show();
+        //debugger;
+        //$.ajax({
+        //    url: "/CreateEmployee/CallCommanMessageModel",
+        //    success: function (result) {
+              
+        //    }
+        //});
+
+
+
+        $.ajax(
+            {                                                                                                               
+                type: 'POST',
+                dataType: "html",
+                url: '/CreateEmployee/CallCommanMessageModel',
+                //data: { jsonInput: JSON.stringify(jsonInput) },
+                ///data: {,
+               
+                //data: { id: '' },
+                success: function (data) {
+                    debugger;
+                    //alert(data);
+                    // $('#CommanMessageModel').html(data);
+                    $("#CommanMessageModel").show();
+                    $("#CommanMessageModel").find('.modal-title').text("Alert")
+                    $("#CommanMessageModel").find('.modal-body').text("Are you sure, do you want to delete this record?");
+
+                   
+                    $('#btnNo').click(function (e) {
+                        $("#CommanMessageModel").hide();
+                    });
+                    $('#btnYes').click(function (e) {
+                        $("#CommanMessageModel").hide();
+                        debugger;
+                        $.ajax(
+                            {
+                                type: 'POST',
+                                dataType: "html",
+                                url: '/CreateEmployee/DeleteEmployeeById',
+                                data: { EmployeePKID: EmployeePKID },
+                                success: function (data) {
+                                    debugger;
+                                    
+                                },
+                            });
+
+
+
+
+
+                    });
+                    
+                },
+            });
+    }
+
+</script>
 <div>
     @*@Html.ActionLink("Back to List", "Index")*@
 </div>

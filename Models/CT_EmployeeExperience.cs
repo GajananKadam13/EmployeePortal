@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,13 +10,25 @@ namespace EmployeePortal.Models
     {
         ////-----------------------Experience----------------------
 
+        [Required]
         public string Organization { get; set; }
+        [Required]
         public string ExperienceDesignation { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        [Required]
+        public DateTime StartDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
+        [Required]
         public string StartSalary { get; set; }
+        [Required]
         public string EndSalary { get; set; }
+        [Required]
         public string Reason { get; set; }
+
+        public int LastEmployeePKID { get; set; }
+        public int CreatedBy { get; set; }
+        
+
         ////-------------------------------------------
 
     }

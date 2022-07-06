@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Site.css" />
     <Content Include="CSS\Home.css" />
     <Content Include="CSS\Home2.css" />
     <Content Include="CSS\Login.css" />
@@ -130,6 +131,9 @@
     <Content Include="Views\EmployeeDetail\Index.cshtml" />
     <Content Include="UploadsImages\TestImage.png_Gajanan%40Nelito.com" />
     <Content Include="UploadsImages\TestImage.png_" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_CommanMessagePartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

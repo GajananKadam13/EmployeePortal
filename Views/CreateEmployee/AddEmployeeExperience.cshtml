@@ -65,19 +65,21 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
                 <form class="form-horizontal" role="form">
-                    <h5 class="card-title mb-3">Education</h5>
+                    <h5 class="card-title mb-3">Experience</h5>
 
                     <div class="form-row">
                         <div class="col-12 col-sm-6 col-md-6">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label for="fn" class="col-form-label control-label">Organization</label>
                                 @Html.EditorFor(model => model.Organization, new { htmlAttributes = new { @class = "form-control", @id = "Organization", @placeholder = "Organization", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Organization, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-6">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label for="fn" class="col-form-label control-label">Designation</label>
                                 @Html.EditorFor(model => model.ExperienceDesignation, new { htmlAttributes = new { @class = "form-control", @id = "ExperienceDesignation", @placeholder = "Designation", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.ExperienceDesignation, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -86,25 +88,29 @@
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">Start Date</label>
-                                <input type="date" id="StartDate" class="form-control">
+                                <input type="date" id="StartDate" name="StartDate" class="form-control">
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">End Date</label>
-                                <input type="date" id="EndDate" class="form-control">
+                                <input type="date" id="EndDate" name="EndDate" class="form-control">
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-6">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label for="fn" class="col-form-label control-label">StartSalary</label>
                                 @Html.EditorFor(model => model.StartSalary, new { htmlAttributes = new { @class = "form-control", @id = "StartSalary", @placeholder = "StartSalary", @autocomplete = "off", onKeyDown = "if(this.value.length==10 && event.keyCode!=8) return false;" } })
+                                @Html.ValidationMessageFor(model => model.StartSalary, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-6">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label for="fn" class="col-form-label control-label">EndSalary</label>
                                 @Html.EditorFor(model => model.EndSalary, new { htmlAttributes = new { @class = "form-control", @id = "EndSalary", @placeholder = "EndSalary", @autocomplete = "off", onKeyDown = "if(this.value.length==10 && event.keyCode!=8) return false;" } })
+                                @Html.ValidationMessageFor(model => model.EndSalary, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -114,7 +120,7 @@
                         <div class="col-md-12 ">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label for="Reason" class="d-block title-label">Reason</label>
-                                <textarea id="Reason" name="Description" cols="40" rows="5" class="form-control"></textarea>
+                                <textarea id="Reason"  name="Reason" cols="40" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>

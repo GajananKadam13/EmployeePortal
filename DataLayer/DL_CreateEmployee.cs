@@ -14,6 +14,8 @@ namespace EmployeePortal.DataLayer
         public string FnCreateEmployee(CT_CreateEmployee obj_CT_Log)
         {
             string returntype = "";
+            int returntype2 = 0;
+          
             try
             {
                 using (con)
@@ -53,9 +55,15 @@ namespace EmployeePortal.DataLayer
 
                         cmd.Parameters.Add("@msg", SqlDbType.VarChar, 40);
                         cmd.Parameters["@msg"].Direction = ParameterDirection.Output;
+
+                        cmd.Parameters.Add("@LastEmployeePKID", SqlDbType.Int);
+                        cmd.Parameters["@LastEmployeePKID"].Direction = ParameterDirection.Output;
+
                         con.Open();
                         Convert.ToString(cmd.ExecuteNonQuery());
-                        returntype = (string)cmd.Parameters["@msg"].Value;
+                        returntype = (string)cmd.Parameters["@msg"].Value + '_' + cmd.Parameters["@LastEmployeePKID"].Value;
+                        //returntype2 =Convert.ToInt32(cmd.Parameters["@LastEmployeePKID"].Value);
+           
                         con.Close();
                     }
                 }
@@ -220,6 +228,109 @@ namespace EmployeePortal.DataLayer
                 throw;
             }
         }
+
+
+
+        //-----START-----Employee Education Part-------------------------------------
+        public string FnAddEmployeeEducation(CT_EmployeeEducation Obj_Emp_Edu)
+        {
+            string returntype = "";
+          
+            try
+            {
+                using (con)
+                {
+                    using (cmd = new System.Data.SqlClient.SqlCommand("sp_AddEmployeeEducation", con))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@LastEmployeePKID", Obj_Emp_Edu.LastEmployeePKID);
+                        cmd.Parameters.AddWithValue("@Degree", Obj_Emp_Edu.Degree);
+                        cmd.Parameters.AddWithValue("@Specialization", Obj_Emp_Edu.Specialization);
+                        cmd.Parameters.AddWithValue("@PassingYear", Obj_Emp_Edu.PassingYear);
+                        cmd.Parameters.AddWithValue("@Institute", Obj_Emp_Edu.Institute);
+                        cmd.Parameters.AddWithValue("@StartDate", Obj_Emp_Edu.StartDate);
+                        cmd.Parameters.AddWithValue("@EndDate", Obj_Emp_Edu.EndDate);
+                        cmd.Parameters.AddWithValue("@Percentage", Obj_Emp_Edu.Percentage);
+                        
+                        
+                        //--------------------------------------------------------------------------
+                        cmd.Parameters.AddWithValue("@CreatedBy", Obj_Emp_Edu.CreatedBy);
+
+
+                        cmd.Parameters.Add("@msg", SqlDbType.VarChar, 40);
+                        cmd.Parameters["@msg"].Direction = ParameterDirection.Output;
+
+                        con.Open();
+                        Convert.ToString(cmd.ExecuteNonQuery());
+                        returntype = (string)cmd.Parameters["@msg"].Value;
+                        con.Close();
+                    }
+                }
+                return returntype;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        //------END---------------------------------------------------
+
+        //-----------START CODE Experience-------------------------------------------
+
+        public string FnAddEmployeeExperience(CT_EmployeeExperience Obj_Emp_Exp)
+        {
+            string returntype = "";
+
+            try
+            {
+                using (con)
+                {
+                    using (cmd = new System.Data.SqlClient.SqlCommand("sp_AddEmployeeExperience", con))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@LastEmployeePKID", Obj_Emp_Exp.LastEmployeePKID);
+                        cmd.Parameters.AddWithValue("@Organization", Obj_Emp_Exp.Organization);
+                        cmd.Parameters.AddWithValue("@ExperienceDesignation", Obj_Emp_Exp.ExperienceDesignation);
+                        cmd.Parameters.AddWithValue("@StartDate", Obj_Emp_Exp.StartDate);
+                        cmd.Parameters.AddWithValue("@EndDate", Obj_Emp_Exp.EndDate);
+                        cmd.Parameters.AddWithValue("@StartSalary", Obj_Emp_Exp.StartSalary);
+                        cmd.Parameters.AddWithValue("@EndSalary", Obj_Emp_Exp.EndSalary);
+                        cmd.Parameters.AddWithValue("@Reason", Obj_Emp_Exp.Reason);
+
+
+                        //--------------------------------------------------------------------------
+                        cmd.Parameters.AddWithValue("@CreatedBy", Obj_Emp_Exp.CreatedBy);
+
+
+                        cmd.Parameters.Add("@msg", SqlDbType.VarChar, 40);
+                        cmd.Parameters["@msg"].Direction = ParameterDirection.Output;
+
+                        con.Open();
+                        Convert.ToString(cmd.ExecuteNonQuery());
+                        returntype = (string)cmd.Parameters["@msg"].Value;
+                        con.Close();
+                    }
+                }
+                return returntype;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        //-----------END CODE Experience-------------------------------------------
+
+
+
+
+
+
 
         //public string FnCreateEmployee(CT_CreateEmployee obj_CT_Log)
         //{

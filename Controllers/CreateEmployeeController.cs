@@ -16,7 +16,7 @@ namespace EmployeePortal.Controllers
         DL_CreateEmployee objdl_CreateUser = new DL_CreateEmployee();
         public ActionResult Index(CT_CreateEmployee obj)
         {
-            if(obj.EmployeePKID!=0)
+            if (obj.EmployeePKID != 0)
             {
                 //For Update
             }
@@ -51,6 +51,14 @@ namespace EmployeePortal.Controllers
 
 
             }
+            if(obj.MaritalStatus!="")
+            {
+                ViewBag.MaritalStatus = obj.MaritalStatus;
+            }
+            if (obj.Gender != "")
+            {
+                ViewBag.Gender = obj.Gender;
+            }
             //if (obj.Password != null)
             //{
             //    
@@ -66,13 +74,13 @@ namespace EmployeePortal.Controllers
 
 
         [HttpPost]  //Add Employee Information
-        public ActionResult Index(CT_CreateEmployee Obj_CE,  string gender, string MaritalStatus,  HttpPostedFileBase ProfilePictureFile, string TypeofEmployee, DateTime ? DateofJoining = null, DateTime? DateofBirth = null, string  ddlDepartment ="", string ddlDesignation = "", string ddlReportingEmployee = "", string ddlCountry = "")
+        public ActionResult Index(CT_CreateEmployee Obj_CE, string gender, string MaritalStatus, HttpPostedFileBase ProfilePictureFile, string TypeofEmployee, DateTime? DateofJoining = null, DateTime? DateofBirth = null, string ddlDepartment = "", string ddlDesignation = "", string ddlReportingEmployee = "", string ddlCountry = "")
         {
             Obj_CE.Department = ddlDepartment;
             Obj_CE.Designation = ddlDesignation;
             Obj_CE.ReportingEmployee = ddlReportingEmployee;
             Obj_CE.Country = ddlCountry;
-            if(ddlDepartment!="")
+            if (ddlDepartment != "")
             {
                 ModelState["Department"].Errors.Clear();
             }
@@ -89,13 +97,15 @@ namespace EmployeePortal.Controllers
 
                 ModelState["Country"].Errors.Clear();
             }
-            
-            if(ProfilePictureFile.FileName!="")
-            {
-                Obj_CE.ProfilePictureName = ProfilePictureFile.FileName;
-                ModelState["ProfilePictureName"].Errors.Clear();
-            }
 
+            if (ProfilePictureFile != null)
+            {
+                if (ProfilePictureFile.FileName != "")
+                {
+                    Obj_CE.ProfilePictureName = ProfilePictureFile.FileName;
+                    ModelState["ProfilePictureName"].Errors.Clear();
+                }
+            }
 
 
             if (ModelState.IsValid)
@@ -117,7 +127,7 @@ namespace EmployeePortal.Controllers
 
 
 
-                  
+
                     string extension = System.IO.Path.GetExtension(ProfilePictureFile.FileName);
                     var FileFinalName = Obj_CE.CompanyEmail + extension;
                     ProfilePictureFile.SaveAs(path + FileFinalName);
@@ -126,29 +136,82 @@ namespace EmployeePortal.Controllers
                 Obj_CE.DateOfBirth = Convert.ToDateTime(DateofBirth);
                 Obj_CE.Gender = gender;
                 Obj_CE.MaritalStatus = MaritalStatus;
-                Obj_CE.DateofJoining =Convert.ToDateTime(DateofJoining);
-          
-              
+                Obj_CE.DateofJoining = Convert.ToDateTime(DateofJoining);
+
+
                 Obj_CE.TypeofEmployee = TypeofEmployee;
                 Obj_CE.CreatedBy = 0;//Convert.ToInt32(Session["Emp_PK_ID"]);
-                string status = objdl_CreateUser.FnCreateEmployee(Obj_CE);
+                string returnValue = objdl_CreateUser.FnCreateEmployee(Obj_CE);
+                string [] arrayVal =  returnValue.Split('_');
+                string status = arrayVal[0];
+                string LastEmployeeID = arrayVal[1];
                 if (status == "Success")
                 {
+                    Session["LastEmployeeID"] = LastEmployeeID;
                     ViewBag.Message = "Success";
                 }
             }
             return View();
         }
 
+        [HttpGet]
+        public ActionResult AddEmployeeEducation()
+         {
+            
+                return View();
+        }
 
-        public ActionResult AddEmployeeEducation(CT_CreateEmployee Obj_CE)
+        [HttpPost]
+        public ActionResult AddEmployeeEducation(CT_EmployeeEducation Obj_Edu, string ddlDegreee = "", string ddlSpecialization = "", DateTime? PassingYear = null, DateTime? StartDate = null, DateTime? EndDate = null)
         {
+            Obj_Edu.Degree = ddlDegreee;
+            Obj_Edu.Specialization = ddlSpecialization;
+            Obj_Edu.PassingYear = Convert.ToDateTime(PassingYear);
+            Obj_Edu.StartDate = Convert.ToDateTime(StartDate);
+            Obj_Edu.EndDate = Convert.ToDateTime(EndDate);
+
+            if (ddlDegreee != "")
+            {
+                ModelState["Degree"].Errors.Clear();
+            }
+            if (ddlSpecialization != "")
+            {
+                ModelState["Specialization"].Errors.Clear();
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                Obj_Edu.LastEmployeePKID=Convert.ToInt32(Session["LastEmployeeID"]);
+                string returnValue = objdl_CreateUser.FnAddEmployeeEducation(Obj_Edu);
+                if (returnValue == "Success")
+                {
+                    ViewBag.Message = "Success";
+                }
+            }
 
             return View();
         }
-        public ActionResult AddEmployeeExperience(CT_CreateEmployee Obj_CE)
+        public ActionResult AddEmployeeExperience()
         {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddEmployeeExperience(CT_EmployeeExperience Obj_CE_Ex,string Reason, DateTime? StartDate = null, DateTime? EndDate = null)
+        {
+            Obj_CE_Ex.StartDate =Convert.ToDateTime(StartDate);
+            Obj_CE_Ex.EndDate = Convert.ToDateTime(EndDate);
+            Obj_CE_Ex.Reason = Reason;
 
+            if (ModelState.IsValid)
+            {
+                Obj_CE_Ex.LastEmployeePKID = Convert.ToInt32(Session["LastEmployeeID"]);
+                string returnValue = objdl_CreateUser.FnAddEmployeeExperience(Obj_CE_Ex);
+                if (returnValue == "Success")
+                {
+                    ViewBag.Message = "Success";
+                }
+            }
             return View();
         }
 
@@ -165,10 +228,18 @@ namespace EmployeePortal.Controllers
 
         public ActionResult ViewEmployeeById(int EmployeePKID)
         {
-            CT_CreateEmployee obj = new CT_CreateEmployee();
-            obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
-            return RedirectToAction("Index", "EmployeeDetail", obj);
+            //CT_CreateEmployee obj = new CT_CreateEmployee();
+            //obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
+            return RedirectToAction("Index", "EmployeeDetail", EmployeePKID);
         }
+        public ActionResult EditEmployeeById(int EmployeePKID)
+        {
+            CT_CreateEmployee obj = new CT_CreateEmployee();
+            //ViewBag.userdetails = objdl_CreateUser.FnGetEmployees();
+            obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
+            return RedirectToAction("Index", obj);
+        }
+
         public ActionResult DeleteEmployeeById(int EmployeePKID)
         {
             string returnType = "";
@@ -176,6 +247,13 @@ namespace EmployeePortal.Controllers
             returnType = objdl_CreateUser.FnDeleteEmployeeById(EmployeePKID).ToString();
             return RedirectToAction("Index", returnType);
         }
+
+        public ActionResult CallCommanMessageModel()
+        {
+             
+            return PartialView("_CommanMessagePartial");
+        }
+
 
 
         //[HttpPost]

@@ -71,18 +71,19 @@
                                 <label class="col-form-label control-label">Degreee</label>
                                 <div class="">
 
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Choose ...</option>
-                                        <option> Bachelor of Engineering</option>
-                                        <option> Masters of Engineering</option>
-                                        <option> Master of Computer Applications</option>
-                                        <option> Bachelors of Business Administration</option>
-                                        <option> Masters of Business Administration</option>
-                                        <option> Bachelor of Arts</option>
-                                        <option> Bachelor of Commerce</option>
-                                        <option> Masters of Commerce</option>
+                                    <select id="ddlDegreee" name="ddlDegreee" class="form-control">
+                                        <option value="" selected>Choose ...</option>
+                                        <option value="1"> Bachelor of Engineering</option>
+                                        <option value="2"> Masters of Engineering</option>
+                                        <option value="3"> Master of Computer Applications</option>
+                                        <option value="4"> Bachelors of Business Administration</option>
+                                        <option value="5"> Masters of Business Administration</option>
+                                        <option value="6"> Bachelor of Arts</option>
+                                        <option value="7"> Bachelor of Commerce</option>
+                                        <option value="8"> Masters of Commerce</option>
                                     </select>
                                 </div>
+                                @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
@@ -90,18 +91,19 @@
                                 <label class="col-form-label control-label">Specialization</label>
                                 <div class="">
 
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Choose ...</option>
-                                        <option> Bachelor of Engineering</option>
-                                        <option> Masters of Engineering</option>
-                                        <option> Master of Computer Applications</option>
-                                        <option> Bachelors of Business Administration</option>
-                                        <option> Masters of Business Administration</option>
-                                        <option> Bachelor of Arts</option>
-                                        <option> Bachelor of Commerce</option>
-                                        <option> Masters of Commerce</option>
+                                    <select id="ddlSpecialization" name="ddlSpecialization" class="form-control">
+                                        <option value="" selected>Choose ...</option>
+                                        <option value="1"> Bachelor of Engineering</option>
+                                        <option value="2"> Masters of Engineering</option>
+                                        <option value="3"> Master of Computer Applications</option>
+                                        <option value="4"> Bachelors of Business Administration</option>
+                                        <option value="5"> Masters of Business Administration</option>
+                                        <option value="6"> Bachelor of Arts</option>
+                                        <option value="7"> Bachelor of Commerce</option>
+                                        <option value="8"> Masters of Commerce</option>
                                     </select>
                                 </div>
+                                @Html.ValidationMessageFor(model => model.Specialization, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -110,7 +112,8 @@
                         <div class="col-12 col-sm-6 col-md-4">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">PassingYear*</label>
-                                <input type="date" id="PassingYear" class="form-control">
+                                <input type="date" id="PassingYear" name="PassingYear" class="form-control">
+                                @Html.ValidationMessageFor(model => model.PassingYear, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -119,18 +122,21 @@
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label for="fn" class="col-form-label control-label">Institute</label>
                                 @Html.EditorFor(model => model.Institute, new { htmlAttributes = new { @class = "form-control", @id = "Institute", @placeholder = "Institute", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Institute, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">Start Date*</label>
-                                <input type="date" id="StartDate" class="form-control">
+                                <input type="date" id="StartDate" name="StartDate" class="form-control">
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">End Date*</label>
-                                <input type="date" id="EndDate" class="form-control">
+                                <input type="date" id="EndDate" name="EndDate" class="form-control">
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -139,6 +145,7 @@
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">Percentage</label>
                                 @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", @id = "Percentage", @placeholder = "Percentage", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>

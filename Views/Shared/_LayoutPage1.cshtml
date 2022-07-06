@@ -36,24 +36,20 @@
         jQuery(function ($) {
 
             $(".sidebar-dropdown > a").click(function () {
+                debugger;
                 $(".sidebar-submenu").slideUp(200);
-                if (
-                    $(this)
-                        .parent()
-                        .hasClass("active")
-                ) {
+                if ($(this).parent().hasClass("active"))
+                {
                     $(".sidebar-dropdown").removeClass("active");
                     $(this)
                         .parent()
                         .removeClass("active");
-                } else {
+                } else
+                {
                     $(".sidebar-dropdown").removeClass("active");
-                    $(this)
-                        .next(".sidebar-submenu")
-                        .slideDown(200);
-                    $(this)
-                        .parent()
-                        .addClass("active");
+                    $(this).next(".sidebar-submenu")
+                    .slideDown(200);
+                    $(this).parent().addClass("active");
                 }
             });
 
@@ -65,6 +61,14 @@
             });
 
 
+            //////////
+            //$(".sidebar-dropdown").click(function () {
+            //    debugger;
+            //    $(this).parent().addClass("active");
+            //    //$(".sidebar-dropdown").removeClass("active");
+            //    $(this).css("display", "block");
+            //});
+            ///////
         });
 
     </script>
@@ -112,8 +116,8 @@
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
-                        <img class="img-responsive img-rounded" src="~/UploadsImages/@Model.ProfilePictureName"
-                             alt="User picture">
+                        @*<img class="img-responsive img-rounded" src="~/UploadsImages/@Model.ProfilePictureName"
+                            alt="User picture">*@
                     </div>
                     <div class="user-info">
                         <span class="user-name GeneralExtraColor">
@@ -154,7 +158,7 @@
                         <li class="header-menu">
                             <span>General</span>
                         </li>
-                        <li class="sidebar-dropdown">
+                        @*<li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-tachometer-alt GeneralExtraColor"></i>
                                 <span class="GeneralExtraColor">Dashboard</span>
@@ -199,7 +203,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>*@
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="far fa-gem GeneralExtraColor"></i>
@@ -212,21 +216,21 @@
                                         <a href="/CreateEmployee/Index"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Create Employee</span></a>
                                     </li>
                                     <li>
-                                        <a href="/CreateEmployee/ViewEmployee"><i  aria-hidden="true"></i><span class="hidden-xs hidden-sm">View Employee List</span></a>
+                                        <a href="/CreateEmployee/ViewEmployee"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">View Employee List</span></a>
                                     </li>
                                     <li>
-                                        <a href="/CreateEmployee/ViewEmployee"><i  aria-hidden="true"></i><span class="hidden-xs hidden-sm">Employee Detail</span></a>
+                                        <a href="/CreateEmployee/ViewEmployee"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Employee Detail</span></a>
                                     </li>
                                     <li>
                                         <a href="/EmployeeDetail/Index"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Employee Detail</span></a>
                                     </li>
-                                    <li>
+                                    @*<li>
                                         <a href="#">Forms</a>
-                                    </li>
+                                    </li>*@
                                 </ul>
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
+                        @*<li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-chart-line GeneralExtraColor"></i>
                                 <span class="GeneralExtraColor">Charts</span>
@@ -285,7 +289,7 @@
                                 <i class="fa fa-folder GeneralExtraColor"></i>
                                 <span class="GeneralExtraColor">Examples</span>
                             </a>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
@@ -313,81 +317,81 @@
         <main class="page-content">
             <div class="container-fluid">
                 @*<h2>Pro Sidebar</h2>
-                <hr>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4 framework.</p>
-                        <p>
-                            You can find the complete code on <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
-                                Github
-                            </a>, it contains more themes and background image option
-                        </p>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <iframe src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=pro-sidebar-template&type=star&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="30px"></iframe>
-                        <iframe src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=pro-sidebar-template&type=fork&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="30px"></iframe>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <div class="alert alert-success" role="alert">
-                            <h4 class="alert-heading">New !</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4 framework.</p>
                             <p>
-                                New react pro sidebar library is now available on <a href="https://www.npmjs.com/package/react-pro-sidebar" target="_blank">npm</a> <a href="https://github.com/azouaoui-med/react-pro-sidebar" target="_blank">
-                                    <img alt="GitHub stars" src="https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social" />
-                                </a>
+                                You can find the complete code on <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
+                                    Github
+                                </a>, it contains more themes and background image option
                             </p>
-                            <a href="https://github.com/azouaoui-med/react-pro-sidebar" target="_blank" class="btn btn-sm btn-primary mr-2">
-                                Github
-                            </a>
-                            <a href="https://azouaoui-med.github.io/react-pro-sidebar" target="_blank" class="btn btn-sm btn-success">
-                                Demo
-                            </a>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <iframe src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=pro-sidebar-template&type=star&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="30px"></iframe>
+                            <iframe src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=pro-sidebar-template&type=fork&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="30px"></iframe>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="alert alert-success" role="alert">
+                                <h4 class="alert-heading">New !</h4>
+                                <p>
+                                    New react pro sidebar library is now available on <a href="https://www.npmjs.com/package/react-pro-sidebar" target="_blank">npm</a> <a href="https://github.com/azouaoui-med/react-pro-sidebar" target="_blank">
+                                        <img alt="GitHub stars" src="https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social" />
+                                    </a>
+                                </p>
+                                <a href="https://github.com/azouaoui-med/react-pro-sidebar" target="_blank" class="btn btn-sm btn-primary mr-2">
+                                    Github
+                                </a>
+                                <a href="https://azouaoui-med.github.io/react-pro-sidebar" target="_blank" class="btn btn-sm btn-success">
+                                    Demo
+                                </a>
+
+                            </div>
 
                         </div>
+                    </div>
+                    <h5>More templates</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="card rounded-0 p-0 shadow-sm">
+                                <img src="https://user-images.githubusercontent.com/25878302/58369568-a49b2480-7efc-11e9-9ca9-2be44afacda1.png" class="card-img-top rounded-0" alt="Angular pro sidebar">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title">Angular Pro Sidebar</h6>
+                                    <a href="https://github.com/azouaoui-med/angular-pro-sidebar" target="_blank" class="btn btn-primary btn-sm">Github</a>
+                                    <a href="https://azouaoui-med.github.io/angular-pro-sidebar/demo/" target="_blank" class="btn btn-success btn-sm">Preview</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="card rounded-0 p-0 shadow-sm">
+                                <img src="https://user-images.githubusercontent.com/25878302/58369258-33f20900-7ef8-11e9-8ff3-b277cb7ed7b4.PNG" class="card-img-top rounded-0" alt="Angular pro sidebar">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title">Angular Dashboard</h6>
+                                    <a href="https://github.com/azouaoui-med/lightning-admin-angular" target="_blank" class="btn btn-primary btn-sm">Github</a>
+                                    <a href="https://azouaoui-med.github.io/lightning-admin-angular/demo/" target="_blank" class="btn btn-success btn-sm">Preview</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
 
-                    </div>
-                </div>
-                <h5>More templates</h5>
-                <hr>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                        <div class="card rounded-0 p-0 shadow-sm">
-                            <img src="https://user-images.githubusercontent.com/25878302/58369568-a49b2480-7efc-11e9-9ca9-2be44afacda1.png" class="card-img-top rounded-0" alt="Angular pro sidebar">
-                            <div class="card-body text-center">
-                                <h6 class="card-title">Angular Pro Sidebar</h6>
-                                <a href="https://github.com/azouaoui-med/angular-pro-sidebar" target="_blank" class="btn btn-primary btn-sm">Github</a>
-                                <a href="https://azouaoui-med.github.io/angular-pro-sidebar/demo/" target="_blank" class="btn btn-success btn-sm">Preview</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                        <div class="card rounded-0 p-0 shadow-sm">
-                            <img src="https://user-images.githubusercontent.com/25878302/58369258-33f20900-7ef8-11e9-8ff3-b277cb7ed7b4.PNG" class="card-img-top rounded-0" alt="Angular pro sidebar">
-                            <div class="card-body text-center">
-                                <h6 class="card-title">Angular Dashboard</h6>
-                                <a href="https://github.com/azouaoui-med/lightning-admin-angular" target="_blank" class="btn btn-primary btn-sm">Github</a>
-                                <a href="https://azouaoui-med.github.io/lightning-admin-angular/demo/" target="_blank" class="btn btn-success btn-sm">Preview</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
-               
                 @RenderBody()
                 <footer class="text-center">
                     <div class="mb-2">
                         <small>
                             © 2022 made with <i class="fa fa-heart" style="color:red"></i> by - <a target="_blank" rel="noopener noreferrer" href="https://azouaoui.netlify.com">
-                               Gajanan G. Kadam  , Juhi Singh , Prerana Kulkarni
+                                Gajanan G. Kadam  , Juhi Singh , Prerana Kulkarni
                             </a>
                         </small>
                     </div>
                     @*<div>
-                        <a href="https://github.com/azouaoui-med" target="_blank">
-                            <img alt="GitHub followers" src="https://img.shields.io/github/followers/azouaoui-med?label=github&style=social" />
-                        </a>
-                        <a href="https://twitter.com/azouaoui_med" target="_blank">
-                            <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/azouaoui_med?label=twitter&style=social" />
-                        </a>
-                    </div>*@
+                            <a href="https://github.com/azouaoui-med" target="_blank">
+                                <img alt="GitHub followers" src="https://img.shields.io/github/followers/azouaoui-med?label=github&style=social" />
+                            </a>
+                            <a href="https://twitter.com/azouaoui_med" target="_blank">
+                                <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/azouaoui_med?label=twitter&style=social" />
+                            </a>
+                        </div>*@
                 </footer>
             </div>
         </main>
@@ -396,6 +400,27 @@
 
 
 
+    @*-------Delete messge confirm model-----------------*@
+<div id="CommanMessageModel" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnNo" value="No" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button  id="btnYes" value="Yes" type="button" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+    @*------------------------*@
 
 </body>
 </html>
