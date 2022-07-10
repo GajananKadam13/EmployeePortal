@@ -59,6 +59,11 @@ namespace EmployeePortal.Controllers
             {
                 ViewBag.Gender = obj.Gender;
             }
+            if (obj.Department != "")
+            {
+                ViewBag.Department = obj.Department;
+            }
+            
             //if (obj.Password != null)
             //{
             //    
@@ -156,9 +161,17 @@ namespace EmployeePortal.Controllers
 
         [HttpGet]
         public ActionResult AddEmployeeEducation()
-         {
-            
-                return View();
+        {
+            CT_EmployeeEducation obj = new CT_EmployeeEducation();
+            List<CT_EmployeeEducation> list = new List<CT_EmployeeEducation>();
+            if(Session["LastEmployeeID"]==""  || Session["LastEmployeeID"] == null)
+            {
+
+            }
+            int LastEmployeeID =Convert.ToInt32(Session["LastEmployeeID"]);
+            list= objdl_CreateUser.FnGetEmployeesEducation(1);
+            obj.employeeEducationsModelList=list;
+            return View(obj);
         }
 
         [HttpPost]

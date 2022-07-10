@@ -70,6 +70,13 @@
                 $("#female").prop("checked", true)
             }
         }
+        var hdn_Department = $("#hdn_Department").val();
+        if (hdn_Department != "") {
+           
+                $("#ddlDepartment option[value="+hdn_Department+"]").attr('selected', 'selected');
+            
+        }
+
         
       
         @*$("#ddlGender").change(function () {
@@ -169,6 +176,7 @@
     <input type="hidden" id="hdn_Message" name="hdn_Message" />
     <input type="hidden" id="hdn_MaritalStatus" value="@ViewBag.MaritalStatus" name="hdn_MaritalStatus" />
     <input type="hidden" id="hdn_Gender" value="@ViewBag.Gender" name="hdn_Gender" />
+    <input type="hidden" id="hdn_Department" value="@ViewBag.Department" name="hdn_Department" />
     @*<input type="hidden" id="hdn_Emp_pkid" value="@Model.EMP_PK_ID" name="hdn_Emp_pkid" />*@
     <!-- Name Section -->
     <div class="row">

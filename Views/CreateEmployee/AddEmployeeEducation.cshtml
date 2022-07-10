@@ -150,11 +150,71 @@
                         </div>
                     </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Submit" class="btn btn-primary" />
-                            </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submit" class="btn btn-primary" />
                         </div>
+                    </div>
+
+
+                    @*----------*@
+                    <div>
+                        <table class="table " id="t01">
+                            <thead>
+                            <th scope="col">Degreee</th>
+                            <th scope="col">Passing Year</th>
+                            <th scope="col">Institute</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Percentage</th>
+                            <th scope="col">Action</th>
+
+                            </thead>
+                            @*@foreach (var item in ViewBag.userdetails)*@
+
+                            @if (Model.employeeEducationsModelList.Count > 0)
+                            {
+                                foreach (var item in Model.employeeEducationsModelList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Degree
+                                        </td>
+                                        <td>
+                                            @item.Specialization
+                                        </td>
+                                        <td>
+                                            @item.PassingYear
+                                        </td>
+                                        <td>
+                                            @item.Institute
+                                        </td>
+                                        <td>
+                                            @item.StartDate
+                                        </td>
+                                        <td>
+                                            @item.EndDate
+                                        </td>
+                                        <td>
+                                            @item.Percentage
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = item.LastEmployeePKID }, null) |
+                                            @Html.ActionLink("Edit", "EditEmployeeById", new { EmployeePKID = item.LastEmployeePKID }) |
+                                            @*@Html.ActionLink("Delete", "CallCommanMessageModel", new { EmployeePKID = item.EmployeePKID }) |*@
+                                            @*DeleteEmployeeById*@
+                                            @*@Html.ActionLink("Delete", new { onclick = "someFunction();" }) |*@
+                                            <input type="button" id="btnDelete" value="Delete" onclick="someFunction(@item.LastEmployeePKID)" /> |
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+
+                    @*-------------*@
+
+
                 </form>
             </div>
         </div>

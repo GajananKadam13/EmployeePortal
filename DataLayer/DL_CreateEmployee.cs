@@ -328,6 +328,53 @@ namespace EmployeePortal.DataLayer
 
 
 
+        //------------------------------------------------------------
+        public List<CT_EmployeeEducation> FnGetEmployeesEducation(int LastEmployeePKID)
+        {
+            List<CT_EmployeeEducation> CT_EmployeeEducation_list = new List<CT_EmployeeEducation>();
+            try
+            {
+                using (con)
+                {
+                    using (cmd = new System.Data.SqlClient.SqlCommand("sp_GetEmployeeEducation", con))
+                    {
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@LastEmployeePKID", LastEmployeePKID);
+                        con.Open();
+                        reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            CT_EmployeeEducation obj = new CT_EmployeeEducation();
+                            obj.Edu_PKID = Convert.ToInt32(reader["Edu_PKID"].ToString());
+                            obj.Employee_PKID = Convert.ToInt32(reader["Employee_PKID"].ToString());
+                            obj.Degree = reader["Degree"].ToString();
+                            obj.Specialization = reader["Specialization"].ToString();
+
+                            obj.PassingYear = Convert.ToDateTime(reader["PassingYear"].ToString());
+                            obj.Institute = reader["Institute"].ToString();
+                            obj.StartDate = Convert.ToDateTime(reader["StartDate"].ToString());
+                            obj.EndDate = Convert.ToDateTime(reader["EndDate"].ToString());
+                            obj.Percentage = reader["Percentage"].ToString();
+                            obj.CreatedBy = Convert.ToInt32(reader["CreatedBy"].ToString());
+                            obj.Status = reader["Status"].ToString();
+
+
+                            CT_EmployeeEducation_list.Add(obj);
+                        }
+
+                        return CT_EmployeeEducation_list;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        //-----------------------------------------------------------
+
 
 
 
