@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EmployeePortal.Models
 {
-    public class CT_CreateEmployee
+    public class CT_CreateEmployee : CT_EmployeeEducation  
     {
         //-----Registartion Form-----------
         //public string Salutaion { get; set; }
@@ -104,5 +104,63 @@ namespace EmployeePortal.Models
         public string Status { get; set; }
         public int CreatedBy { get; set; }
         public string  Password { get; set; }
+        [Required]
+        public string Role { get; set; }
+        //-------------------------------------------------------------------
+
+
+        //-----------------************************************************************************************************************------------------------
+
+
+        //############################################################
+        //==============Education===================================
+        public string Degree { get; set; }
+        public string Specialization { get; set; }
+        public string PassingYear { get; set; }
+        public string Institute { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+        public string Percentage { get; set; }
+        //=================================================
+        
+        //############################################################
+
+        //=================Experience================================
+        public string Organization { get; set; }
+        public string ExperienceDesignation { get; set; }
+        public string ExperienceStartDate { get; set; }
+        public string ExperienceEndDate { get; set; }
+        public string StartSalary { get; set; }
+        public string EndSalary { get; set; }
+        public string Reason { get; set; }
+
+        //=================================================
+        //############################################################
+        //===============Documents==================================
+        public string DocumentName { get; set; }
+        //=================================================
+        //############################################################
+
+        //############################################################
+        //===============Salary==================================
+        public string BasicSalary { get; set; }
+        public string HouseRentAllowences { get; set; }
+        public string ConveyanceAllowences { get; set; }
+        public string MedicalAllowences { get; set; }
+        public string SpecialAllowences { get; set; }
+        public string GrossSalary { get; set; }
+        public string EPF { get; set; }
+        public string HealthInsuranceESI { get; set; }
+        
+        public string NetPay { get; set; }
+        //=================================================
+        //############################################################
+
+        public List<CT_EmployeeEducation> CT_EmployeeEducationlist = new List<CT_EmployeeEducation>();
+        public List<CT_EmployeeExperience> CT_EmployeeExperiencelist = new List<CT_EmployeeExperience>();
+         public List<CT_EmployeeDocuments> CT_EmployeeDocumentslist = new List<CT_EmployeeDocuments>();
+        
+        //public CT_EmployeeEducation CT_EmployeeEducationObj;
     }
+
 }

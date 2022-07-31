@@ -8,7 +8,7 @@
 <nav aria-label="breadcrumb" style="margin: -17px -1px -1px  -38px;">
     <ol class="breadcrumb pmd-breadcrumb" style="background-color: white;">
         <li class="breadcrumb-item">
-            <a href="dashboard.html">Dashboard</a>
+            <a href="Index">Add Employee</a>
         </li>
         <li class="breadcrumb-item">Employees</li>
         <li class="breadcrumb-item active" aria-current="page">Add Employee</li>
@@ -16,7 +16,73 @@
 </nav>
 
 <script type="text/javascript">
+
+   
     $(document).ready(function () {
+       
+        //$("img").load(function () {
+        //    debugger;
+        //    alert($(this).height());
+        //    alert($(this).width());
+        //});
+        //$("#ProfilePictureFile").change(function (e) {
+        //    debugger;
+        //   var Width=  document.querySelector('img').naturalWidth;
+        //   var Height =document.querySelector('img').naturalHeight;
+
+        //    if (Width != 200 && Height != 260) {
+        //        alert(3);
+
+        //    }
+        //   /* var file, img;*/
+
+
+        //    //if ((file = this.files[0])) {
+        //    //    img = $(".img-thumbnail").attr("src");
+        //    //    img.onload = function () {
+        //    //        alert(this.width + " " + this.height);
+        //    //    };
+        //    //    img.onerror = function () {
+        //    //        alert("not a valid file: " + file.type);
+        //    //    };
+        //    //  //  img.src = _URL.createObjectURL(file);
+
+
+        //    //}
+
+        //});
+
+
+
+        var _URL = window.URL || window.webkitURL;
+
+        $("#ProfilePictureFile").change(function (e) {
+            var file, img;
+
+            debugger;
+            if ((file = this.files[0])) {
+                img = new Image();
+                img.onload = function () {
+                   // alert(this.width + " " + this.height);
+                    if (this.width != 200 && this.height != 260) {
+                        $("#error_msg_ProfilePictureFile_Size").show();
+                        return false;
+                    }
+                    else {
+                        $("#error_msg_ProfilePictureFile_Size").hide();
+                    }
+                };
+
+                img.onerror = function () {
+                    alert("not a valid file: " + file.type);
+                };
+                img.src = _URL.createObjectURL(file);
+
+
+            }
+
+        });
+
         debugger;
         var hdn_message='@ViewBag.Message';
         $("#hdn_Message").val(hdn_message);
@@ -129,6 +195,12 @@
             debugger;
             window.location.href = '/CreateEmployee/AddEmployeeExperience';
         });
+        $("#Documents").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeDocumetns';
+        });
+        $("#Salary").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeSalary';
+        });
 
         //$("#LoginForm").submit(function (e) {
         //    alert(3);
@@ -158,16 +230,18 @@
             <a href='@Url.Action("ViewEmployee", "CreateEmployee")' class="btn btn-primary">Back</a>
         }*@
 <div class="">
-    <div class="col-md-8" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
+    <div class="col-md-12" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
         <div class="pmd-tab-active-bar" style="width: 93.125px; left: 0px;"></div><ul class="nav nav-tabs" role="tablist" style="width: 325.578px;">
-            <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
-            <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
-            <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
-            <!--<li>-->
-            @*<a href="#">General</a>*@
-            <!--<a href="/CreateEmployee/AddEmployeeEducation"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Create Employee</span></a>
-            </li>-->
-        </ul>
+    <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
+    <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
+    <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
+    <li class="nav-item"><a id="Documents" style="margin: -41px 19px -64px 350px;" class="nav-link" href="/CreateEmployee/AddEmployeeDocumetns" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Documents</a></li>
+    <li class="nav-item"><a id="Salary"  style="margin: -41px 19px -64px 462px;"   class="nav-link" href="/CreateEmployee/AddEmployeeSalary" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Salary</a></li>
+    <!--<li>-->
+    @*<a href="#">General</a>*@
+    <!--<a href="/CreateEmployee/AddEmployeeEducation"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Create Employee</span></a>
+    </li>-->
+</ul>
     </div>
 
 
@@ -180,16 +254,19 @@
     @*<input type="hidden" id="hdn_Emp_pkid" value="@Model.EMP_PK_ID" name="hdn_Emp_pkid" />*@
     <!-- Name Section -->
     <div class="row">
-        <div class="col-md-8 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
+        <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
             <form id="myform" class="form-horizontal" role="form" onSubmit="mySubmitFunction()">
                 <fieldset>
                     <h5 class="card-title mb-3">Profile Picture</h5>
                     <div class="text-center">
                         <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
                         <h6>Upload a different photo...</h6>
-                        <input type="file" name="ProfilePictureFile" id="ProfilePictureFile" class="text-center center-block file-upload">
+                        <input type="file" name="ProfilePictureFile" id="ProfilePictureFile" src="" class=" ProImage text-center center-block file-upload">
                         @Html.ValidationMessageFor(model => model.ProfilePictureName, "", new { @class = "text-danger" })
+                        <br />
+                        <span class="text-danger" id="error_msg_ProfilePictureFile_Size" style="display:none">Image size should be Width:200px & Height:260px.</span>
                     </div>
+                    
                     <hr />
                     <h5 class="card-title mb-3">Basic Information</h5>
 
@@ -233,15 +310,15 @@
                             </div>
                         </div>
                         @*<div class="col-12 col-sm-6 col-md-6">
-                                <label for="fn" class="col-form-label control-label">Date of Birth*</label>
-                                <select id="inputState" class="form-control">
-                                    <option selected>Choose ...</option>
-                                    <option> New Buyer</option>
-                                    <option> Auction</option>
-                                    <option> Complaint</option>
-                                    <option> Feedback</option>
-                                </select>
-                            </div>*@
+                <label for="fn" class="col-form-label control-label">Date of Birth*</label>
+                <select id="inputState" class="form-control">
+                    <option selected>Choose ...</option>
+                    <option> New Buyer</option>
+                    <option> Auction</option>
+                    <option> Complaint</option>
+                    <option> Feedback</option>
+                </select>
+            </div>*@
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label for="fn" class="col-form-label control-label">Date of Birth*</label>
@@ -370,6 +447,21 @@
                                 <label class="custom-control-label pmd-radio-ripple-effect" for="PartTime">Part Time</label>
                             </div>
                         </div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                <label class="col-form-label control-label">Role</label>
+                                <div class="">
+
+                                    <select id="ddlReportingEmployee" name="ddlRole" class="form-control">
+                                        <option value="" selected>Choose ...</option>
+                                        <option value="1"> Admin</option>
+                                        <option value="2"> Employee</option>
+
+                                    </select>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ReportingEmployee, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
                     <hr />
                     <h5 class="card-title mb-3">Contact Information</h5>
@@ -425,8 +517,12 @@
                     </div>
                     <!-- Form Name -->
 
-
-                    <button type="submit" text="Submit" onclick="clickloginformbtn();" id="btn_submit" style="position: relative; left: 16px;" class="btn btn-primary">Submit</button>
+                    <div class="form-row">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" text="Submit" onclick="clickloginformbtn();" id="btn_submit" style="position: relative; left: 16px; padding: 11px 67px 11px 66px;" class="btn btn-primary">Submit</button>
+                            <input type="button" style="padding:11px 67px 11px 66px;" id="btn_Reset" value="Reset" name="btn_Reset" class="btn btn-warning" />
+                        </div>
+                    </div>
                 </fieldset>
             </form>
         </div><!-- /.col-lg-12 -->

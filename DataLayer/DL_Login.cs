@@ -59,7 +59,7 @@ namespace EmployeePortal.DataLayer
 
                        
                         cmd.CommandType = CommandType.StoredProcedure; 
-                        cmd.Parameters.AddWithValue("@PersonalEmail", obj_CT_Log.UserName);
+                        cmd.Parameters.AddWithValue("@CompanyEmail", obj_CT_Log.UserName);
                         cmd.Parameters.AddWithValue("@Password", obj_CT_Log.Password);
                         adr = new SqlDataAdapter(cmd);
                         adr.Fill(dt);

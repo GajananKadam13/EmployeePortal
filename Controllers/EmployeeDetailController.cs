@@ -17,6 +17,7 @@ namespace EmployeePortal.Controllers
         public ActionResult Index(int EmployeePKID)
         {
             CT_CreateEmployee obj_CE = new CT_CreateEmployee();
+            CT_EmployeeEducation obj_EmpEdu = new CT_EmployeeEducation();
             obj_CE = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
             //----------Designation-------------------------
             if (obj_CE.Designation=="1")
@@ -59,28 +60,30 @@ namespace EmployeePortal.Controllers
             }
 
             //----------Country-------------------------
-            if (obj_CE.Department == "1")
+            if (obj_CE.Country == "1")
             {
-                obj_CE.Department = "India(Bharat)";
+                obj_CE.Country = "India(Bharat)";
             }
-            if (obj_CE.Department == "2")
+            if (obj_CE.Country == "2")
             {
-                obj_CE.Department = "Japan";
+                obj_CE.Country = "Japan";
             }
-            if (obj_CE.Department == "3")
+            if (obj_CE.Country == "3")
             {
-                obj_CE.Department = "USA";
+                obj_CE.Country = "USA";
             }
-            if (obj_CE.Department == "4")
+            if (obj_CE.Country == "4")
             {
-                obj_CE.Department = "Rashiya";
+                obj_CE.Country = "Rashiya";
             }
-            if (obj_CE.Department == "5")
+            if (obj_CE.Country == "5")
             {
-                obj_CE.Department = "France";
+                obj_CE.Country = "France";
             }
-            CT_CreateEmployee obj = new CT_CreateEmployee();
-           // obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
+            //CT_CreateEmployee obj = new CT_CreateEmployee();
+            // obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
+
+         
             return View(obj_CE);
         }
     }

@@ -12,25 +12,32 @@ namespace EmployeePortal.Models
         public int Edu_PKID { get; set; }
         public int Employee_PKID { get; set; }
 
-        [Required(ErrorMessage = "{0} is required.")]
+       // [Required(ErrorMessage = "{0} is required.")]
         public string Degree { get; set; }
-        [Required(ErrorMessage = "{0} is required.")]
+        public string DegreeText { get; set; }
+        //[Required(ErrorMessage = "{0} is required.")]
         public string Specialization { get; set; }
-        [Required]
+        public string SpecializationText { get; set; }
+        //[Required]
         public DateTime PassingYear { get; set; }
-        [Required]
+        public string PassingYearFormat { get; set; }
+        //[Required]
         public string Institute { get; set; }
 
-        [Required]
+        //[Required]
         public DateTime StartDate { get; set; }
-        [Required]
+        public string StartDateFormat { get; set; }
+        //[Required]
         public DateTime EndDate { get; set; }
-        [Required]
+        public string EndDateFormat { get; set; }
+        
+        //[Required]
         public string Percentage { get; set; }
         public int CreatedBy { get; set; }
         public int LastEmployeePKID { get; set; }
         public string Status { get; set; }
          
-        public List<CT_EmployeeEducation> employeeEducationsModelList {get;set;}
+        public CT_EmployeeEducation employeeEducationsModel {get;set;}
+        public List<CT_EmployeeEducation> employeeEducationsModelList { get; set; }
     }
 }

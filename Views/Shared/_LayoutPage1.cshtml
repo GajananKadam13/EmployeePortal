@@ -44,6 +44,8 @@
                     $(this)
                         .parent()
                         .removeClass("active");
+                   // localStorage.removeItem("sidebar-dropdown_active");
+                  //  localStorage.removeItem("sidebar-submenu_display");
                 } else
                 {
                     $(".sidebar-dropdown").removeClass("active");
@@ -62,12 +64,46 @@
 
 
             //////////
-            //$(".sidebar-dropdown").click(function () {
-            //    debugger;
-            //    $(this).parent().addClass("active");
-            //    //$(".sidebar-dropdown").removeClass("active");
-            //    $(this).css("display", "block");
-            //});
+            $(".sidebar-dropdown").click(function () {
+                debugger;
+                $(this).parent().addClass("active");
+                //$(".sidebar-dropdown").removeClass("active");
+                localStorage.setItem("active", "active");
+                $(this).css("display", "block");
+                localStorage.setItem("display", "block");
+            });
+
+            $(document).ready(function () {
+                //$(".sidebar-dropdown").click(function () {
+                //    debugger;
+                //    $(this).parent().addClass("active");
+                //    //$(".sidebar-dropdown").removeClass("active");
+                //    localStorage.setItem("sidebar-dropdown_active", "active");
+                //    $(this).css("display", "block");
+                //    localStorage.setItem("sidebar-submenu_display", "block");
+                //});
+                //localStorage.getItem("sidebar-dropdown_active");
+                //localStorage.getItem("sidebar-submenu_display");
+                $(".sidebar-dropdown").addClass(localStorage.getItem("sidebar-dropdown_active"));
+                $(".sidebar-submenu").css("display", localStorage.getItem("sidebar-submenu_display"));
+            });
+
+            $(".EmployeesMainSideBar").click(function () {
+                debugger;
+                $(this).parent().addClass("active");
+                //$(".sidebar-dropdown").removeClass("active");
+                localStorage.setItem("Employeesactive", "active");
+                $(this).css("display", "block");
+                localStorage.setItem("Employeesdisplay", "block");
+            });
+
+            $(document).ready(function () {
+                $(".sidebar-dropdown").addClass(localStorage.getItem("Employeesactive"));
+                $(".sidebar-submenu").css("display", localStorage.getItem("Employeesdisplay"));
+
+                //$(".sidebar-dropdown").addClass(localStorage.getItem("sidebar-dropdown_active"));
+                //$(".sidebar-submenu").css("display", localStorage.getItem("sidebar-submenu_display"));
+            });
             ///////
         });
 
@@ -204,12 +240,12 @@
                                 </ul>
                             </div>
                         </li>*@
-                        <li class="sidebar-dropdown">
+                        <li class="sidebar-dropdown EmployeesMainSideBar">
                             <a href="#">
                                 <i class="far fa-gem GeneralExtraColor"></i>
                                 <span class="GeneralExtraColor">Employees</span>
                             </a>
-                            <div class="sidebar-submenu">
+                            <div class="sidebar-submenu EmployeesSubSideBar">
                                 <ul>
                                     <li>
                                         @*<a href="#">General</a>*@
@@ -221,9 +257,7 @@
                                     <li>
                                         <a href="/CreateEmployee/ViewEmployee"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Employee Detail</span></a>
                                     </li>
-                                    <li>
-                                        <a href="/EmployeeDetail/Index"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Employee Detail</span></a>
-                                    </li>
+                                    
                                     @*<li>
                                         <a href="#">Forms</a>
                                     </li>*@

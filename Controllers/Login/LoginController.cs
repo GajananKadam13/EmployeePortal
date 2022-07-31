@@ -31,6 +31,7 @@ namespace EmployeePortal.Controllers.Login
                     Session["EmployeePKID"] = dt.Rows[0]["EmployeePKID"].ToString();
                     Session["EmployeeName"] = dt.Rows[0]["EmployeeName"].ToString();
                     ViewBag.Message = "Login Success";
+                    Session["LastEmployeeID"] =3;
                     return RedirectToAction("Index", "Home");
                 }
                 else

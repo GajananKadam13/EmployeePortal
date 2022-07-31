@@ -3,22 +3,425 @@
 @{
     ViewBag.Title = "AddEmployeeEducation";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+
 }
+
 
 <h2>Add Employee Education</h2>
 <nav aria-label="breadcrumb" style="margin: -17px -1px -1px  -38px;">
     <ol class="breadcrumb pmd-breadcrumb" style="background-color: white;">
         <li class="breadcrumb-item">
-            <a href="dashboard.html">Dashboard</a>
+            <a href="AddEmployeeEducation">Education</a>
         </li>
         <li class="breadcrumb-item">Employees</li>
         <li class="breadcrumb-item active" aria-current="page">Add Employee</li>
     </ol>
 </nav>
-<script>
-
+<script type="text/javascript">
 
     $(document).ready(function () {
+
+        $('#btn_Reset').on('click', function () {
+            $('#ddlDegreee').val("");
+            $('#ddlSpecialization').val("");
+
+            $('#PassingYear').val("");
+            $('#Institute').val("");
+            $('#StartDate').val("");
+            $('#EndDate').val("");
+            $('#Percentage').val("");
+            $("#hdn_EmpEdu_PKID").val(0);
+        });
+
+        
+        ///
+        GetEmployeeEducationData();
+        function GetEmployeeEducationData() {
+
+
+            $.ajax(
+                {
+                    type: 'GET',
+                    dataType: 'JSON',
+                    url: '/CreateEmployee/GetEmployeeEducationData',
+                    data: {},
+                    success:
+                        function (response) {
+                            // Generate HTML table.
+                            debugger;
+                            //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
+                            var Listdata = JSON.parse(response)
+                            var len = Listdata.length;
+                            var txt = "";
+                            for (var i = 0; i < len; i++) {
+                                txt += "<tr id=" + Listdata[i].Edu_PKID + " ><td style='display: none;'>" + Listdata[i].Edu_PKID + "</td><td style='display: none;'>" + Listdata[i].Degree + "</td><td>" + Listdata[i].DegreeText + "</td><td style='display: none;'>" + Listdata[i].Specialization + "</td><td>" + Listdata[i].SpecializationText + "</td> <td>" + Listdata[i].PassingYearFormat + "</td>  <td>" + Listdata[i].Institute + "</td> <td>" + Listdata[i].StartDateFormat + "</td>  <td>" + Listdata[i].EndDateFormat + "</td>  <td>" + Listdata[i].Percentage + "</td><td> " + ' <input type="button" id="btnView_' + Listdata[i].Edu_PKID + '" value="View"  /> |' + ' <input type="button" id="btnEdi_' + Listdata[i].Edu_PKID + '" value="Edit"  /> |' + ' <input type="button" id="btnDel_' + Listdata[i].Edu_PKID + '" value="Delete"  /> |' + "</td></tr >";
+                            }
+                            if (txt != "") {
+                                $("#tbl_EmployeeEducation").append(txt).removeClass("hidden");
+                            }
+                        },
+                    error:
+                        function (response) {
+                            alert("Error: " + response);
+                        }
+                });
+        }
+        ///
+
+        ////////////////
+        $('#tbl_EmployeeEducation').on('click', 'input', function () {
+            document.getElementById("ddlDegreee").disabled = false;
+            document.getElementById("ddlSpecialization").disabled = false;
+            document.getElementById("PassingYear").disabled = false;
+            document.getElementById("Institute").disabled = false;
+            document.getElementById("StartDate").disabled = false;
+            document.getElementById("EndDate").disabled = false;
+            document.getElementById("Percentage").disabled = false;
+            document.getElementById("btnmainsub").disabled = false;
+            debugger;
+            //var id = table.row(this).id();
+            var row = $(this).closest('tr');
+            //var idddd = $(row).find('td').eq(0).html();
+            //var id = $("tr").find(".id")
+            var btn_idArry = $(this).attr('id');
+            var btn_Name = btn_idArry.split('_')[0];
+            var btn_id = btn_idArry.split('_')[1];
+            if (btn_Name != "btnDel") {
+
+
+                var Edu_PKID = $(this).closest('tr').find("td").eq(0).html();
+                var Employee_PKID = $(this).closest('tr').find("td").eq(1).html().trim();
+                $("#hdn_EmpEdu_PKID").val(Edu_PKID);
+                var Degreee = $(this).closest('tr').find("td").eq(1).html().trim();
+                var Specialization = $(this).closest('tr').find("td").eq(3).html().trim();
+                var PassingYear = $(this).closest('tr').find("td").eq(5).html().trim();
+                var Institute = $(this).closest('tr').find("td").eq(6).html().trim();
+                var StartDate = $(this).closest('tr').find("td").eq(7).html().trim();
+                var EndDate = $(this).closest('tr').find("td").eq(8).html().trim();
+                var Percentage = $(this).closest('tr').find("td").eq(9).html().trim();
+
+                if (Degreee != "") {
+                    $("#ddlDegreee").val(Degreee);
+                }
+
+                if (Specialization != "") {
+                    $("#ddlSpecialization").val(Specialization);
+                }
+
+                if (PassingYear != "") {
+                    $("#PassingYear").val(PassingYear);
+                }
+
+                if (Institute != "") {
+                    $("#Institute").val(Institute);
+                }
+
+                if (StartDate != "") {
+                    $("#StartDate").val(StartDate);
+                }
+
+                if (EndDate != "") {
+                    $("#EndDate").val(EndDate);
+                }
+
+                if (Percentage != "") {
+                    $("#Percentage").val(Percentage);
+                }
+            }
+            if (btn_Name == "btnDel") {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        dataType: "html",
+                        url: '/CreateEmployee/CallCommanMessageModel',
+                        //data: { jsonInput: JSON.stringify(jsonInput) },
+                        ///data: {,
+
+                        //data: { id: '' },
+                        success: function (data) {
+                            debugger;
+                            //alert(data);
+                            // $('#CommanMessageModel').html(data);
+                            $("#CommanMessageModel").show();
+                            $("#CommanMessageModel").find('.modal-title').text("Alert")
+                            $("#CommanMessageModel").find('.modal-body').text("Are you sure, do you want to delete this record?");
+
+
+                            $('#btnNo').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                            });
+                            $('#btnYes').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                                //$('#tableEmpExperience tr:eq(2)').show();
+                                debugger;
+                                $('#tbl_EmployeeEducation  tr#' + btn_id + '').remove();
+
+                                debugger;
+                                $.ajax(
+                                    {
+                                        type: 'POST',
+                                        dataType: "html",
+                                        url: '/CreateEmployee/DeleteEmployeeExperienceById',
+                                        data: { EmployeeEduPKID: btn_id },
+                                        success: function (data) {
+                                            debugger;
+                                            /*window.location.href = '/CreateEmployee/AddEmployeeExperience';*/
+
+                                            $.ajax(
+                                                {
+                                                    type: 'POST',
+                                                    dataType: "html",
+                                                    url: '/CreateEmployee/CallCommanMessageModel',
+                                                    //data: { jsonInput: JSON.stringify(jsonInput) },
+                                                    ///data: {,
+
+                                                    //data: { id: '' },
+                                                    success: function (data) {
+                                                        debugger;
+                                                        //alert(data);
+                                                        // $('#CommanMessageModel').html(data);
+                                                        $("#CommanMessageModel").show();
+                                                        $("#CommanMessageModel").find('.modal-title').text("Alert")
+                                                        $("#CommanMessageModel").find('.modal-body').text("Record deleted successfully.");
+
+                                                        $("#btnNo").text("Close");
+                                                        $("#btnYes").hide();
+                                                        $('#btnNo').click(function (e) {
+                                                            $("#CommanMessageModel").hide();
+                                                            window.location.href = '/CreateEmployee/AddEmployeeEducation';
+                                                        });
+
+                                                    },
+                                                });
+
+
+                                        },
+                                    });
+
+
+                            });
+
+                        },
+                    });
+            }
+
+            if (btn_Name == "btnEdi") {
+                document.getElementById("btnmainsub").disabled = false;
+                document.getElementById("btn_Reset").disabled = false;
+            }
+            if (btn_Name == "btnView") {
+                debugger;
+                document.getElementById("Degreee").disabled = true;
+                document.getElementById("ddlSpecialization").disabled = true;
+                document.getElementById("PassingYear").disabled = true;
+                document.getElementById("Institute").disabled = true;
+                document.getElementById("StartDate").disabled = true;
+                document.getElementById("EndDate").disabled = true;
+                document.getElementById("Percentage").disabled = true;
+                document.getElementById("btnmainsub").disabled = true;
+
+                document.getElementById("btnmainsub").disabled = true;
+                document.getElementById("btn_Reset").disabled = true;
+            }
+
+        });
+
+        //////////////////
+
+
+
+        var input = document.getElementById('Percentage');
+        input.onkeyup = input.onchange = enforceFloat;
+
+        //enforce that only a float can be inputed
+        function enforceFloat() {
+            debugger;
+            var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
+            var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
+            if (!valid.test(this.value)) {
+                var n = this.value.match(number);
+                this.value = n ? n[0] : '';
+            }
+        }
+
+
+
+        @*////
+          var hdn_message='@ViewBag.Message';
+        $("#hdn_Message").val(hdn_message);
+        debugger;
+        if ($("#hdn_Message").val() != "") {
+            debugger;
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: "html",
+                    url: '/CreateEmployee/CallCommanMessageModel',
+                    success: function (data) {
+                        debugger;
+                        $("#CommanMessageModel").show();
+                        $("#btnNo").text("Later");
+                        $("#CommanMessageModel").find('.modal-title').text("Alert")
+                        $("#CommanMessageModel").find('.modal-body').text("Employee Education Successfully, Please Fill Employee Experience Detail.");
+
+                        $('#btnNo').click(function (e) {
+                            $("#CommanMessageModel").hide();
+                        });
+                        $('#btnYes').click(function (e) {
+                            $("#CommanMessageModel").hide();
+
+                            window.location.href = '/CreateEmployee/AddEmployeeExperience';
+                        });
+
+                    },
+                });
+        }
+
+        ///*@
+
+
+        $('#btnmainsub').on('click', function () {
+            var Counter = 0;
+            if ($('#ddlDegreee').val() == "") {
+                $('#error_msg_Degree').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_Degree').hide();
+            }
+            if ($('#ddlSpecialization').val() == "") {
+                $('#error_msg_Specialization').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_Specialization').hide();
+            }
+            if ($('#PassingYear').val() == "") {
+                $('#error_msg_PassingYear').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_PassingYear').hide();
+            }
+            if ($('#Institute').val() == "") {
+                $('#error_msg_Institute').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_Institute').hide();
+            }
+            if ($('#StartDate').val() == "") {
+                $('#error_msg_StartDate').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_StartDate').hide();
+            }
+            if ($('#EndDate').val() == "") {
+                $('#error_msg_EndDate').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_EndDate').hide();
+            }
+            if ($('#Percentage').val() == "") {
+                $('#error_msg_Percentage').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_Percentage').hide();
+            }
+
+            if (Counter == 0) {
+
+            }
+            else {
+                return false;
+            }
+
+        });
+       // alert($("#hdn_Submit").val());
+        if ($("#hdn_Submit").val() == "Submit") {
+            debugger;
+            if ($("#hdn_IsValid").val() == "false") {
+
+            } else {
+                var hdn_message = '@ViewBag.Message';
+                $.ajax(
+                    {
+                        type: 'GET',
+                        dataType: "html",
+                        data: { hdn_message: hdn_message },
+                        url: '/CreateEmployee/AddEmployeeEducation',
+                        success: function (data) {
+
+                        },
+                    });
+
+
+
+        $("#hdn_Message").val(hdn_message);
+        debugger;
+                if ($("#hdn_Message").val() == "Success") {
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: "html",
+                    url: '/CreateEmployee/CallCommanMessageModel',
+                    success: function (data) {
+                        debugger;
+                        $("#CommanMessageModel").show();
+                        $("#btnNo").text("Later");
+                        $("#CommanMessageModel").find('.modal-title').text("Alert")
+                        $("#CommanMessageModel").find('.modal-body').text("Employee Education Added Successfully, Please Fill Employee Experience Detail.");
+
+                        $('#btnNo').click(function (e) {
+                            $("#CommanMessageModel").hide();
+                        });
+                        $('#btnYes').click(function (e) {
+                            $("#CommanMessageModel").hide();
+                            window.location.href = '/CreateEmployee/AddEmployeeExperience';
+                        });
+
+                    },
+                });
+                }
+
+                if ($("#hdn_Message").val() == "Updated") {
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            dataType: "html",
+                            url: '/CreateEmployee/CallCommanMessageModel',
+                            success: function (data) {
+                                debugger;
+                                $("#CommanMessageModel").show();
+                                $("#btnNo").text("Close");
+                                $("#CommanMessageModel").find('.modal-title').text("Alert")
+                                $("#CommanMessageModel").find('.modal-body').text("Employee Education Updated Successfully.");
+
+                                $('#btnNo').click(function (e) {
+                                    $("#CommanMessageModel").hide();
+                                });
+                                $('#btnYes').hide();
+                                //$('#btnYes').click(function (e) {
+                                //    $("#CommanMessageModel").hide();
+                                //    window.location.href = '/CreateEmployee/AddEmployeeExperience';
+                                //});
+
+                            },
+                        });
+                }
+
+
+        ///
+            }
+
+        }
+        var hdn_Degreee = $("#hdn_Degreee").val();
+        var hdn_Specialization = $("#hdn_Specialization").val();
+        var Degree = '@ViewBag.Degree';
 
         $("#About").click(function () {
             debugger
@@ -32,37 +435,229 @@
 
             window.location.href = '/CreateEmployee/AddEmployeeExperience';
         });
+        $("#Documents").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeDocumetns';
+        });
+        $("#Salary").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeSalary';
+        });
         $("#Education").addClass("active show");
         $("#About").removeClass("active hide");
         $("#Experience").removeClass("active hide");
+        $("#Documents").removeClass("active hide");
+        $("#Salary").removeClass("active hide");
 
 
         $("#Institute").keypress(function (evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode
-            if ((charCode <= 93 && charCode >= 65) || (charCode <= 122 && charCode >= 97) || charCode == 8) {
+            if ((charCode==32)||(charCode <= 93 && charCode >= 65) || (charCode <= 122 && charCode >= 97) || charCode == 8) {
 
                 return true;
             }
             return false;
         });
+        //$('tr input[type=button]').click(function () {
+        //    document.getElementById("ddlDegreee").disabled = false;
+        //    document.getElementById("ddlSpecialization").disabled = false;
+        //    document.getElementById("PassingYear").disabled = false;
+        //    document.getElementById("Institute").disabled = false;
+        //    document.getElementById("StartDate").disabled = false;
+        //    document.getElementById("EndDate").disabled = false;
+        //    document.getElementById("Percentage").disabled = false;
+        //    document.getElementById("btnmainsub").disabled = false;
+        //    debugger;
+        //    var btn_idArry = $(this).attr('id');
+        //    var btn_Name = btn_idArry.split('_')[0];
+        //    var btn_id = btn_idArry.split('_')[1];
 
+        //    if (btn_Name != "btnDelete") {
+
+        //        id = $(this).closest('tr').attr('id');
+        //        var Edu_PKID = $(this).closest('tr').find("td").eq(0).html().trim();
+        //        var DegreeeId = $(this).closest('tr').find("td").eq(1).html().trim();
+        //        var Degreee = $(this).closest('tr').find("td").eq(2).html().trim();
+        //        var SpecializationId = $(this).closest('tr').find("td").eq(3).html().trim();
+        //        var Specialization = $(this).closest('tr').find("td").eq(4).html().trim();
+        //        var PassingYear = $(this).closest('tr').find("td").eq(5).html().trim();
+        //        var Institute = $(this).closest('tr').find("td").eq(6).html().trim();
+        //        var StartDate = $(this).closest('tr').find("td").eq(7).html().trim();
+        //        var EndDate = $(this).closest('tr').find("td").eq(8).html().trim();
+        //        var Percentage = $(this).closest('tr').find("td").eq(9).html().trim();
+
+        //        if (DegreeeId != "") {
+        //            $("#ddlDegreee option[value=" + DegreeeId + "]").attr('selected', 'selected');
+        //        }
+        //        if (SpecializationId != "") {
+        //            $("#ddlSpecialization option[value=" + SpecializationId + "]").attr('selected', 'selected');
+        //        }
+
+        //        if (PassingYear != "") {
+        //            $("#PassingYear").val(PassingYear);
+        //        }
+
+        //        if (Institute != "") {
+        //            $("#Institute").val(Institute);
+        //        }
+        //        if (StartDate != "") {
+        //            $("#StartDate").val(StartDate);
+        //        }
+        //        if (EndDate != "") {
+        //            $("#EndDate").val(EndDate);
+        //        }
+
+        //        if (Percentage != "") {
+        //            $("#Percentage").val(Percentage);
+        //        }
+        //        if (Edu_PKID != "") {
+        //            $("#hdn_Edu_PKID").val(Edu_PKID);
+        //        }
+        //    }
+        //    if (btn_Name == "btnDelete") {
+        //        $.ajax(
+        //            {
+        //                type: 'POST',
+        //                dataType: "html",
+        //                url: '/CreateEmployee/CallCommanMessageModel',
+        //                //data: { jsonInput: JSON.stringify(jsonInput) },
+        //                ///data: {,
+
+        //                //data: { id: '' },
+        //                success: function (data) {
+        //                    debugger;
+        //                    //alert(data);
+        //                    // $('#CommanMessageModel').html(data);
+        //                    $("#CommanMessageModel").show();
+        //                    $("#CommanMessageModel").find('.modal-title').text("Alert")
+        //                    $("#CommanMessageModel").find('.modal-body').text("Are you sure, do you want to delete this record?");
+
+
+        //                    $('#btnNo').click(function (e) {
+        //                        $("#CommanMessageModel").hide();
+        //                    });
+        //                    $('#btnYes').click(function (e)
+        //                    {
+        //                        debugger;
+        //                        $("#CommanMessageModel").hide();
+        //                        //$('#tableEmpExperience tr:eq(2)').show();
+        //                        $('#tbl_EmployeeEducation  tr#' + btn_id + '').remove();
+        //                        $.ajax(
+        //                            {
+        //                                type: 'POST',
+        //                                dataType: "html",
+        //                                url: '/CreateEmployee/DeleteEmployeeEducationById',
+        //                                data: { EmployeeEduPKID: btn_id },
+        //                                success: function (data) {
+        //                                    debugger;
+        //                                    $.ajax(
+        //                                        {
+        //                                            type: 'POST',
+        //                                            dataType: "html",
+        //                                            url: '/CreateEmployee/CallCommanMessageModel',
+        //                                            success: function (data) {
+        //                                                debugger;
+        //                                                $("#CommanMessageModel").show();
+        //                                                $("#CommanMessageModel").find('.modal-title').text("Alert")
+        //                                                $("#CommanMessageModel").find('.modal-body').text("Record deleted successfully.");
+
+        //                                                $("#btnNo").text("Close");
+        //                                                $("#btnYes").hide();
+        //                                                $('#btnNo').click(function (e) {
+        //                                                    $("#CommanMessageModel").hide();
+        //                                                    window.location.href = '/CreateEmployee/AddEmployeeEducation';
+        //                                                });
+        //                                            },
+        //                                        });
+        //                                },
+        //                            });
+        //                    });
+
+        //                },
+        //            });
+        //    }
+        //    if (btn_Name == "btnView") {
+        //        document.getElementById("ddlDegreee").disabled = true;
+        //        document.getElementById("ddlSpecialization").disabled = true;
+        //        document.getElementById("PassingYear").disabled = true;
+        //        document.getElementById("Institute").disabled = true;
+        //        document.getElementById("StartDate").disabled = true;
+        //        document.getElementById("EndDate").disabled = true;
+        //        document.getElementById("Percentage").disabled = true;
+        //        document.getElementById("btnmainsub").disabled = true;
+        //    }
+
+        //});
     });
+
+    //function EditEmployee(EmployeePKID) {
+    //    debugger;
+    //    alert(2);
+    //   / var dsdfdf = $("#tbl_EmployeeEducation").closest('tr').attr('id')
+    //    var $item = $("#tbl_EmployeeEducation").closest("tr")   // Finds the closest row <tr>
+    //        .find(".nr")     // Gets a descendent with class="nr"
+    //        .text();
+    //    document.location.reload();
+    //    $.ajax(
+    //        {
+    //            type: 'POST',
+    //            dataType: "html",
+    //            data: { Edu_PKID: EmployeePKID },
+    //            url: '/CreateEmployee/EditEmployeeEducationW',
+    //            success: function (data) {
+    //                alert(1);
+    //                debugger;
+
+
+    //                if (hdn_Degreee != "") {
+    //                    $("#ddlDegreee option[value=" + hdn_Degreee + "]").attr('selected', 'selected');
+    //                }
+    //                if (hdn_Specialization != "") {
+    //                    $("#ddlSpecialization option[value=" + hdn_Specialization + "]").attr('selected', 'selected');
+    //                }
+
+
+    //            },
+    //        });
+    //}
+
+
+    $('tr input[type=button]').click(function () {
+
+        debugger;
+        id = $(this).closest('tr').attr('id');
+    });
+    function ViewEmployee(EmployeePKID) {
+
+        return false;
+    }
+
 </script>
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <input type="hidden" id="hdn_EmpEdu_PKID" value="" name="hdn_EmpEdu_PKID" />
+
+    <input type="hidden" id="hdn_Degreee" value="@ViewBag.Degree" name="hdn_Degreee" />
+    <input type="hidden" id="hdn_Specialization" value="@ViewBag.Specialization" name="hdn_Specialization" />
+    <input type="hidden" id="hdn_Submit" value="@ViewBag.Submit" name="hdn_Submit" />
+    <input type="hidden" id="hdn_IsValid" value="@ViewBag.IsValid" name="hdn_IsValid" />
+    <input type="hidden" id="hdn_Message" value="@ViewBag.Message" name="hdn_Message" />
 
 
+    <input type="hidden" id="hdn_Edu_PKID" value="" name="hdn_Edu_PKID" />
     <div class="">
-        <div class="col-md-8" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
+        <div class="col-md-12" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
             <div class="pmd-tab-active-bar" style="width: 93.125px; left: 0px;"></div><ul class="nav nav-tabs" role="tablist" style="width: 325.578px;">
-                <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
-                <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
-                <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="Experience" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
-            </ul>
+    <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
+    <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
+    <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="Experience" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
+    <li class="nav-item"><a id="Documents" style="margin: -41px 19px -64px 350px;" class="nav-link" href="/CreateEmployee/AddEmployeeDocuments" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Documents</a></li>
+    <li class="nav-item"><a id="Salary" style="margin: -41px 19px -64px 462px;" class="nav-link" href="/CreateEmployee/AddEmployeeSalary" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Salary</a></li>
+</ul>
         </div>
         <div class="row">
-            <div class="col-md-8 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
+            <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
                 <form class="form-horizontal" role="form">
                     <h5 class="card-title mb-3">Education</h5>
                     <div class="form-row">
@@ -81,9 +676,12 @@
                                         <option value="6"> Bachelor of Arts</option>
                                         <option value="7"> Bachelor of Commerce</option>
                                         <option value="8"> Masters of Commerce</option>
+                                        <option value="9"> HSC</option>
+                                        <option value="10"> SSC</option>
                                     </select>
                                 </div>
-                                @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })*@
+                                <span class="text-danger" id="error_msg_Degree" style="display:none">The Degree field is required.</span>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4">
@@ -101,9 +699,12 @@
                                         <option value="6"> Bachelor of Arts</option>
                                         <option value="7"> Bachelor of Commerce</option>
                                         <option value="8"> Masters of Commerce</option>
+                                        <option value="9"> HSC</option>
+                                        <option value="10"> SSC</option>
                                     </select>
                                 </div>
-                                @Html.ValidationMessageFor(model => model.Specialization, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(model => model.Specialization, "", new { @class = "text-danger" })*@
+                                <span class="text-danger" id="error_msg_Specialization" style="display:none">The Specialization field is required.</span>
                             </div>
                         </div>
 
@@ -113,7 +714,8 @@
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">PassingYear*</label>
                                 <input type="date" id="PassingYear" name="PassingYear" class="form-control">
-                                @Html.ValidationMessageFor(model => model.PassingYear, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(model => model.PassingYear, "", new { @class = "text-danger" })*@
+                                <span class="text-danger" id="error_msg_PassingYear" style="display:none">The PassingYear field is required.</span>
                             </div>
                         </div>
                     </div>
@@ -122,21 +724,24 @@
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label for="fn" class="col-form-label control-label">Institute</label>
                                 @Html.EditorFor(model => model.Institute, new { htmlAttributes = new { @class = "form-control", @id = "Institute", @placeholder = "Institute", @autocomplete = "off" } })
-                                @Html.ValidationMessageFor(model => model.Institute, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(model => model.Institute, "", new { @class = "text-danger" })*@
+                                <span class="text-danger" id="error_msg_Institute" style="display:none">The Institute field is required.</span>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">Start Date*</label>
                                 <input type="date" id="StartDate" name="StartDate" class="form-control">
-                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })*@
+                                <span class="text-danger" id="error_msg_StartDate" style="display:none">The StartDate field is required.</span>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">End Date*</label>
                                 <input type="date" id="EndDate" name="EndDate" class="form-control">
-                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                @*@Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })*@
+                                <span class="text-danger" id="error_msg_EndDate" style="display:none">The EndDate field is required.</span>
                             </div>
                         </div>
                     </div>
@@ -144,71 +749,92 @@
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">Percentage</label>
-                                @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", @id = "Percentage", @placeholder = "Percentage", @autocomplete = "off" } })
+                                @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", @id = "Percentage", @placeholder = "Percentage 99.99%", @autocomplete = "off" } })
                                 @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+                                <span class="text-danger" id="error_msg_Percentage" style="display:none">The Percentage field is required.</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-row">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Submit" class="btn btn-primary" />
+                            <input type="submit" style="padding:11px 67px 11px 66px;" id="btnmainsub" value="Submit" name="btnmainsub" class="btn btn-primary" />
+                            <input type="button" style="padding:11px 67px 11px 66px;" id="btn_Reset" value="Reset" name="btn_Reset" class="btn btn-warning" />
                         </div>
                     </div>
+                    <br />
 
 
                     @*----------*@
                     <div>
-                        <table class="table " id="t01">
-                            <thead>
-                            <th scope="col">Degreee</th>
-                            <th scope="col">Passing Year</th>
-                            <th scope="col">Institute</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">Percentage</th>
-                            <th scope="col">Action</th>
+                        <table class="table " id="tbl_EmployeeEducation">
+                            <tr>
+                                @*<thead>*@
+                                <th style="display:none;" scope="col">Edu_PKID</th>
+                                <th style="display:none;" scope="col">Degreee_ID</th>
+                                <th scope="col">Degreee</th>
+                                <th style="display:none;" scope="col">Specialization_ID</th>
+                                <th scope="col">Specialization</th>
+                                <th scope="col">Passing Year</th>
+                                <th scope="col">Institute</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Percentage</th>
+                                <th scope="col">Action</th>
 
-                            </thead>
+                                @*</thead>*@
+                            </tr>
                             @*@foreach (var item in ViewBag.userdetails)*@
-
-                            @if (Model.employeeEducationsModelList.Count > 0)
+                            <!--if (Model != null)
                             {
-                                foreach (var item in Model.employeeEducationsModelList)
+
+
+                                if (Model.employeeEducationsModelList.Count > 0)
                                 {
-                                    <tr>
-                                        <td>
-                                            @item.Degree
-                                        </td>
-                                        <td>
-                                            @item.Specialization
-                                        </td>
-                                        <td>
-                                            @item.PassingYear
-                                        </td>
-                                        <td>
-                                            @item.Institute
-                                        </td>
-                                        <td>
-                                            @item.StartDate
-                                        </td>
-                                        <td>
-                                            @item.EndDate
-                                        </td>
-                                        <td>
-                                            @item.Percentage
-                                        </td>
-                                        <td>
-                                            @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = item.LastEmployeePKID }, null) |
-                                            @Html.ActionLink("Edit", "EditEmployeeById", new { EmployeePKID = item.LastEmployeePKID }) |
-                                            @*@Html.ActionLink("Delete", "CallCommanMessageModel", new { EmployeePKID = item.EmployeePKID }) |*@
-                                            @*DeleteEmployeeById*@
-                                            @*@Html.ActionLink("Delete", new { onclick = "someFunction();" }) |*@
-                                            <input type="button" id="btnDelete" value="Delete" onclick="someFunction(@item.LastEmployeePKID)" /> |
-                                        </td>
-                                    </tr>
+                                    foreach (var item in Model.employeeEducationsModelList)
+                                    {
+                                        <tr id="item.Edu_PKID">
+                                            <td style="display:none;">
+                                                item.Edu_PKID
+                                            </td>
+                                            <td style="display:none;">
+                                                item.Degree
+                                            </td>
+                                            <td>
+                                                item.DegreeText
+                                            </td>
+                                            <td style="display:none;">
+                                                item.Specialization
+                                            </td>
+                                            <td>
+                                                item.SpecializationText
+                                            </td>
+                                            <td>
+                                                item.PassingYearFormat
+                                            </td>
+                                            <td>
+                                                item.Institute
+                                            </td>
+
+                                            <td>
+                                                item.StartDateFormat
+                                            </td>
+                                            <td>
+                                                item.EndDateFormat
+                                            </td>
+                                            <td>
+                                                item.Percentage
+                                            </td>
+                                            <td>
+                                                <input type="button" id="btnView_item.Edu_PKID" value="View" /> |
+                                                <input type="button" id="btnEdit_item.Edu_PKID" value="Edit" /> |-->
+                            @*<a href="#" onclick="EditEmployee(@item.Edu_PKID)">LINK</a> |*@
+                            <!--<input type="button" id="btnDelete_item.Edu_PKID" value="Delete" onclick="return false;" /> |
+                                            </td>
+                                        </tr>
+                                    }
                                 }
-                            }
+                            }-->
                         </table>
                     </div>
 

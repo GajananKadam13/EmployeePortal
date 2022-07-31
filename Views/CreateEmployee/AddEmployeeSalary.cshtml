@@ -1,0 +1,538 @@
+﻿@model EmployeePortal.Models.CT_EmployeeSalary
+
+@{
+    ViewBag.Title = "AddEmployeeSalary";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Add Employee Salary</h2>
+<nav aria-label="breadcrumb" style="margin: -17px -1px -1px  -38px;">
+    <ol class="breadcrumb pmd-breadcrumb" style="background-color: white;">
+        <li class="breadcrumb-item">
+            <a href="AddEmployeeSalary">Salary</a>
+        </li>
+        <li class="breadcrumb-item">Employees</li>
+        <li class="breadcrumb-item active" aria-current="page">Add Employee</li>
+    </ol>
+</nav>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#About").click(function () {
+            window.location.href = '/CreateEmployee/Index';
+        });
+        $("#Education").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeEducation';
+        });
+        $("#Experience").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeExperience';
+        });
+        $("#Documents").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeDocumetns';
+        });
+        $("#Salary").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeSalary';
+        });
+
+        $("#Education").removeClass("active hide");
+        $("#About").removeClass("active hide");
+        $("#Experience").removeClass("active hide");
+        $("#Documents").removeClass("active hide");
+        $("#Salary").addClass("active show");
+
+
+        //Validations Start
+        $('#btn_Submit').on('click', function () {
+            debugger;
+            var Counter = 0;
+            if ($('#BasicSalary').val() == "") {
+                $('#error_msg_BasicSalary').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_BasicSalary').hide();
+            }
+            if ($('#HouseRentAllowences').val() == "") {
+                $('#error_msg_HouseRentAllowences').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_HouseRentAllowences').hide();
+            }
+
+            if ($('#ConveyanceAllowences').val() == "") {
+                $('#error_msg_ConveyanceAllowences').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_ConveyanceAllowences').hide();
+            }
+
+            if ($('#MedicalAllowences').val() == "") {
+                $('#error_msg_MedicalAllowences').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_MedicalAllowences').hide();
+            }
+            if ($('#SpecialAllowences').val() == "") {
+                $('#error_msg_SpecialAllowences').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_SpecialAllowences').hide();
+            }
+
+            if ($('#GrossSalary').val() == "") {
+                $('#error_msg_GrossSalary').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_GrossSalary').hide();
+            }
+
+            if ($('#EPF').val() == "") {
+                $('#error_msg_EPF').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_EPF').hide();
+            }
+            if ($('#HealthInsurance_ESI').val() == "") {
+                $('#error_msg_HealthInsurance_ESI').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_HealthInsurance_ESI').hide();
+            }
+
+            if ($('#NetPay').val() == "") {
+                $('#error_msg_NetPay').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_NetPay').hide();
+            }
+
+
+            if (Counter == 0) {
+
+            }
+            else {
+                return false;
+            }
+
+
+        });
+        //Validations End
+        //
+        //Reset All Fields
+
+        $('#btn_Reset').on('click', function () {
+            debugger;
+            var Counter = 0;
+            $('#BasicSalary').val("");
+            $('#HouseRentAllowences').val("");
+            $('#ConveyanceAllowences').val("");
+            $('#MedicalAllowences').val("");
+            $('#SpecialAllowences').val("");
+            $('#GrossSalary').val("");
+            $('#EPF').val("");
+            $('#HealthInsurance_ESI').val("");
+            $('#NetPay').val("");
+            $("#HouseRentAllowences").val(0);
+        });
+        //
+
+        GetEmployeeSalaryData();
+        function GetEmployeeSalaryData() {
+            $.ajax(
+                {
+                    type: 'GET',
+                    dataType: 'JSON',
+                    url: '/CreateEmployee/GetEmployeeSalaryData',
+                    data: {},
+                    success:
+                        function (response) {
+                            // Generate HTML table.
+                            debugger;
+                            //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
+                            var Listdata = JSON.parse(response)
+                            var len = Listdata.length;
+                            var txt = "";
+                            for (var i = 0; i < len; i++) {
+
+                                txt += "<tr id=" + Listdata[i].Sal_PKID + " ><td style='display: none;'>" + Listdata[i].Sal_PKID + "</td><td style='display: none;'>" + Listdata[i].Employee_PKID + "</td><td>" + Listdata[i].BasicSalary + "</td><td>" + Listdata[i].HouseRentAllowences + "</td><td>" + Listdata[i].ConveyanceAllowences + "</td><td>" + Listdata[i].MedicalAllowences + "</td><td>" + Listdata[i].SpecialAllowences + "</td><td>" + Listdata[i].GrossSalary + "</td><td>" + Listdata[i].EPF + "</td><td>" + Listdata[i].HealthInsurance_ESI + "</td><td>" + Listdata[i].NetPay + "</td><td> " + ' <input type="button" id="btnView_' + Listdata[i].Sal_PKID + '" value="View"  /> |' + ' <input type="button" id="btnEdi_' + Listdata[i].Sal_PKID + '" value="Edit"  /> |' + ' <input type="button" id="btnDel_' + Listdata[i].Sal_PKID + '" value="Delete"  /> |' + "</td></tr >";
+                            }
+                            if (txt != "") {
+                                $("#tbl_EmployeeSalary").append(txt).removeClass("hidden");
+                            }
+                        },
+                    error:
+                        function (response) {
+                            alert("Error: " + response);
+                        }
+                });
+        }
+
+
+
+
+
+
+
+
+        //------View Table----------------------------
+        $('#tbl_EmployeeSalary').on('click', 'input', function () {
+
+            document.getElementById("BasicSalary").disabled = false;
+            document.getElementById("HouseRentAllowences").disabled = false;
+            document.getElementById("ConveyanceAllowences").disabled = false;
+            document.getElementById("MedicalAllowences").disabled = false;
+            document.getElementById("SpecialAllowences").disabled = false;
+            document.getElementById("GrossSalary").disabled = false;
+            document.getElementById("EPF").disabled = false;
+            document.getElementById("HealthInsurance_ESI").disabled = false;
+            document.getElementById("NetPay").disabled = false;
+
+
+            var row = $(this).closest('tr');
+            var btn_idArry = $(this).attr('id');
+            var btn_Name = btn_idArry.split('_')[0];
+            var btn_id = btn_idArry.split('_')[1];
+
+            if (btn_Name == "btnEdi") {
+                debugger;
+                var HDNEmpSalary_PKID = $(this).closest('tr').find("td").eq(0).html();
+                var Basic_Salary = $(this).closest('tr').find("td").eq(2).html();
+                var House_Rent_Allowences = $(this).closest('tr').find("td").eq(3).html();
+                var Conveyance_Allowences = $(this).closest('tr').find("td").eq(4).html();
+                var Medical_Allowences = $(this).closest('tr').find("td").eq(5).html();
+                var Special_Allowences = $(this).closest('tr').find("td").eq(6).html();
+                var Gross_Salary = $(this).closest('tr').find("td").eq(7).html();
+                var EPF = $(this).closest('tr').find("td").eq(8).html();
+                var HealthInsurance_ESI = $(this).closest('tr').find("td").eq(9).html();
+                var NetPay = $(this).closest('tr').find("td").eq(10).html();
+                $("#hdn_EmpSalary_PKID").val(HDNEmpSalary_PKID);
+                $("#BasicSalary").val(Basic_Salary);
+                $("#HouseRentAllowences").val(House_Rent_Allowences);
+                $("#ConveyanceAllowences").val(Conveyance_Allowences);
+                $("#MedicalAllowences").val(Medical_Allowences);
+                $("#SpecialAllowences").val(Special_Allowences);
+                $("#GrossSalary").val(Gross_Salary);
+                $("#EPF").val(EPF);
+                $("#HealthInsurance_ESI").val(HealthInsurance_ESI);
+                $("#NetPay").val(NetPay);
+                document.getElementById("btn_Submit").disabled = false;
+                document.getElementById("btn_Reset").disabled = false;
+            }
+            if (btn_Name == "btnDel") {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        dataType: "html",
+                        url: '/CreateEmployee/CallCommanMessageModel',
+                        success: function (data) {
+                            debugger;
+                            $("#CommanMessageModel").show();
+                            $("#CommanMessageModel").find('.modal-title').text("Alert")
+                            $("#CommanMessageModel").find('.modal-body').text("Are you sure, do you want to delete this record?");
+                            $('#btnNo').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                            });
+                            $('#btnYes').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                                debugger;
+                                $('#tbl_EmployeeDocuments  tr#' + btn_id + '').remove();
+
+                                debugger;
+                                $.ajax(
+                                    {
+                                        type: 'POST',
+                                        dataType: "html",
+                                        url: '/CreateEmployee/DeleteEmployeeSalaryById',
+                                        data: { Sal_PKIDEmployee: btn_id },
+                                        success: function (data) {
+                                            $.ajax(
+                                                {
+                                                    type: 'POST',
+                                                    dataType: "html",
+                                                    url: '/CreateEmployee/CallCommanMessageModel',
+                                                    success: function (data) {
+                                                        debugger;
+                                                        $("#CommanMessageModel").show();
+                                                        $("#CommanMessageModel").find('.modal-title').text("Alert")
+                                                        $("#CommanMessageModel").find('.modal-body').text("Record deleted successfully.");
+                                                        $("#btnNo").text("Close");
+                                                        $("#btnYes").hide();
+                                                        $('#btnNo').click(function (e) {
+                                                            $("#CommanMessageModel").hide();
+                                                            window.location.href = '/CreateEmployee/AddEmployeeSalary';
+                                                        });
+
+                                                    },
+                                                });
+                                        },
+                                    });
+                            });
+
+                        },
+                    });
+            }
+            if (btn_Name == "btnView") {
+                debugger;
+                document.getElementById("BasicSalary").disabled = true;
+                document.getElementById("HouseRentAllowences").disabled = true;
+                document.getElementById("ConveyanceAllowences").disabled = true;
+                document.getElementById("MedicalAllowences").disabled = true;
+                document.getElementById("SpecialAllowences").disabled = true;
+                document.getElementById("GrossSalary").disabled = true;
+                document.getElementById("EPF").disabled = true;
+                document.getElementById("HealthInsurance_ESI").disabled = true;
+                document.getElementById("NetPay").disabled = true;
+
+
+
+                var Basic_Salary = $(this).closest('tr').find("td").eq(2).html();
+                var House_Rent_Allowences = $(this).closest('tr').find("td").eq(3).html();
+                var Conveyance_Allowences = $(this).closest('tr').find("td").eq(4).html();
+                var Medical_Allowences = $(this).closest('tr').find("td").eq(5).html();
+                var Special_Allowences = $(this).closest('tr').find("td").eq(6).html();
+                var Gross_Salary = $(this).closest('tr').find("td").eq(7).html();
+                var EPF = $(this).closest('tr').find("td").eq(8).html();
+                var HealthInsurance_ESI = $(this).closest('tr').find("td").eq(9).html();
+                var NetPay = $(this).closest('tr').find("td").eq(10).html();
+
+
+                $("#hdn_EmpSalary_PKID").val(0);
+                $("#BasicSalary").val(Basic_Salary);
+                $("#HouseRentAllowences").val(House_Rent_Allowences);
+                $("#ConveyanceAllowences").val(Conveyance_Allowences);
+                $("#MedicalAllowences").val(Medical_Allowences);
+                $("#SpecialAllowences").val(Special_Allowences);
+                $("#GrossSalary").val(Gross_Salary);
+                $("#EPF").val(EPF);
+                $("#HealthInsurance_ESI").val(HealthInsurance_ESI);
+                $("#NetPay").val(NetPay);
+
+                document.getElementById("btn_Submit").disabled = true;
+                document.getElementById("btn_Reset").disabled = true;
+            }
+
+        });
+        ////////////////////////////////////
+         if ($("#hdn_Submit").val() == "Submit") {
+            debugger;
+            var hdn_message = '@ViewBag.Message';
+            $.ajax(
+                {
+                    type: 'GET',
+                    dataType: "html",
+                    data: { hdn_message: hdn_message },
+                    url: '/CreateEmployee/AddEmployeeSalary',
+                    success: function (data) {
+
+                    },
+                });
+
+            $("#hdn_Message").val(hdn_message);
+            if ($("#hdn_Message").val() == "Success") {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        dataType: "html",
+                        url: '/CreateEmployee/CallCommanMessageModel',
+                        success: function (data) {
+                            debugger;
+                            $("#CommanMessageModel").show();
+                            $("#btnNo").text("Ok");
+                            $("#CommanMessageModel").find('.modal-title').text("Alert")
+                            $("#CommanMessageModel").find('.modal-body').text("Employee Salary Details Added Successfully.");
+
+                            $('#btnNo').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                            });
+                            //$('#btnYes').click(function (e) {
+                            //    $("#CommanMessageModel").hide();
+                            //    window.location.href = '/CreateEmployee/AddEmployeeSalary';
+                            //});
+                            $('#btnYes').hide();
+                        },
+                    });
+            }
+
+            if ($("#hdn_Message").val() == "Updated") {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        dataType: "html",
+                        url: '/CreateEmployee/CallCommanMessageModel',
+                        success: function (data) {
+                            debugger;
+                            $("#CommanMessageModel").show();
+                            $("#btnNo").text("Close");
+                            $("#CommanMessageModel").find('.modal-title').text("Alert")
+                            $("#CommanMessageModel").find('.modal-body').text("Employee Salary Details Updated Successfully.");
+
+                            $('#btnNo').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                            });
+                            $('#btnYes').hide();
+                            //$('#btnYes').click(function (e) {
+                            //    $("#CommanMessageModel").hide();
+                            //    window.location.href = '/CreateEmployee/AddEmployeeExperience';
+                            //});
+
+                        },
+                    });
+            }
+        }
+
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="hdn_EmpSalary_PKID" value="" name="hdn_EmpSalary_PKID" />
+
+    <input type="hidden" id="hdn_Submit" value="@ViewBag.Submit" name="hdn_Submit" />
+    <input type="hidden" id="hdn_Message" value="@ViewBag.Message" name="hdn_Message" />
+
+    <div class="form-horizontal">
+
+       
+
+
+
+        <div class="">
+            <div class="col-md-12" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
+                <div class="pmd-tab-active-bar" style="width: 93.125px; left: 0px;"></div><ul class="nav nav-tabs" role="tablist" style="width: 325.578px;">
+                    <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
+                    <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
+                    <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="Experience" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
+                    <li class="nav-item"><a id="Documents" style="margin: -41px 19px -64px 350px;" class="nav-link" href="/CreateEmployee/AddEmployeeDocumetns" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Documents</a></li>
+                    <li class="nav-item"><a id="Salary" style="margin: -41px 19px -64px 462px;" class="nav-link" href="/CreateEmployee/AddEmployeeSalary" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Salary</a></li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
+                    <form class="form-horizontal" role="form">
+                        <h5 class="card-title mb-3">Salary</h5>
+
+
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.BasicSalary, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.BasicSalary, new { htmlAttributes = new { @class = "form-control", @placeholder = "Basic Salary" } })
+                                    <span class="text-danger" id="error_msg_BasicSalary" style="display:none">The Basic Salary field is required.</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.HouseRentAllowences, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.HouseRentAllowences, new { htmlAttributes = new { @class = "form-control", @placeholder = "House Rent Allowences" } })
+                                    <span class="text-danger" id="error_msg_HouseRentAllowences" style="display:none">The House Rent Allowences field is required.</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.ConveyanceAllowences, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.ConveyanceAllowences, new { htmlAttributes = new { @class = "form-control", @placeholder = "Conveyance Allowences" } })
+                                    <span class="text-danger" id="error_msg_ConveyanceAllowences" style="display:none">The ConveyanceAllowences field is required.</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.MedicalAllowences, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.MedicalAllowences, new { htmlAttributes = new { @class = "form-control", @placeholder = "Medical Allowences" } })
+                                    <span class="text-danger" id="error_msg_MedicalAllowences" style="display:none">The Medical Allowences field is required.</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.SpecialAllowences, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.SpecialAllowences, new { htmlAttributes = new { @class = "form-control", @placeholder = "Special Allowences" } })
+                                    <span class="text-danger" id="error_msg_SpecialAllowences" style="display:none">The SpecialAllowences field is required.</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.GrossSalary, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.GrossSalary, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gross Salary" } })
+                                    <span class="text-danger" id="error_msg_GrossSalary" style="display:none">The Gross Salary field is required.</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.EPF, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.EPF, new { htmlAttributes = new { @class = "form-control", @placeholder = "EPF" } })
+                                    <span class="text-danger" id="error_msg_EPF" style="display:none">The EPF field is required.</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.HealthInsurance_ESI, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.HealthInsurance_ESI, new { htmlAttributes = new { @class = "form-control", @placeholder = "HealthInsurance ESI" } })
+                                    <span class="text-danger" id="error_msg_HealthInsurance_ESI" style="display:none">The HealthInsurance ESI field is required.</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                    @Html.LabelFor(model => model.NetPay, htmlAttributes: new { @class = "control-label " })
+                                    @Html.EditorFor(model => model.NetPay, new { htmlAttributes = new { @class = "form-control", @placeholder = "NetPay" } })
+                                    <span class="text-danger" id="error_msg_NetPay" style="display:none">The NetPay field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" style="padding:11px 67px 11px 66px;" id="btn_Submit" value="Submit" name="btn_Submit" class="btn btn-primary" />
+                                <input type="button" style="padding:11px 67px 11px 66px;" id="btn_Reset" value="Reset" name="btn_Reset" class="btn btn-warning" />
+                            </div>
+                        </div>
+                        <br />
+                        @*----------*@
+                        <div>
+                            <table class="table " id="tbl_EmployeeSalary">
+                                <tr>
+                                    <th style="display:none;" scope="col">Sal_PKID</th>
+                                    <th style="display:none;" scope="col">Employee_PKID</th>
+                                    <th scope="col">Basic Salary</th>
+                                    <th scope="col">House Rent Allowences</th>
+                                    <th scope="col">Conveyance Allowences</th>
+                                    <th scope="col">Medical Allowences</th>
+                                    <th scope="col">Special Allowences</th>
+                                    <th scope="col">Gross Salary</th>
+                                    <th scope="col">EPF</th>
+                                    <th scope="col">HealthInsurance ESI</th>
+                                    <th scope="col">Net Pay</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+}
+
+

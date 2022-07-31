@@ -1,4 +1,6 @@
-﻿@model EmployeePortal.Models.CT_CreateEmployee
+﻿@*@model EmployeePortal.Models.CT_CreateEmployee*@
+@using PagedList.Mvc
+@model  PagedList.IPagedList<EmployeePortal.Models.CT_CreateEmployee>
 
 @{
     ViewBag.Title = "ViewEmployee";
@@ -9,19 +11,92 @@
 <style>
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        if ($("#hdn_txt_Search").val() != "") {
+            debugger;
+            $("#txt_Search").val($("#hdn_txt_Search").val());
+            document.getElementById("txt_Search").focus();
+        }
+        if (localStorage.getItem('searchEmployeeKey') != "") {
+            debugger;
+            $("#txt_Search").val(localStorage.getItem('searchEmployeeKey'));
+            $("#hdn_txt_Search").val(localStorage.getItem('searchEmployeeKey'));
+            document.getElementById("txt_Search").focus();
+        }
+        //$("#btnSearch").onclick(function () {
+        ////function Search() {
+        //    debugger;
+        //    var searchEmployee = this.value;
+
+        //    $("#tbl_ViewEmployee tbody").remove();
+
+        //    debugger;
+        //    //document.location.reload();
+
+        //    $("#hdn_txt_Search").val(searchEmployee);
+
+        //    $.ajax(
+        //        {
+        //            type: 'POST',
+        //            dataType: "html",
+        //            data: { searchEmployee: searchEmployee },
+        //            url: '/CreateEmployee/SearchEmployee',
+        //            success: function (data) {
+
+        //            },
+        //        });
+
+        //   // }
+        //});
+    });
+    function Search() {
+        debugger;
+        var searchEmployee = $("#txt_Search").val();
+        $("#tbl_ViewEmployee tbody").remove();
+        $("#hdn_txt_Search").val(searchEmployee);
+
+        localStorage.setItem("searchEmployeeKey", searchEmployee);
+        debugger;
+        //document.location.reload();
+        window.location.href = '/CreateEmployee/ViewEmployee',
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: "html",
+                    data: { searchEmployee: searchEmployee },
+                    url: '/CreateEmployee/SearchEmployee',
+                    success: function (data) {
+
+                    },
+                });
+
+    }
+</script>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <input type="hidden" id="hdn_txt_Search" value="@ViewBag.searchEmployee" name="hdn_txt_Search" />
+    <input type="button" id="btnSearch" value="Search" style="margin:10px 7px -47px 368px;" onclick="Search()" class="btn btn-primary" />
+    <input type="hidden" id="hdn_Message" value="@ViewBag.Message" name="hdn_Message" />
+    <input type="hidden" id="hdn_Submit" value="@ViewBag.Submit" name="hdn_Submit" />
 
     <div class="form-horizontal">
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                <input autocomplete="off" class="form-control text-box single-line" data-val="true" id="txt_Search" name="txt_Search" placeholder="Search by EmailId" type="text" value="">
 
+            </div>
+        </div>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
 
             <div>
-                <table class="table " id="t01">
+                <table class="table table-striped" id="tbl_ViewEmployee">
                     <thead>
                     <th scope="col">First Name</th>
                     <th scope="col">Middle Name</th>
@@ -34,44 +109,81 @@
 
                     </thead>
                     @*@foreach (var item in ViewBag.userdetails)*@
-                    @foreach (var item in Model.CT_CreateEmployeelist)
+                    @*@foreach (var item in Model.CT_CreateEmployeelist)*@
+                    @for (int i = 0; i < Model.Count; i++)
                     {
 
                         <tr>
+                            @*<td>
+                                    @item.FirstName
+                                </td>
+                                <td>
+                                    @item.MiddleName
+                                </td>
+                                <td>
+                                    @item.LastName
+                                </td>
+                                <td>
+                                    @item.CompanyEmail
+                                </td>
+                                <td>
+                                    @item.DateOfBirth
+                                </td>
+                                <td>
+                                    @item.Gender
+                                </td>
+                                <td>
+                                    @item.Status
+                                </td>*@
                             <td>
-                                @item.FirstName
+                                @Model[i].FirstName
                             </td>
                             <td>
-                                @item.MiddleName
+                                @Model[i].MiddleName
                             </td>
                             <td>
-                                @item.LastName
+                                @Model[i].LastName
                             </td>
                             <td>
-                                @item.CompanyEmail
+                                @Model[i].CompanyEmail
                             </td>
                             <td>
-                                @item.DateOfBirth
+                                @Model[i].DateOfBirth
                             </td>
                             <td>
-                                @item.Gender
+                                @Model[i].Gender
                             </td>
                             <td>
-                                @item.Status
+                                @Model[i].Status
                             </td>
                             <td>
-                                @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = item.EmployeePKID }, null) |
-                                @Html.ActionLink("Edit", "EditEmployeeById", new { EmployeePKID = item.EmployeePKID }) |
+                                @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = Model[i].EmployeePKID }, null) |
+                                @Html.ActionLink("Edit", "EditEmployeeById", new { EmployeePKID = Model[i].EmployeePKID }) |
                                 @*@Html.ActionLink("Delete", "CallCommanMessageModel", new { EmployeePKID = item.EmployeePKID }) |*@
                                 @*DeleteEmployeeById*@
                                 @*@Html.ActionLink("Delete", new { onclick = "someFunction();" }) |*@
-                                <input type="button" id="btnDelete" value="Delete" onclick="someFunction(@item.EmployeePKID)" /> |
+                                <input type="button" id="btnDelete" value="Delete" onclick="someFunction(@Model[i].EmployeePKID)" /> |
                             </td>
                         </tr>
                     }
 
                 </table>
+
             </div>
+            <div id="container" style="margin-left: 20px">
+                <p></p>
+                <p></p>
+
+                <div class="pagination" style="margin-left: 400px; ">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                    of @Model.PageCount  &nbsp; &nbsp; &nbsp; &nbsp;
+                    <p> @Html.PagedListPager(Model, page => Url.Action("ViewEmployee", new { page }))</p>
+                </div>
+                <div>
+
+                </div>
+            </div>
+
         </div>
 
         <div class="form-group">
@@ -83,32 +195,30 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-       
+
 
     });
 
     function someFunction(EmployeePKID) {
-
-        alert(4);
-       // $("#CommanMessageModel").show();
+        // $("#CommanMessageModel").show();
         //debugger;
         //$.ajax({
         //    url: "/CreateEmployee/CallCommanMessageModel",
         //    success: function (result) {
-              
+
         //    }
         //});
 
 
 
         $.ajax(
-            {                                                                                                               
+            {
                 type: 'POST',
                 dataType: "html",
                 url: '/CreateEmployee/CallCommanMessageModel',
                 //data: { jsonInput: JSON.stringify(jsonInput) },
                 ///data: {,
-               
+
                 //data: { id: '' },
                 success: function (data) {
                     debugger;
@@ -118,7 +228,7 @@
                     $("#CommanMessageModel").find('.modal-title').text("Alert")
                     $("#CommanMessageModel").find('.modal-body').text("Are you sure, do you want to delete this record?");
 
-                   
+
                     $('#btnNo').click(function (e) {
                         $("#CommanMessageModel").hide();
                     });
@@ -133,16 +243,13 @@
                                 data: { EmployeePKID: EmployeePKID },
                                 success: function (data) {
                                     debugger;
-                                    
+
                                 },
                             });
 
 
-
-
-
                     });
-                    
+
                 },
             });
     }

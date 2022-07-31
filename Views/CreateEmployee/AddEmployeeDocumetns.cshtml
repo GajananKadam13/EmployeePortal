@@ -1,0 +1,425 @@
+﻿@model EmployeePortal.Models.CT_EmployeeDocuments
+
+@{
+    ViewBag.Title = "AddEmployeeDocumetns";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Add Employee Documents</h2>
+<nav aria-label="breadcrumb" style="margin: -17px -1px -1px  -38px;">
+    <ol class="breadcrumb pmd-breadcrumb" style="background-color: white;">
+        <li class="breadcrumb-item">
+            <a href="AddEmployeeDocumetns">Documents</a>
+        </li>
+        <li class="breadcrumb-item">Employees</li>
+        <li class="breadcrumb-item active" aria-current="page">Add Employee</li>
+    </ol>
+</nav>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        $('#btn_Reset').on('click', function () {
+            $('#DocumentName').val("");
+            $('#EmployeeDocumentsFile').val("");
+            $("#hdn_EmpDocuments_PKID").val(0);
+        });
+
+
+        $("#About").click(function () {
+            window.location.href = '/CreateEmployee/Index';
+        });
+        $("#Education").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeEducation';
+        });
+        $("#Experience").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeExperience';
+        });
+        $("#Documents").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeDocumetns';
+        });
+        $("#Salary").click(function () {
+            window.location.href = '/CreateEmployee/AddEmployeeSalary';
+        });
+
+        $("#Education").removeClass("active hide");
+        $("#About").removeClass("active hide");
+        $("#Experience").removeClass("active hide");
+        $("#Documents").addClass("active show");
+        $("#Salary").removeClass("active hide");
+
+
+        GetEmployeeDocumentsData();
+        function GetEmployeeDocumentsData() {
+            $.ajax(
+                {
+                    type: 'GET',
+                    dataType: 'JSON',
+                    url: '/CreateEmployee/GetEmployeeDocumetnsData',
+                    data: {},
+                    success:
+                        function (response) {
+                            // Generate HTML table.
+                            debugger;
+                            //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
+                            var Listdata = JSON.parse(response)
+                            var len = Listdata.length;
+                            var txt = "";
+                            for (var i = 0; i < len; i++) {
+
+                                txt += "<tr id=" + Listdata[i].Doc_PKID + " ><td style='display: none;'>" + Listdata[i].Doc_PKID + "</td><td style='display: none;'>" + Listdata[i].Employee_PKID + "</td><td>" + Listdata[i].DocumentName + "</td><td> " + ' <input type="button" id="btnView_' + Listdata[i].Doc_PKID + '" value="View"  /> |' + ' <input type="button" id="btnEdi_' + Listdata[i].Doc_PKID + '" value="Edit"  /> |' + ' <input type="button" id="btnDel_' + Listdata[i].Doc_PKID + '" value="Delete"  /> |' + "</td></tr >";
+                            }
+                            if (txt != "") {
+                                $("#tbl_EmployeeDocuments").append(txt).removeClass("hidden");
+                            }
+                        },
+                    error:
+                        function (response) {
+                            alert("Error: " + response);
+                        }
+                });
+        }
+
+
+
+
+        //------View Table----------------------------
+        $('#tbl_EmployeeDocuments').on('click', 'input', function () {
+            document.getElementById("DocumentName").disabled = false;
+            document.getElementById("EmployeeDocumentsFile").disabled = false;
+
+            debugger;
+            var row = $(this).closest('tr');
+            var btn_idArry = $(this).attr('id');
+            var btn_Name = btn_idArry.split('_')[0];
+            var btn_id = btn_idArry.split('_')[1];
+            if (btn_Name == "btnView") {
+                var Doc_PKID = $(this).closest('tr').find("td").eq(0).html();
+                var Employee_PKID = $(this).closest('tr').find("td").eq(1).html().trim();
+                $("#hdn_EmpDocuments_PKID").val(Doc_PKID);
+                var DocumentName = $(this).closest('tr').find("td").eq(2).html().trim();
+                if (DocumentName != "") {
+
+                    $("#DocumentName").val(DocumentName);
+                    $("#Img_EmployeeDoc").attr("src", "/UploadsDocuments/" + DocumentName + "");
+                    $("#lbl_Img_EmployeeDoc").text(DocumentName);
+                    document.getElementById("lbl_Img_EmployeeDoc").style.display = 'block';
+                    document.getElementById("Img_EmployeeDoc").style.display = 'block';
+
+                    $("#Img_EmployeeDoc_Download").attr("href", "/UploadsDocuments/" + DocumentName);
+                    document.getElementById("Img_EmployeeDoc_Download").style.display = 'block';
+
+                    document.getElementById("error_msg_EmployeeDocumentsFile").style.display = 'none';
+
+                }
+            }
+            if (btn_Name == "btnEdi") {
+                var Doc_PKID = $(this).closest('tr').find("td").eq(0).html();
+                var Employee_PKID = $(this).closest('tr').find("td").eq(1).html().trim();
+                $("#hdn_EmpDocuments_PKID").val(Doc_PKID);
+                var DocumentName = $(this).closest('tr').find("td").eq(2).html().trim();
+                if (DocumentName != "") {
+
+                    $("#DocumentName").val(DocumentName);
+                    $("#Img_EmployeeDoc").attr("src", "/UploadsDocuments/" + DocumentName + "");
+                    $("#lbl_Img_EmployeeDoc").text(DocumentName);
+                    document.getElementById("lbl_Img_EmployeeDoc").style.display = 'none';
+                    document.getElementById("Img_EmployeeDoc").style.display = 'none';
+
+                    $("#Img_EmployeeDoc_Download").attr("href", "/UploadsDocuments/" + DocumentName);
+                    document.getElementById("Img_EmployeeDoc_Download").style.display = 'none';
+                    document.getElementById("Img_EmployeeDoc_Download").style.display = 'none';
+
+                    $("#hdn_ConfirmDeleteOrNotImage").val(DocumentName);
+                    document.getElementById("btn_Submit").disabled = false;
+                    document.getElementById("btn_Reset").disabled = false;
+                }
+            }
+            if (btn_Name == "btnDel") {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        dataType: "html",
+                        url: '/CreateEmployee/CallCommanMessageModel',
+                        success: function (data) {
+                            debugger;
+                            $("#CommanMessageModel").show();
+                            $("#CommanMessageModel").find('.modal-title').text("Alert")
+                            $("#CommanMessageModel").find('.modal-body').text("Are you sure, do you want to delete this record?");
+                            $('#btnNo').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                            });
+                            $('#btnYes').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                                debugger;
+                                $('#tbl_EmployeeDocuments  tr#' + btn_id + '').remove();
+
+                                debugger;
+                                $.ajax(
+                                    {
+                                        type: 'POST',
+                                        dataType: "html",
+                                        url: '/CreateEmployee/DeleteEmployeeDocumetnsById',
+                                        data: { Doc_PKIDEmployee: btn_id },
+                                        success: function (data) {
+                                            $.ajax(
+                                                {
+                                                    type: 'POST',
+                                                    dataType: "html",
+                                                    url: '/CreateEmployee/CallCommanMessageModel',
+                                                    success: function (data) {
+                                                        debugger;
+                                                        $("#CommanMessageModel").show();
+                                                        $("#CommanMessageModel").find('.modal-title').text("Alert")
+                                                        $("#CommanMessageModel").find('.modal-body').text("Record deleted successfully.");
+                                                        $("#btnNo").text("Close");
+                                                        $("#btnYes").hide();
+                                                        $('#btnNo').click(function (e) {
+                                                            $("#CommanMessageModel").hide();
+                                                            window.location.href = '/CreateEmployee/AddEmployeeDocumetns';
+                                                        });
+
+                                                    },
+                                                });
+                                        },
+                                    });
+                            });
+
+                        },
+                    });
+            }
+            if (btn_Name == "btnView") {
+                debugger;
+                document.getElementById("DocumentName").disabled = true;
+                document.getElementById("EmployeeDocumentsFile").disabled = true;
+                
+                $("#hdn_ConfirmDeleteOrNotImage").val("");
+                document.getElementById("btn_Submit").disabled = true;
+                document.getElementById("btn_Reset").disabled = true;
+            }
+
+        });
+        //////
+
+
+        $("#EmployeeDocumentsFile").change(function () {
+            debugger;
+
+           var imageNameFakePath= $("#EmployeeDocumentsFile").val();
+            document.getElementById("lbl_ImgaeName").style.display = 'block';
+           var RemovedFakePath= imageNameFakePath.replace("C:\\fakepath\\", "");
+            $("#lbl_ImgaeName").text(RemovedFakePath);
+        });
+        $('#btn_Submit').on('click', function () {
+            debugger;
+            var Counter = 0;
+            if ($('#DocumentName').val() == "") {
+                $('#error_msg_DocumentName').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_DocumentName').hide();
+            }
+            if ($('#EmployeeDocumentsFile').val() == "") {
+              //  $('#error_msg_EmployeeDocumentsFile').show();
+                document.getElementById("error_msg_EmployeeDocumentsFile").style.display = 'block';
+                Counter++;
+            }
+            else {
+                $('#error_msg_EmployeeDocumentsFile').hide();
+            }
+
+            if (Counter == 0) {
+
+            }
+            else {
+                return false;
+            }
+
+
+        });
+
+
+
+
+
+          if ($("#hdn_Submit").val() == "Submit") {
+            debugger;
+            if ($("#hdn_IsValid").val() == "false") {
+
+            } else {
+                var hdn_message = '@ViewBag.Message';
+                $.ajax(
+                    {
+                        type: 'GET',
+                        dataType: "html",
+                        data: { hdn_message: hdn_message },
+                        url: '/CreateEmployee/AddEmployeeEducation',
+                        success: function (data) {
+
+                        },
+                    });
+
+
+
+        $("#hdn_Message").val(hdn_message);
+        debugger;
+                if ($("#hdn_Message").val() == "Success") {
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: "html",
+                    url: '/CreateEmployee/CallCommanMessageModel',
+                    success: function (data) {
+                        debugger;
+                        $("#CommanMessageModel").show();
+                        $("#btnNo").text("Later");
+                        $("#CommanMessageModel").find('.modal-title').text("Alert")
+                        $("#CommanMessageModel").find('.modal-body').text("Employee Documents Added Successfully, Please Fill Employee Salary Detail.");
+
+                        $('#btnNo').click(function (e) {
+                            $("#CommanMessageModel").hide();
+                        });
+                        $('#btnYes').click(function (e) {
+                            $("#CommanMessageModel").hide();
+                            window.location.href = '/CreateEmployee/AddEmployeeSalary';
+                        });
+
+                    },
+                });
+                }
+
+                if ($("#hdn_Message").val() == "Updated") {
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            dataType: "html",
+                            url: '/CreateEmployee/CallCommanMessageModel',
+                            success: function (data) {
+                                debugger;
+                                $("#CommanMessageModel").show();
+                                $("#btnNo").text("Close");
+                                $("#CommanMessageModel").find('.modal-title').text("Alert")
+                                $("#CommanMessageModel").find('.modal-body').text("Employee Documents Updated Successfully.");
+
+                                $('#btnNo').click(function (e) {
+                                    $("#CommanMessageModel").hide();
+                                });
+                                $('#btnYes').hide();
+                                //$('#btnYes').click(function (e) {
+                                //    $("#CommanMessageModel").hide();
+                                //    window.location.href = '/CreateEmployee/AddEmployeeExperience';
+                                //});
+
+                            },
+                        });
+                }
+
+
+        ///
+            }
+
+        }
+    });
+
+</script>
+
+@using (Html.BeginForm("AddEmployeeDocumetns", "CreateEmployee", new { id = "AddEmployeeDocumetns" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="hdn_EmpDocuments_PKID" value="" name="hdn_EmpDocuments_PKID" />
+
+    <input type="hidden" id="hdn_Submit" value="@ViewBag.Submit" name="hdn_Submit" />
+    <input type="hidden" id="hdn_Message" value="@ViewBag.Message" name="hdn_Message" />
+
+    <input type="hidden" id="hdn_ConfirmDeleteOrNotImage" value="@ViewBag.hdn_ConfirmDeleteOrNotImage" name="hdn_ConfirmDeleteOrNotImage" />
+
+    <div class="">
+        <div class="col-md-12" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
+            <div class="pmd-tab-active-bar" style="width: 93.125px; left: 0px;"></div><ul class="nav nav-tabs" role="tablist" style="width: 325.578px;">
+                <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
+                <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
+                <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="Experience" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
+                <li class="nav-item"><a id="Documents" style="margin: -41px 19px -64px 350px;" class="nav-link" href="/CreateEmployee/AddEmployeeDocumetns" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Documents</a></li>
+                <li class="nav-item"><a id="Salary" style="margin: -41px 19px -64px 462px;" class="nav-link" href="/CreateEmployee/AddEmployeeSalary" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Salary</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
+                <form class="form-horizontal" role="form">
+                    <h5 class="card-title mb-3">Documents</h5>
+
+                    <div class="form-row">
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                <img style="display:none;" alt="EmployeeDocument-Pic" id="Img_EmployeeDoc" class="profile-pic rounded-square  pmd-z-depth-light-2-1 mr-md-4 mr-sm-0" height="400" width="400">
+                                <a href="" style="display: none; font-weight: bold;" id="Img_EmployeeDoc_Download" download> Download File </a><label id="lbl_Img_EmployeeDoc" class="col-form-label control-label" style="color: red; font-weight: bold; display: none; margin: -33px 1px -6px 124px">File Name</label>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                <label for="fn" class="col-form-label control-label">File Name</label>
+                                @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control", @id = "DocumentName", @placeholder = "e.g - EducationCertificate / ExperienceLetter", @autocomplete = "off" } })
+                                @*@Html.ValidationMessageFor(model => model.Institute, "", new { @class = "text-danger" })*@
+                                <span class="text-danger" id="error_msg_DocumentName" style="display:none">The DocumentName field is required.</span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                <label for="fn" class="col-form-label control-label">Choose file</label>
+                                <div class="custom-file pmd-custom-file">
+                                    <label class="custom-file-label" for="EmployeeDocumentsFile">Choose file</label>
+
+                                </div>
+                                <span class="text-danger" id="error_msg_EmployeeDocumentsFile" style="display: none; margin: -6px 6px 6px 5px;">The FileName field is required.</span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                                <div class="custom-file pmd-custom-file">
+                                    <input type="file" name="EmployeeDocumentsFile" id="EmployeeDocumentsFile" class="custom-file-input"> <label style="display:none;" id="lbl_ImgaeName">....</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" style="padding:11px 67px 11px 66px;" id="btn_Submit" value="Submit" name="btn_Submit" class="btn btn-primary" />
+                            <input type="button" style="padding:11px 67px 11px 66px;" id="btn_Reset" value="Reset" name="btn_Reset" class="btn btn-warning" />
+                        </div>
+                    </div>
+                    <br />
+                    @*----------*@
+                    <div>
+                        <table class="table " id="tbl_EmployeeDocuments">
+                            <tr>
+                                <th style="display:none;" scope="col">Doc_PKID</th>
+                                <th style="display:none;" scope="col">Employee_PKID</th>
+                                <th scope="col">DocumentName</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+}
+
+
