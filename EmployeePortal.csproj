@@ -119,6 +119,7 @@
     <Compile Include="DataLayer\DL_Base.cs" />
     <Compile Include="DataLayer\DL_CreateEmployee.cs" />
     <Compile Include="DataLayer\DL_EmployeeDetail.cs" />
+    <Compile Include="DataLayer\DL_Home.cs" />
     <Compile Include="DataLayer\DL_Login.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

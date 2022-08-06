@@ -3,11 +3,554 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
-<h2>This is Home page</h2>
-<h2>Wellcome ................</h2>
-<h2>Here we can show some information of Employee ................</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //  var EmployeePKID =@Session["EmployeePKID"];
+        debugger;
+        var CheckInOuStatus = '@ViewBag.CheckInOuStatus';
+        var InOut = CheckInOuStatus.split("_");
+        var In =InOut[0];
+        var Out =InOut[1];
+        if (In =="CheckIn") {
+            $('.GreenOnline').show();
+            $('.GreenOffline').hide();
+            $("#FunctionCheckInStatus").hide();
+        }
+        if (Out =="CheckOut") {
+            $('.GreenOnline').show();
+            $('.GreenOffline').hide();
+        }
+        if (In == "NotCheckIn" && Out == "NotCheckOut") {
+
+            $('.GreenOnline').hide();
+            $('.GreenOffline').show();
+        }
+
+        var EmpCheckInTime = '@ViewBag.EmpCheckInTime';
 
 
+       // $('#spn_EmpCheckInTime').val(EmpCheckInTime);
+
+
+    });
+</script>
+
+
+
+
+<div class="content">
+
+    <h2>Home page Here we can show some information of Employee ................</h2>
+
+
+
+    <div class=" g-3 mb-3 row" style="margin: 18px 10px 10px -116px;">
+        <div class="col-xxl-2 col-md-3">
+            <div class="h-100 card">
+                <div class="pb-0 card-header">
+                    <div class="align-items-center row">
+                        <div class="col">
+                            <h6 class="mb-0">Working Hours</h6>
+                        </div>
+                        <div class="text-right col-auto">
+                            <div class="font-sans-serif btn-reveal-trigger dropdown">
+                                <button type="button" id="react-aria8887127542-5" aria-expanded="false" data-boundary="viewport" class="text-600 btn-reveal dropdown-toggle btn btn-link btn-sm">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div><div class="pt-2 card-body">
+                    <div class="g-0 h-100 align-items-center row">
+                        <div class="d-flex align-items-center col">
+                            <img class="me-3" src="data:image/png;base64,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" alt="" height="60">
+                            <div>
+                                @*<h6 class="mb-2">New York City</h6>*@
+                                <div class="fs--2 fw-semi-bold">
+                                    <div class="text-warning">
+                                        @*Sunny*@
+                                    </div>Logged in at: @ViewBag.EmpCheckInTime
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center ps-2 col-auto">
+                            <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">  </div>
+                            <div class="fs--1 text-800">
+                                @*32° / 25°*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-2 col-md-3">
+            <div class="h-100 card">
+                <div class="pb-0 card-header">
+                    <div class="align-items-center row">
+                        <div class="col">
+                            <h6 class="mb-0">Weather</h6>
+                        </div>
+                        <div class="text-right col-auto">
+                            <div class="font-sans-serif btn-reveal-trigger dropdown">
+                                <button type="button" id="react-aria8887127542-5" aria-expanded="false" data-boundary="viewport" class="text-600 btn-reveal dropdown-toggle btn btn-link btn-sm">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div><div class="pt-2 card-body">
+                    <div class="g-0 h-100 align-items-center row">
+                        <div class="d-flex align-items-center col">
+                            <img class="me-3" src="data:image/png;base64,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" alt="" height="60">
+                            <div>
+                                <h6 class="mb-2">New York City</h6>
+                                <div class="fs--2 fw-semi-bold">
+                                    <div class="text-warning">
+                                        Sunny
+                                    </div>Precipitation: 50%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center ps-2 col-auto">
+                            <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">31°</div>
+                            <div class="fs--1 text-800">
+                                32° / 25°
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xxl-2 col-md-3">
+            <div class="h-100 card">
+                <div class="pb-0 card-header">
+                    <div class="align-items-center row">
+                        <div class="col">
+                            <h6 class="mb-0">Weather</h6>
+                        </div>
+                        <div class="text-right col-auto">
+                            <div class="font-sans-serif btn-reveal-trigger dropdown">
+                                <button type="button" id="react-aria8887127542-5" aria-expanded="false" data-boundary="viewport" class="text-600 btn-reveal dropdown-toggle btn btn-link btn-sm">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div><div class="pt-2 card-body">
+                    <div class="g-0 h-100 align-items-center row">
+                        <div class="d-flex align-items-center col">
+                            <img class="me-3" src="data:image/png;base64,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" alt="" height="60">
+                            <div>
+                                <h6 class="mb-2">New York City</h6>
+                                <div class="fs--2 fw-semi-bold">
+                                    <div class="text-warning">
+                                        Sunny
+                                    </div>Precipitation: 50%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center ps-2 col-auto">
+                            <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">31°</div>
+                            <div class="fs--1 text-800">
+                                32° / 25°
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+       
+
+        <br />
+        <div id="calender" style="height:520px;width:600px;">
+            <div class="container-fluid">
+                <header>
+                    <br />
+                    <h4 class="display-6 mb-2 text-center">Aug 2022</h4>
+                    <div class="row d-none d-sm-flex p-1 bg-dark text-white">
+                        <h5 class="col-sm p-1 text-center">Sunday</h5>
+                        <h5 class="col-sm p-1 text-center">Monday</h5>
+                        <h5 class="col-sm p-1 text-center">Tuesday</h5>
+                        <h5 class="col-sm p-1 text-center">Wednesday</h5>
+                        <h5 class="col-sm p-1 text-center">Thursday</h5>
+                        <h5 class="col-sm p-1 text-center">Friday</h5>
+                        <h5 class="col-sm p-1 text-center">Saturday</h5>
+                    </div>
+                </header>
+                <div class="row border border-right-0 border-bottom-0">
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">29</span>
+                            <small class="col d-sm-none text-center text-muted">Sunday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">30</span>
+                            <small class="col d-sm-none text-center text-muted">Monday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">31</span>
+                            <small class="col d-sm-none text-center text-muted">Tuesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">1</span>
+                            <small class="col d-sm-none text-center text-muted">Wednesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">2</span>
+                            <small class="col d-sm-none text-center text-muted">Thursday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">3</span>
+                            <small class="col d-sm-none text-center text-muted">Friday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        @*<a class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-info text-white" title="Test Event 1">Test Event 1</a>*@
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">4</span>
+                            <small class="col d-sm-none text-center text-muted">Saturday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">5</span>
+                            <small class="col d-sm-none text-center text-muted">Sunday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">6</span>
+                            <small class="col d-sm-none text-center text-muted">Monday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">7</span>
+                            <small class="col d-sm-none text-center text-muted">Tuesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">8</span>
+                            <small class="col d-sm-none text-center text-muted">Wednesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        @*<a class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-success text-white" title="Test Event 2">Test Event 2</a>*@
+                        @*<a class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-danger text-white" title="Test Event 3">Test Event 3</a>*@
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">9</span>
+                            <small class="col d-sm-none text-center text-muted">Thursday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">10</span>
+                            <small class="col d-sm-none text-center text-muted">Friday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">11</span>
+                            <small class="col d-sm-none text-center text-muted">Saturday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">12</span>
+                            <small class="col d-sm-none text-center text-muted">Sunday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">13</span>
+                            <small class="col d-sm-none text-center text-muted">Monday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">14</span>
+                            <small class="col d-sm-none text-center text-muted">Tuesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">15</span>
+                            <small class="col d-sm-none text-center text-muted">Wednesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">16</span>
+                            <small class="col d-sm-none text-center text-muted">Thursday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">17</span>
+                            <small class="col d-sm-none text-center text-muted">Friday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">18</span>
+                            <small class="col d-sm-none text-center text-muted">Saturday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">19</span>
+                            <small class="col d-sm-none text-center text-muted">Sunday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">20</span>
+                            <small class="col d-sm-none text-center text-muted">Monday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        @*<a class="event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-primary text-white" title="Test Event with Super Duper Really Long Title">Test Event with Super Duper Really Long Title</a>*@
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">21</span>
+                            <small class="col d-sm-none text-center text-muted">Tuesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">22</span>
+                            <small class="col d-sm-none text-center text-muted">Wednesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">23</span>
+                            <small class="col d-sm-none text-center text-muted">Thursday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">24</span>
+                            <small class="col d-sm-none text-center text-muted">Friday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">25</span>
+                            <small class="col d-sm-none text-center text-muted">Saturday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">26</span>
+                            <small class="col d-sm-none text-center text-muted">Sunday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">27</span>
+                            <small class="col d-sm-none text-center text-muted">Monday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">28</span>
+                            <small class="col d-sm-none text-center text-muted">Tuesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">29</span>
+                            <small class="col d-sm-none text-center text-muted">Wednesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate ">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">30</span>
+                            <small class="col d-sm-none text-center text-muted">Thursday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">1</span>
+                            <small class="col d-sm-none text-center text-muted">Friday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">2</span>
+                            <small class="col d-sm-none text-center text-muted">Saturday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">3</span>
+                            <small class="col d-sm-none text-center text-muted">Sunday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">4</span>
+                            <small class="col d-sm-none text-center text-muted">Monday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">5</span>
+                            <small class="col d-sm-none text-center text-muted">Tuesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">6</span>
+                            <small class="col d-sm-none text-center text-muted">Wednesday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">7</span>
+                            <small class="col d-sm-none text-center text-muted">Thursday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">8</span>
+                            <small class="col d-sm-none text-center text-muted">Friday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                    <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
+                        <h5 class="row align-items-center">
+                            <span class="date col-1">9</span>
+                            <small class="col d-sm-none text-center text-muted">Saturday</small>
+                            <span class="col-1"></span>
+                        </h5>
+                        <p class="d-sm-none">No events</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style type="text/css">
+    @@media (max-width:575px) {
+    .display-4 {
+        font-size: 3.5rem;
+    }
+    .day h5 {
+        background-color: #f8f9fa;
+        padding: 3px 5px 5px;
+        margin: -8px -8px 8px -8px;
+    }
+    .date {
+        padding-left: 4px;
+    }
+}
+
+@@media (min-width: 576px) {
+    .day {
+        height: 6.2857vw;
+    }
+}
+</style>
 
 
 

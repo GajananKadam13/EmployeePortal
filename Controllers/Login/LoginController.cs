@@ -29,9 +29,30 @@ namespace EmployeePortal.Controllers.Login
                 if (dt.Rows.Count> 0 )
                 {
                     Session["EmployeePKID"] = dt.Rows[0]["EmployeePKID"].ToString();
-                    Session["EmployeeName"] = dt.Rows[0]["EmployeeName"].ToString();
+                    string [] Name=dt.Rows[0]["EmployeeName"].ToString().Split('-');
+
+                    Session["EmployeeName"] = Name[0] +' '+Name[2];
+                    string Designation = Name[5];
+                    if(Designation =="1")
+                    {
+                        Session["Designation"] = "HR";
+                    }
+                    if (Designation == "2")
+                    {
+                        Session["Designation"] = "Software Engineer";
+                    }
+                    if (Designation == "3")
+                    {
+                        Session["Designation"] = "Manager";
+                    }
+                    if (Designation == "4")
+                    {
+                        Session["Designation"] = "Security";  
+                    }
+                   
+                    Session["ProfilePictureName"] =Name[4];
                     ViewBag.Message = "Login Success";
-                    Session["LastEmployeeID"] =3;
+                    //Session["LastEmployeeID"] =3;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -41,6 +62,12 @@ namespace EmployeePortal.Controllers.Login
             }
 
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index");
         }
     }
 }
