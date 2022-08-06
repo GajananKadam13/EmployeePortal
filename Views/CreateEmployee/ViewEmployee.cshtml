@@ -13,26 +13,26 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        debugger;
+        
         if ($("#hdn_txt_Search").val() != "") {
-            debugger;
+            
             $("#txt_Search").val($("#hdn_txt_Search").val());
             document.getElementById("txt_Search").focus();
         }
         if (localStorage.getItem('searchEmployeeKey') != "") {
-            debugger;
+            
             $("#txt_Search").val(localStorage.getItem('searchEmployeeKey'));
             $("#hdn_txt_Search").val(localStorage.getItem('searchEmployeeKey'));
             document.getElementById("txt_Search").focus();
         }
         //$("#btnSearch").onclick(function () {
         ////function Search() {
-        //    debugger;
+        //    
         //    var searchEmployee = this.value;
 
         //    $("#tbl_ViewEmployee tbody").remove();
 
-        //    debugger;
+        //    
         //    //document.location.reload();
 
         //    $("#hdn_txt_Search").val(searchEmployee);
@@ -52,13 +52,13 @@
         //});
     });
     function Search() {
-        debugger;
+        
         var searchEmployee = $("#txt_Search").val();
         $("#tbl_ViewEmployee tbody").remove();
         $("#hdn_txt_Search").val(searchEmployee);
 
         localStorage.setItem("searchEmployeeKey", searchEmployee);
-        debugger;
+        
         //document.location.reload();
         window.location.href = '/CreateEmployee/ViewEmployee',
 
@@ -74,6 +74,10 @@
                 });
 
     }
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 </script>
 @using (Html.BeginForm())
 {
@@ -96,75 +100,88 @@
         <div class="form-group">
 
             <div>
-                <table class="table table-striped" id="tbl_ViewEmployee">
+                <table class="table table-striped" style=" margin: 4px 5px -1px -92px;" id="tbl_ViewEmployee">
                     <thead>
                     <th scope="col">First Name</th>
-                    <th scope="col">Middle Name</th>
+
                     <th scope="col">Last Name</th>
                     <th scope="col">EmailId</th>
                     <th scope="col">DOB</th>
                     <th scope="col">Gender</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
 
+                    <th data-toggle="tooltip"  title="Education Status!" scope="col">EDU Status </th>
+                    <th data-toggle="tooltip"  title="Experience Status!"  scope="col">EXP Status</th>
+                    <th  data-toggle="tooltip"  title="Documents Status!" scope="col">DOC Status</th>
+                    <th data-toggle="tooltip"  title="Salary Status!"  scope="col">SAL Status</th>
+
+
+                    @*<th scope="col">Status</th>*@
+                    <th scope="col">Action</th>
                     </thead>
                     @*@foreach (var item in ViewBag.userdetails)*@
                     @*@foreach (var item in Model.CT_CreateEmployeelist)*@
                     @for (int i = 0; i < Model.Count; i++)
                     {
 
-                        <tr>
-                            @*<td>
-                                    @item.FirstName
-                                </td>
-                                <td>
-                                    @item.MiddleName
-                                </td>
-                                <td>
-                                    @item.LastName
-                                </td>
-                                <td>
-                                    @item.CompanyEmail
-                                </td>
-                                <td>
-                                    @item.DateOfBirth
-                                </td>
-                                <td>
-                                    @item.Gender
-                                </td>
-                                <td>
-                                    @item.Status
-                                </td>*@
-                            <td>
-                                @Model[i].FirstName
-                            </td>
-                            <td>
-                                @Model[i].MiddleName
-                            </td>
-                            <td>
-                                @Model[i].LastName
-                            </td>
-                            <td>
-                                @Model[i].CompanyEmail
-                            </td>
-                            <td>
-                                @Model[i].DateOfBirth
-                            </td>
-                            <td>
-                                @Model[i].Gender
-                            </td>
-                            <td>
-                                @Model[i].Status
-                            </td>
-                            <td>
-                                @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = Model[i].EmployeePKID }, null) |
-                                @Html.ActionLink("Edit", "EditEmployeeById", new { EmployeePKID = Model[i].EmployeePKID }) |
-                                @*@Html.ActionLink("Delete", "CallCommanMessageModel", new { EmployeePKID = item.EmployeePKID }) |*@
-                                @*DeleteEmployeeById*@
-                                @*@Html.ActionLink("Delete", new { onclick = "someFunction();" }) |*@
-                                <input type="button" id="btnDelete" value="Delete" onclick="someFunction(@Model[i].EmployeePKID)" /> |
-                            </td>
-                        </tr>
+                <tr>
+                    @*<td>
+            @item.FirstName
+        </td>
+        <td>
+            @item.MiddleName
+        </td>
+        <td>
+            @item.LastName
+        </td>
+        <td>
+            @item.CompanyEmail
+        </td>
+        <td>
+            @item.DateOfBirth
+        </td>
+        <td>
+            @item.Gender
+        </td>
+        <td>
+            @item.Status
+        </td>*@
+                    <td>
+                        @Model[i].FirstName
+                    </td>
+
+                    <td>
+                        @Model[i].LastName
+                    </td>
+                    <td>
+                        @Model[i].CompanyEmail
+                    </td>
+                    <td>
+                        @Model[i].DateOfBirthFormat
+                    </td>
+                    <td>
+                        @Model[i].Gender
+                    </td>
+                    <td>
+                        @Model[i].EducationStatus
+                    </td>
+                    <td>
+                        @Model[i].ExperienceStatus
+                    </td>
+                    <td>
+                        @Model[i].DocumentsStatus
+                    </td>
+                    <td>
+                        @Model[i].SalaryStatus
+                    </td>
+                    @*<td>
+                        @Model[i].Status
+                    </td>*@
+                    <td>
+                        @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = Model[i].EmployeePKID }, null) |
+                        @Html.ActionLink("Edit", "EditEmployeeByIdForEdit", new { EmployeePKID = Model[i].EmployeePKID }) |
+                        <input type="button" id="btnDelete" value="Delete" onclick="someFunction(@Model[i].EmployeePKID)" /> |
+                    </td>
+                </tr>
                     }
 
                 </table>
@@ -201,7 +218,7 @@
 
     function someFunction(EmployeePKID) {
         // $("#CommanMessageModel").show();
-        //debugger;
+        //
         //$.ajax({
         //    url: "/CreateEmployee/CallCommanMessageModel",
         //    success: function (result) {
@@ -221,7 +238,7 @@
 
                 //data: { id: '' },
                 success: function (data) {
-                    debugger;
+                    
                     //alert(data);
                     // $('#CommanMessageModel').html(data);
                     $("#CommanMessageModel").show();
@@ -234,7 +251,7 @@
                     });
                     $('#btnYes').click(function (e) {
                         $("#CommanMessageModel").hide();
-                        debugger;
+                        
                         $.ajax(
                             {
                                 type: 'POST',
@@ -242,7 +259,7 @@
                                 url: '/CreateEmployee/DeleteEmployeeById',
                                 data: { EmployeePKID: EmployeePKID },
                                 success: function (data) {
-                                    debugger;
+                                    
 
                                 },
                             });

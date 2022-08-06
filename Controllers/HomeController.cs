@@ -19,10 +19,11 @@ namespace EmployeePortal.Controllers
             int EmployeePKID =Convert.ToInt32(Session["EmployeePKID"]);
             string status= Obj_dL_Home.FnEmployeeCheckInOut(EmployeePKID);
             string statusEmpCheckInTime = Obj_dL_Home.FnGetEmployeeCheckInTime(EmployeePKID);
-            
 
 
+            //----START----For Hide and show Onlien and Offline----------
             ViewBag.CheckInOuStatus= status;
+            //---END-----For Hide and show Onlien and Offline----------
             ViewBag.EmpCheckInTime = statusEmpCheckInTime;
 
 

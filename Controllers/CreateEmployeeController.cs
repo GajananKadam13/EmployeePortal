@@ -77,6 +77,12 @@ namespace EmployeePortal.Controllers
             //ModelState["Password"].Errors.Clear();
 
             //Obj_CE
+
+            //--------For Hide and show Onlien and Offline----------
+            DL_Home ObjDlHome = new DL_Home();
+            string status = ObjDlHome.FnEmployeeCheckInOut( Convert.ToInt32(Session["EmployeePKID"]));
+            ViewBag.CheckInOuStatus = status;
+
             return View();
         }
 
@@ -303,6 +309,12 @@ namespace EmployeePortal.Controllers
             List<CT_CreateEmployee> list = new List<CT_CreateEmployee>();
             //ViewBag.userdetails = objdl_CreateUser.FnGetEmployees();
             //list = TempData["SearchEmployeeData"];
+
+            //--------For Hide and show Onlien and Offline----------
+            DL_Home ObjDlHome = new DL_Home();
+            string status = ObjDlHome.FnEmployeeCheckInOut(Convert.ToInt32(Session["EmployeePKID"])); 
+            ViewBag.CheckInOuStatus = status;
+            //-------------------
             list = TempData["SearchEmployeeData"] as List<CT_CreateEmployee>;
             if (list == null)
             {
@@ -333,7 +345,17 @@ namespace EmployeePortal.Controllers
             obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
             return RedirectToAction("Index", obj);
         }
+        public ActionResult EditEmployeeByIdForEdit(int EmployeePKID)
+        {
+            CT_CreateEmployee obj = new CT_CreateEmployee();
+            Session["LastEmployeeID"] = EmployeePKID;
 
+            obj = objdl_CreateUser.FnGetEmployeesByIdForEdit(EmployeePKID);
+            return RedirectToAction("Index", obj);
+        }
+
+
+        
         public ActionResult DeleteEmployeeById(int EmployeePKID)
         {
             string returnType = "";

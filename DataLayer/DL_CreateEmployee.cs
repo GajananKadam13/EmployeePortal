@@ -103,6 +103,7 @@ namespace EmployeePortal.DataLayer
                             obj.Phone = reader["Phone"].ToString();
                             obj.PersonalEmail = reader["PersonalEmail"].ToString();
                             obj.DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"].ToString());
+                            obj.DateOfBirthFormat = Convert.ToString(obj.DateOfBirth.Date.ToString("yyyy/MM/dd"));
                             obj.Gender = reader["Gender"].ToString();
                             obj.MaritalStatus = reader["MaritalStatus"].ToString();
                             obj.Description = reader["Description"].ToString();
@@ -124,6 +125,10 @@ namespace EmployeePortal.DataLayer
                             obj.Status = reader["Status"].ToString();
                             obj.Password = reader["Password"].ToString();
 
+                            obj.EducationStatus = reader["EducationStatus"].ToString();
+                            obj.ExperienceStatus = reader["ExperienceStatus"].ToString();
+                            obj.DocumentsStatus = reader["DocumentsStatus"].ToString();
+                            obj.SalaryStatus = reader["SalaryStatus"].ToString();
 
                             CT_CreateEmployee_list.Add(obj);
                         }
@@ -171,6 +176,8 @@ namespace EmployeePortal.DataLayer
                 throw;
             }
         }
+
+
 
 
 
@@ -227,6 +234,7 @@ namespace EmployeePortal.DataLayer
                                 obj.CreatedBy = Convert.ToInt32(reader["CreatedBy"].ToString());
                                 obj.Status = reader["Status"].ToString();
                                 obj.Password = reader["Password"].ToString();
+
 
 
                                 //-----------------------------------------------------------------------------------------------
@@ -339,6 +347,79 @@ namespace EmployeePortal.DataLayer
                             obj.NetPay = reader["NetPay"].ToString();
                             //===============Salary==================================
                         }
+
+
+                        return obj;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
+
+        public CT_CreateEmployee FnGetEmployeesByIdForEdit(int EmployeePKID)
+        {
+            CT_CreateEmployee obj = new CT_CreateEmployee();
+
+            List<CT_EmployeeEducation> CT_EmployeeEducationlist = new List<CT_EmployeeEducation>();
+            List<CT_EmployeeExperience> CT_EmployeeExperiencelist = new List<CT_EmployeeExperience>();
+            List<CT_EmployeeDocuments> CT_EmployeeDocumentslist = new List<CT_EmployeeDocuments>();
+
+
+
+            try
+            {
+                using (con)
+                {
+                    using (cmd = new System.Data.SqlClient.SqlCommand("sp_GetEmployeeByIdForEdit", con))
+                    {
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@EmployeePKID", EmployeePKID);
+                        con.Open();
+                        reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            obj.EmployeePKID = Convert.ToInt32(reader["EmployeePKID"].ToString());
+                            obj.ProfilePictureName = reader["ProfilePictureName"].ToString();
+                            obj.FirstName = reader["FirstName"].ToString();
+                            obj.MiddleName = reader["MiddleName"].ToString();
+
+                            obj.LastName = reader["LastName"].ToString();
+                            obj.Phone = reader["Phone"].ToString();
+                            obj.PersonalEmail = reader["PersonalEmail"].ToString();
+                            obj.DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"].ToString());
+                            obj.Gender = reader["Gender"].ToString();
+                            obj.MaritalStatus = reader["MaritalStatus"].ToString();
+                            obj.Description = reader["Description"].ToString();
+                            obj.EmployeeEnrollmentID = reader["EmployeeEnrollmentID"].ToString();
+                            obj.DateofJoining = Convert.ToDateTime(reader["DateofJoining"].ToString());
+                            obj.CompanyEmail = reader["CompanyEmail"].ToString();
+                            obj.Department = reader["Department"].ToString();
+                            obj.Designation = reader["Designation"].ToString();
+                            obj.ReportingEmployee = reader["ReportingEmployee"].ToString();
+                            obj.TypeofEmployee = reader["TypeofEmployee"].ToString();
+                            obj.AddressLine1 = reader["AddressLine1"].ToString();
+                            obj.AddressLine2 = reader["AddressLine2"].ToString();
+                            obj.City = reader["City"].ToString();
+
+                            obj.State = reader["State"].ToString();
+                            obj.ZipCode = reader["ZipCode"].ToString();
+                            obj.Country = reader["Country"].ToString();
+                            obj.CreatedBy = Convert.ToInt32(reader["CreatedBy"].ToString());
+                            obj.Status = reader["Status"].ToString();
+                            obj.Password = reader["Password"].ToString();
+
+
+                            //-----------------------------------------------------------------------------------------------
+                        }
+
 
 
                         return obj;
@@ -836,6 +917,10 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
                             obj.Status = reader["Status"].ToString();
                             obj.Password = reader["Password"].ToString();
 
+                            obj.EducationStatus = reader["EducationStatus"].ToString();
+                            obj.ExperienceStatus = reader["ExperienceStatus"].ToString();
+                            obj.DocumentsStatus = reader["DocumentsStatus"].ToString();
+                            obj.SalaryStatus = reader["SalaryStatus"].ToString();
 
                             CT_CreateEmployee_list.Add(obj);
                         }

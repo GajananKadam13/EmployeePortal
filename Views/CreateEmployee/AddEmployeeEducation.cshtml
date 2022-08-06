@@ -48,7 +48,7 @@
                     success:
                         function (response) {
                             // Generate HTML table.
-                            debugger;
+                            
                             //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
                             var Listdata = JSON.parse(response)
                             var len = Listdata.length;
@@ -78,7 +78,7 @@
             document.getElementById("EndDate").disabled = false;
             document.getElementById("Percentage").disabled = false;
             document.getElementById("btnmainsub").disabled = false;
-            debugger;
+            
             //var id = table.row(this).id();
             var row = $(this).closest('tr');
             //var idddd = $(row).find('td').eq(0).html();
@@ -139,7 +139,7 @@
 
                         //data: { id: '' },
                         success: function (data) {
-                            debugger;
+                            
                             //alert(data);
                             // $('#CommanMessageModel').html(data);
                             $("#CommanMessageModel").show();
@@ -153,10 +153,10 @@
                             $('#btnYes').click(function (e) {
                                 $("#CommanMessageModel").hide();
                                 //$('#tableEmpExperience tr:eq(2)').show();
-                                debugger;
+                                
                                 $('#tbl_EmployeeEducation  tr#' + btn_id + '').remove();
 
-                                debugger;
+                                
                                 $.ajax(
                                     {
                                         type: 'POST',
@@ -164,7 +164,7 @@
                                         url: '/CreateEmployee/DeleteEmployeeExperienceById',
                                         data: { EmployeeEduPKID: btn_id },
                                         success: function (data) {
-                                            debugger;
+                                            
                                             /*window.location.href = '/CreateEmployee/AddEmployeeExperience';*/
 
                                             $.ajax(
@@ -177,7 +177,7 @@
 
                                                     //data: { id: '' },
                                                     success: function (data) {
-                                                        debugger;
+                                                        
                                                         //alert(data);
                                                         // $('#CommanMessageModel').html(data);
                                                         $("#CommanMessageModel").show();
@@ -210,7 +210,7 @@
                 document.getElementById("btn_Reset").disabled = false;
             }
             if (btn_Name == "btnView") {
-                debugger;
+                
                 document.getElementById("Degreee").disabled = true;
                 document.getElementById("ddlSpecialization").disabled = true;
                 document.getElementById("PassingYear").disabled = true;
@@ -235,7 +235,7 @@
 
         //enforce that only a float can be inputed
         function enforceFloat() {
-            debugger;
+            
             var valid = /^\-?\d+\.\d*$|^\-?[\d]*$/;
             var number = /\-\d+\.\d*|\-[\d]*|[\d]+\.[\d]*|[\d]+/;
             if (!valid.test(this.value)) {
@@ -249,9 +249,9 @@
         @*////
           var hdn_message='@ViewBag.Message';
         $("#hdn_Message").val(hdn_message);
-        debugger;
+        
         if ($("#hdn_Message").val() != "") {
-            debugger;
+            
 
             $.ajax(
                 {
@@ -259,7 +259,7 @@
                     dataType: "html",
                     url: '/CreateEmployee/CallCommanMessageModel',
                     success: function (data) {
-                        debugger;
+                        
                         $("#CommanMessageModel").show();
                         $("#btnNo").text("Later");
                         $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -343,7 +343,7 @@
         });
        // alert($("#hdn_Submit").val());
         if ($("#hdn_Submit").val() == "Submit") {
-            debugger;
+            
             if ($("#hdn_IsValid").val() == "false") {
 
             } else {
@@ -362,7 +362,7 @@
 
 
         $("#hdn_Message").val(hdn_message);
-        debugger;
+        
                 if ($("#hdn_Message").val() == "Success") {
             $.ajax(
                 {
@@ -370,7 +370,7 @@
                     dataType: "html",
                     url: '/CreateEmployee/CallCommanMessageModel',
                     success: function (data) {
-                        debugger;
+                        
                         $("#CommanMessageModel").show();
                         $("#btnNo").text("Later");
                         $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -395,7 +395,7 @@
                             dataType: "html",
                             url: '/CreateEmployee/CallCommanMessageModel',
                             success: function (data) {
-                                debugger;
+                                
                                 $("#CommanMessageModel").show();
                                 $("#btnNo").text("Close");
                                 $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -465,7 +465,7 @@
         //    document.getElementById("EndDate").disabled = false;
         //    document.getElementById("Percentage").disabled = false;
         //    document.getElementById("btnmainsub").disabled = false;
-        //    debugger;
+        //    
         //    var btn_idArry = $(this).attr('id');
         //    var btn_Name = btn_idArry.split('_')[0];
         //    var btn_id = btn_idArry.split('_')[1];
@@ -523,7 +523,7 @@
 
         //                //data: { id: '' },
         //                success: function (data) {
-        //                    debugger;
+        //                    
         //                    //alert(data);
         //                    // $('#CommanMessageModel').html(data);
         //                    $("#CommanMessageModel").show();
@@ -536,7 +536,7 @@
         //                    });
         //                    $('#btnYes').click(function (e)
         //                    {
-        //                        debugger;
+        //                        
         //                        $("#CommanMessageModel").hide();
         //                        //$('#tableEmpExperience tr:eq(2)').show();
         //                        $('#tbl_EmployeeEducation  tr#' + btn_id + '').remove();
@@ -547,14 +547,14 @@
         //                                url: '/CreateEmployee/DeleteEmployeeEducationById',
         //                                data: { EmployeeEduPKID: btn_id },
         //                                success: function (data) {
-        //                                    debugger;
+        //                                    
         //                                    $.ajax(
         //                                        {
         //                                            type: 'POST',
         //                                            dataType: "html",
         //                                            url: '/CreateEmployee/CallCommanMessageModel',
         //                                            success: function (data) {
-        //                                                debugger;
+        //                                                
         //                                                $("#CommanMessageModel").show();
         //                                                $("#CommanMessageModel").find('.modal-title').text("Alert")
         //                                                $("#CommanMessageModel").find('.modal-body').text("Record deleted successfully.");
@@ -589,7 +589,7 @@
     });
 
     //function EditEmployee(EmployeePKID) {
-    //    debugger;
+    //    
     //    alert(2);
     //   / var dsdfdf = $("#tbl_EmployeeEducation").closest('tr').attr('id')
     //    var $item = $("#tbl_EmployeeEducation").closest("tr")   // Finds the closest row <tr>
@@ -604,7 +604,7 @@
     //            url: '/CreateEmployee/EditEmployeeEducationW',
     //            success: function (data) {
     //                alert(1);
-    //                debugger;
+    //                
 
 
     //                if (hdn_Degreee != "") {
@@ -622,7 +622,7 @@
 
     $('tr input[type=button]').click(function () {
 
-        debugger;
+        
         id = $(this).closest('tr').attr('id');
     });
     function ViewEmployee(EmployeePKID) {

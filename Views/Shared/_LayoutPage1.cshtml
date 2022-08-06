@@ -27,16 +27,38 @@
         }
     </style>
     <script type="text/javascript">
-        //$(document).ready(function () {
-        //    $('[data-toggle="offcanvas"]').click(function () {
-        //        $("#navigation").toggleClass("hidden-xs");
-        //    });
-        //});
+        $(document).ready(function () {
+             /*---------------------------------------*/
+        debugger;
+        var CheckInOuStatus = '@ViewBag.CheckInOuStatus';
+        var InOut = CheckInOuStatus.split("_");
+        var In =InOut[0];
+        var Out =InOut[1];
+        if (In =="CheckIn") {
+            $('.GreenOnline').show();
+            $('.GreenOffline').hide();
+            $("#FunctionCheckInStatus").hide();
+        }
+        if (Out =="CheckOut") {
+            $('.GreenOnline').show();
+            $('.GreenOffline').hide();
+        }
+        if (In == "NotCheckIn" && Out == "NotCheckOut") {
+
+            $('.GreenOnline').hide();
+            $('.GreenOffline').show();
+        }
+
+        var EmpCheckInTime = '@ViewBag.EmpCheckInTime';
+        var EmpAttendanceList = '@ViewBag.EmpAttendanceList';
+
+       /*---------------------------------------------*/
+        });
 
         jQuery(function ($) {
 
             $(".sidebar-dropdown > a").click(function () {
-                debugger;
+
                 $(".sidebar-submenu").slideUp(200);
                 if ($(this).parent().hasClass("active"))
                 {
@@ -78,7 +100,7 @@
                 $("#Img_EmployeePro").attr("src", "/UploadsImages/" + ProfilePictureName + "");
 
                 //$(".sidebar-dropdown").click(function () {
-                //    debugger;
+                //
                 //    $(this).parent().addClass("active");
                 //    //$(".sidebar-dropdown").removeClass("active");
                 //    localStorage.setItem("sidebar-dropdown_active", "active");
@@ -92,7 +114,7 @@
 
             });
             $('#FunctionCheckInStatus').click(function () {
-                debugger;
+
                 var EmployeePKID = '@Session["EmployeePKID"]';
                 CheckInOutStatus = "CheckIn";
                 $.ajax(
@@ -110,7 +132,7 @@
             });
 
                 $('#FunctionCheckOutStatus').click(function () {
-                debugger;
+
                 var EmployeePKID = '@Session["EmployeePKID"]';
                 CheckInOutStatus = "CheckOut";
                 $.ajax(
@@ -178,7 +200,15 @@
                 $(".AccountMainSideBar").addClass(localStorage.getItem("Accountactive"));
                 $(".AccountSubSideBar").css("display", localStorage.getItem("Accountdisplay"));
 
+
+
+
             });
+            $("#btnLogout").click(function () {
+                window.location.href = '/Login/Logout';
+                return false;
+            })
+
             ///////
         });
 
@@ -243,7 +273,7 @@
             </form>
 
             <!-- Right Menu -->
-            
+
             <div class="nav-item dropdown hide">
                 <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action" aria-expanded="true"> Action <b class="caret"></b></a>
                 <div class="dropdown-menu hide">
@@ -251,7 +281,7 @@
                     <a href="#" class="dropdown-item"><i class="fa fa-calendar-o"></i> Calendar</a>
                     <a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> Settings</a>
                     <div class="dropdown-divider"></div>
-                    <a href="Login/Logout" class="dropdown-item"><i class="material-icons"></i> Logout</a>
+                    <a href="" id="btnLogout" class="dropdown-item"><i class="material-icons"></i> Logout</a>
                     @*href="Home/CheckIn?EmployeePKID=@Session["EmployeePKID"]&CheckInOutStatus='CheckIn'"*@
                     <a href="" id="FunctionCheckInStatus" class="dropdown-item"><i style="color:green" class="fa fa-circle"></i> Check In</a>
                     <a href="" id="FunctionCheckOutStatus" class="dropdown-item"><i style="color:Red" class="fa fa-circle"></i> Check Out</a>
@@ -261,20 +291,20 @@
 
         @*-------------*@
 
-        <nav  id="sidebar" class="sidebar-wrapper">
+        <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <div class="sidebar-brand">
                     @*<a href="#">pro sidebar</a>
-                    <div id="close-sidebar">
-                        <i class="fas fa-times"></i>
-                    </div>*@
+                        <div id="close-sidebar">
+                            <i class="fas fa-times"></i>
+                        </div>*@
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
                         @*<img class="img-responsive img-rounded" src="~/UploadsImages/@Model.ProfilePictureName"
-                        alt="User picture">*@
+                            alt="User picture">*@
                         @*<img class="img-responsive id="img_ProfilePic" img-rounded"
-                        alt="User picture">*@
+                            alt="User picture">*@
                         <img style="display:block;" alt="EmployeeDocument-Pic" id="Img_EmployeePro" class="profile-pic rounded-square  pmd-z-depth-light-2-1 mr-md-4 mr-sm-0" height="400" width="400">
                     </div>
                     <div class="user-info">
@@ -285,26 +315,26 @@
                             </strong>
                         </span>
                         <span class=" GeneralExtraColor">@Session["Designation"]</span>  @*/user-role/*@
-                    <span class="user-status GeneralExtraColor">
-                        <i class="fa fa-circle GreenOnline"></i>
-                        <span class="GeneralExtraColor GreenOnline">Online</span>
-                        <i  style='color: red' class="fa fa-circle GreenOffline"></i>
-                        <span class="GeneralExtraColor GreenOffline">Offline</span>
+                        <span class="user-status GeneralExtraColor">
+                            <i class="fa fa-circle GreenOnline"></i>
+                            <span class="GeneralExtraColor GreenOnline">Online</span>
+                            <i style='color: red' class="fa fa-circle GreenOffline"></i>
+                            <span class="GeneralExtraColor GreenOffline">Offline</span>
 
-                    </span>
+                        </span>
                     </div>
                 </div>
                 <!-- sidebar-header  -->
                 <div class="sidebar-search">
                     <div>
                         @*<div class="input-group">
-                            <input type="text" class="form-control search-menu" placeholder="Search..." style="margin: 0px -18px 0px 0px; /* padding: 11px; */ width: 181px;">
-                            <div class="input-group-append">
-                                <span class="input-group-text" style="margin: 0px 5px 0px 18px; padding: 11px;" >
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                        </div>*@
+                                <input type="text" class="form-control search-menu" placeholder="Search..." style="margin: 0px -18px 0px 0px; /* padding: 11px; */ width: 181px;">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" style="margin: 0px 5px 0px 18px; padding: 11px;" >
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>*@
                         <div class="input-group">
                             <input type="text" class="form-control search-menu" placeholder="Search...">
                             <div class="input-group-append">
@@ -322,51 +352,51 @@
                             <span>General</span>
                         </li>
                         @*<li class="sidebar-dropdown">
-            <a href="#">
-                <i class="fa fa-tachometer-alt GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Dashboard</span>
-                <span class="badge badge-pill badge-warning ">New</span>
-            </a>
-            <div class="sidebar-submenu">
-                <ul>
-                    <li>
-                        <a href="#">
-                            Dashboard 1
-                            <span class="badge badge-pill badge-success ">Pro</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">Dashboard 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Dashboard 3</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="sidebar-dropdown">
-            <a href="#">
-                <i class="fa fa-shopping-cart GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">E-commerce</span>
-                <span class="badge badge-pill badge-danger">3</span>
-            </a>
-            <div class="sidebar-submenu">
-                <ul>
-                    <li>
-                        <a href="#">
-                            Products
+                                <a href="#">
+                                    <i class="fa fa-tachometer-alt GeneralExtraColor"></i>
+                                    <span class="GeneralExtraColor">Dashboard</span>
+                                    <span class="badge badge-pill badge-warning ">New</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                Dashboard 1
+                                                <span class="badge badge-pill badge-success ">Pro</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dashboard 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dashboard 3</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="fa fa-shopping-cart GeneralExtraColor"></i>
+                                    <span class="GeneralExtraColor">E-commerce</span>
+                                    <span class="badge badge-pill badge-danger">3</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                Products
 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">Orders</a>
-                    </li>
-                    <li>
-                        <a href="#">Credit cart</a>
-                    </li>
-                </ul>
-            </div>
-        </li>*@
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Orders</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Credit cart</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>*@
                         <li class="sidebar-dropdown DashboardMainSideBar">
                             <a href="#">
                                 <i class="far fa-gem GeneralExtraColor"></i>
@@ -399,8 +429,8 @@
                                     </li>
 
                                     @*<li>
-                        <a href="#">Forms</a>
-                    </li>*@
+                                            <a href="#">Forms</a>
+                                        </li>*@
                                 </ul>
                             </div>
                         </li>
@@ -418,65 +448,65 @@
                             </div>
                         </li>
                         @*<li class="sidebar-dropdown">
-            <a href="#">
-                <i class="fa fa-chart-line GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Charts</span>
-            </a>
-            <div class="sidebar-submenu">
-                <ul>
-                    <li>
-                        <a href="#">Pie chart</a>
-                    </li>
-                    <li>
-                        <a href="#">Line chart</a>
-                    </li>
-                    <li>
-                        <a href="#">Bar chart</a>
-                    </li>
-                    <li>
-                        <a href="#">Histogram</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="sidebar-dropdown">
-            <a href="#">
-                <i class="fa fa-globe GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Maps</span>
-            </a>
-            <div class="sidebar-submenu">
-                <ul>
-                    <li>
-                        <a href="#">Google maps</a>
-                    </li>
-                    <li>
-                        <a href="#">Open street map</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="header-menu">
-            <span class="GeneralExtraColor">Extra</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-book GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Documentation</span>
-                <span class="badge badge-pill badge-primary">Beta</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-calendar GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Calendar</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-folder GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Examples</span>
-            </a>
-        </li>*@
+                                <a href="#">
+                                    <i class="fa fa-chart-line GeneralExtraColor"></i>
+                                    <span class="GeneralExtraColor">Charts</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Pie chart</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Line chart</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Bar chart</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Histogram</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="fa fa-globe GeneralExtraColor"></i>
+                                    <span class="GeneralExtraColor">Maps</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Google maps</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Open street map</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="header-menu">
+                                <span class="GeneralExtraColor">Extra</span>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-book GeneralExtraColor"></i>
+                                    <span class="GeneralExtraColor">Documentation</span>
+                                    <span class="badge badge-pill badge-primary">Beta</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-calendar GeneralExtraColor"></i>
+                                    <span class="GeneralExtraColor">Calendar</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-folder GeneralExtraColor"></i>
+                                    <span class="GeneralExtraColor">Examples</span>
+                                </a>
+                            </li>*@
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
@@ -504,63 +534,63 @@
         <main class="page-content">
             <div style=" margin: 48px 0px 0px 48px;" class="container-fluid">
                 @*<h2>Pro Sidebar</h2>
-                <hr>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4 framework.</p>
-                        <p>
-                            You can find the complete code on <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
-                                Github
-                            </a>, it contains more themes and background image option
-                        </p>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <iframe src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=pro-sidebar-template&type=star&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="30px"></iframe>
-                        <iframe src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=pro-sidebar-template&type=fork&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="30px"></iframe>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <div class="alert alert-success" role="alert">
-                            <h4 class="alert-heading">New !</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4 framework.</p>
                             <p>
-                                New react pro sidebar library is now available on <a href="https://www.npmjs.com/package/react-pro-sidebar" target="_blank">npm</a> <a href="https://github.com/azouaoui-med/react-pro-sidebar" target="_blank">
-                                    <img alt="GitHub stars" src="https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social" />
-                                </a>
+                                You can find the complete code on <a href="https://github.com/azouaoui-med/pro-sidebar-template" target="_blank">
+                                    Github
+                                </a>, it contains more themes and background image option
                             </p>
-                            <a href="https://github.com/azouaoui-med/react-pro-sidebar" target="_blank" class="btn btn-sm btn-primary mr-2">
-                                Github
-                            </a>
-                            <a href="https://azouaoui-med.github.io/react-pro-sidebar" target="_blank" class="btn btn-sm btn-success">
-                                Demo
-                            </a>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <iframe src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=pro-sidebar-template&type=star&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="30px"></iframe>
+                            <iframe src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=pro-sidebar-template&type=fork&count=true&size=small" frameborder="0" scrolling="0" width="90px" height="30px"></iframe>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="alert alert-success" role="alert">
+                                <h4 class="alert-heading">New !</h4>
+                                <p>
+                                    New react pro sidebar library is now available on <a href="https://www.npmjs.com/package/react-pro-sidebar" target="_blank">npm</a> <a href="https://github.com/azouaoui-med/react-pro-sidebar" target="_blank">
+                                        <img alt="GitHub stars" src="https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social" />
+                                    </a>
+                                </p>
+                                <a href="https://github.com/azouaoui-med/react-pro-sidebar" target="_blank" class="btn btn-sm btn-primary mr-2">
+                                    Github
+                                </a>
+                                <a href="https://azouaoui-med.github.io/react-pro-sidebar" target="_blank" class="btn btn-sm btn-success">
+                                    Demo
+                                </a>
+
+                            </div>
 
                         </div>
-
                     </div>
-                </div>
-                <h5>More templates</h5>
-                <hr>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                        <div class="card rounded-0 p-0 shadow-sm">
-                            <img src="https://user-images.githubusercontent.com/25878302/58369568-a49b2480-7efc-11e9-9ca9-2be44afacda1.png" class="card-img-top rounded-0" alt="Angular pro sidebar">
-                            <div class="card-body text-center">
-                                <h6 class="card-title">Angular Pro Sidebar</h6>
-                                <a href="https://github.com/azouaoui-med/angular-pro-sidebar" target="_blank" class="btn btn-primary btn-sm">Github</a>
-                                <a href="https://azouaoui-med.github.io/angular-pro-sidebar/demo/" target="_blank" class="btn btn-success btn-sm">Preview</a>
+                    <h5>More templates</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="card rounded-0 p-0 shadow-sm">
+                                <img src="https://user-images.githubusercontent.com/25878302/58369568-a49b2480-7efc-11e9-9ca9-2be44afacda1.png" class="card-img-top rounded-0" alt="Angular pro sidebar">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title">Angular Pro Sidebar</h6>
+                                    <a href="https://github.com/azouaoui-med/angular-pro-sidebar" target="_blank" class="btn btn-primary btn-sm">Github</a>
+                                    <a href="https://azouaoui-med.github.io/angular-pro-sidebar/demo/" target="_blank" class="btn btn-success btn-sm">Preview</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                        <div class="card rounded-0 p-0 shadow-sm">
-                            <img src="https://user-images.githubusercontent.com/25878302/58369258-33f20900-7ef8-11e9-8ff3-b277cb7ed7b4.PNG" class="card-img-top rounded-0" alt="Angular pro sidebar">
-                            <div class="card-body text-center">
-                                <h6 class="card-title">Angular Dashboard</h6>
-                                <a href="https://github.com/azouaoui-med/lightning-admin-angular" target="_blank" class="btn btn-primary btn-sm">Github</a>
-                                <a href="https://azouaoui-med.github.io/lightning-admin-angular/demo/" target="_blank" class="btn btn-success btn-sm">Preview</a>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="card rounded-0 p-0 shadow-sm">
+                                <img src="https://user-images.githubusercontent.com/25878302/58369258-33f20900-7ef8-11e9-8ff3-b277cb7ed7b4.PNG" class="card-img-top rounded-0" alt="Angular pro sidebar">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title">Angular Dashboard</h6>
+                                    <a href="https://github.com/azouaoui-med/lightning-admin-angular" target="_blank" class="btn btn-primary btn-sm">Github</a>
+                                    <a href="https://azouaoui-med.github.io/lightning-admin-angular/demo/" target="_blank" class="btn btn-success btn-sm">Preview</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>*@
+                    </div>*@
 
                 @RenderBody()
                 <footer class="text-center">
@@ -572,13 +602,13 @@
                         </small>
                     </div>
                     @*<div>
-                        <a href="https://github.com/azouaoui-med" target="_blank">
-                            <img alt="GitHub followers" src="https://img.shields.io/github/followers/azouaoui-med?label=github&style=social" />
-                        </a>
-                        <a href="https://twitter.com/azouaoui_med" target="_blank">
-                            <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/azouaoui_med?label=twitter&style=social" />
-                        </a>
-                    </div>*@
+                            <a href="https://github.com/azouaoui-med" target="_blank">
+                                <img alt="GitHub followers" src="https://img.shields.io/github/followers/azouaoui-med?label=github&style=social" />
+                            </a>
+                            <a href="https://twitter.com/azouaoui_med" target="_blank">
+                                <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/azouaoui_med?label=twitter&style=social" />
+                            </a>
+                        </div>*@
                 </footer>
             </div>
         </main>
@@ -588,25 +618,25 @@
 
 
     @*-------Delete messge confirm model-----------------*@
-<div id="CommanMessageModel" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button id="btnNo" value="No" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button  id="btnYes" value="Yes" type="button" class="btn btn-primary">Yes</button>
+    <div id="CommanMessageModel" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnNo" value="No" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button id="btnYes" value="Yes" type="button" class="btn btn-primary">Yes</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
     @*------------------------*@
 
 </body>

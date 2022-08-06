@@ -17,16 +17,39 @@
 
 <script type="text/javascript">
 
-   
+
     $(document).ready(function () {
-       
+
+
+         debugger;
+             /*----------------------------------------------------*/
+          var CheckInOuStatus = '@ViewBag.CheckInOuStatus';
+        var InOut = CheckInOuStatus.split("_");
+        var In =InOut[0];
+        var Out =InOut[1];
+        if (In =="CheckIn") {
+            $('.GreenOnline').show();
+            $('.GreenOffline').hide();
+            $("#FunctionCheckInStatus").hide();
+        }
+        if (Out =="CheckOut") {
+            $('.GreenOnline').show();
+            $('.GreenOffline').hide();
+        }
+        if (In == "NotCheckIn" && Out == "NotCheckOut") {
+
+            $('.GreenOnline').hide();
+            $('.GreenOffline').show();
+        }
+                /*----------------------------------------------------*/
+
         //$("img").load(function () {
-        //    debugger;
+        //
         //    alert($(this).height());
         //    alert($(this).width());
         //});
         //$("#ProfilePictureFile").change(function (e) {
-        //    debugger;
+        //
         //   var Width=  document.querySelector('img').naturalWidth;
         //   var Height =document.querySelector('img').naturalHeight;
 
@@ -59,7 +82,7 @@
         $("#ProfilePictureFile").change(function (e) {
             var file, img;
 
-            debugger;
+
             if ((file = this.files[0])) {
                 img = new Image();
                 img.onload = function () {
@@ -83,10 +106,10 @@
 
         });
 
-        debugger;
+
         var hdn_message='@ViewBag.Message';
         $("#hdn_Message").val(hdn_message);
-      
+
         if ($("#hdn_Message").val() != "") {
            // alert("Employee Registered Successfully.");
 
@@ -96,7 +119,7 @@
                     dataType: "html",
                     url: '/CreateEmployee/CallCommanMessageModel',
                     success: function (data) {
-                        debugger;
+
                         $("#CommanMessageModel").show();
                         $("#btnNo").text("Later");
                         $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -117,7 +140,7 @@
 
 
         }
-      
+
         var hdn_MaritalStatus= $("#hdn_MaritalStatus").val();
         if (hdn_MaritalStatus!="") {
             if (hdn_MaritalStatus =="Married") {
@@ -138,15 +161,15 @@
         }
         var hdn_Department = $("#hdn_Department").val();
         if (hdn_Department != "") {
-           
+
                 $("#ddlDepartment option[value="+hdn_Department+"]").attr('selected', 'selected');
-            
+
         }
 
-        
-      
+
+
         @*$("#ddlGender").change(function () {
-            debugger;
+
             alert($('option:selected', $(this)).text());
             '@Model.Gender'=$('option:selected', $(this)).text();
         });*@
@@ -192,7 +215,7 @@
         });
 
         $("#Experience").click(function () {
-            debugger;
+
             window.location.href = '/CreateEmployee/AddEmployeeExperience';
         });
         $("#Documents").click(function () {

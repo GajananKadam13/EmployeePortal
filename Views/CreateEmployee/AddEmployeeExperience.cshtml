@@ -86,7 +86,7 @@
                     success:
                         function (response) {
                             // Generate HTML table.
-                            debugger;
+                            
                             //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
                             var Listdata = JSON.parse(response)
                             var len = Listdata.length;
@@ -117,7 +117,7 @@
             document.getElementById("EndSalary").disabled = false;
             document.getElementById("Reason").disabled = false;
             document.getElementById("btn_submitMain").disabled = false;
-            debugger;
+            
             //var id = table.row(this).id();
             var row = $(this).closest('tr');
             //var idddd = $(row).find('td').eq(0).html();
@@ -179,7 +179,7 @@
 
                         //data: { id: '' },
                         success: function (data) {
-                            debugger;
+                            
                             //alert(data);
                             // $('#CommanMessageModel').html(data);
                             $("#CommanMessageModel").show();
@@ -193,10 +193,10 @@
                             $('#btnYes').click(function (e) {
                                 $("#CommanMessageModel").hide();
                                 //$('#tableEmpExperience tr:eq(2)').show();
-                                debugger;
+                                
                                 $('#tableEmpExperience  tr#' + btn_id + '').remove();
 
-                                debugger;
+                                
                                 $.ajax(
                                     {
                                         type: 'POST',
@@ -204,7 +204,7 @@
                                         url: '/CreateEmployee/DeleteEmployeeExperienceById',
                                         data: { EmployeeEduPKID: btn_id },
                                         success: function (data) {
-                                            debugger;
+                                            
                                             /*window.location.href = '/CreateEmployee/AddEmployeeExperience';*/
 
                                             $.ajax(
@@ -217,7 +217,7 @@
 
                                                     //data: { id: '' },
                                                     success: function (data) {
-                                                        debugger;
+                                                        
                                                         //alert(data);
                                                         // $('#CommanMessageModel').html(data);
                                                         $("#CommanMessageModel").show();
@@ -348,7 +348,7 @@
 
 
         if ($("#hdn_Submit").val() == "Submit") {
-            debugger;
+            
             var hdn_message = '@ViewBag.Message';
             $.ajax(
                 {
@@ -369,7 +369,7 @@
                         dataType: "html",
                         url: '/CreateEmployee/CallCommanMessageModel',
                         success: function (data) {
-                            debugger;
+                            
                             $("#CommanMessageModel").show();
                             $("#btnNo").text("Later");
                             $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -393,7 +393,7 @@
                         dataType: "html",
                         url: '/CreateEmployee/CallCommanMessageModel',
                         success: function (data) {
-                            debugger;
+                            
                             $("#CommanMessageModel").show();
                             $("#btnNo").text("Close");
                             $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -420,11 +420,11 @@
 
 
     //$("#tableEmpExperience tr  input").on('click', function (e) {
-    //    debugger;
+    //    
     //    //alert($(this).closest('td').parent()[0].sectionRowIndex);
     //});
     //function Edit(id) {onclick="Edit(' + Listdata[i].Exp_PKID+')"
-    //    debugger;
+    //    
     //    $("#tableEmpExperience").closest('tr').find("td").eq(0).html().trim();
 
     //    //id = $(this).closest('tr').attr('id');

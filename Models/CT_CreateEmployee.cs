@@ -6,7 +6,7 @@ using System.Web;
 
 namespace EmployeePortal.Models
 {
-    public class CT_CreateEmployee : CT_EmployeeEducation  
+    public class CT_CreateEmployee 
     {
         //-----Registartion Form-----------
         //public string Salutaion { get; set; }
@@ -69,6 +69,8 @@ namespace EmployeePortal.Models
         public string PersonalEmail { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
+        public string DateOfBirthFormat { get; set; }
+        
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
         public string Description { get; set; }
@@ -106,6 +108,12 @@ namespace EmployeePortal.Models
         public string  Password { get; set; }
         [Required]
         public string Role { get; set; }
+
+        public string EducationStatus { get; set; }
+        public string ExperienceStatus { get; set; }
+        public string DocumentsStatus { get; set; }
+        public string SalaryStatus { get; set; }
+
         //-------------------------------------------------------------------
 
 

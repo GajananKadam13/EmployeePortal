@@ -5,35 +5,7 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        //  var EmployeePKID =@Session["EmployeePKID"];
-        debugger;
-        var CheckInOuStatus = '@ViewBag.CheckInOuStatus';
-        var InOut = CheckInOuStatus.split("_");
-        var In =InOut[0];
-        var Out =InOut[1];
-        if (In =="CheckIn") {
-            $('.GreenOnline').show();
-            $('.GreenOffline').hide();
-            $("#FunctionCheckInStatus").hide();
-        }
-        if (Out =="CheckOut") {
-            $('.GreenOnline').show();
-            $('.GreenOffline').hide();
-        }
-        if (In == "NotCheckIn" && Out == "NotCheckOut") {
-
-            $('.GreenOnline').hide();
-            $('.GreenOffline').show();
-        }
-
-        var EmpCheckInTime = '@ViewBag.EmpCheckInTime';
-
-       // $('#spn_EmpCheckInTime').val(EmpCheckInTime);
-        var EmpAttendanceList = '@ViewBag.EmpAttendanceList';
-
-        //$("li").each(function (index) {
-        //    alert(index + " - " + $(this).text())
-        //});
+       
 
 
 
@@ -50,7 +22,7 @@
                     success:
                         function (response) {
                             // Generate HTML table.
-                            debugger;
+                            
                             //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
                             var Listdata = JSON.parse(response)
                             var len = Listdata.length;

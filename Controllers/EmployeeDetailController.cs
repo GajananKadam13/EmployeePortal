@@ -83,7 +83,11 @@ namespace EmployeePortal.Controllers
             //CT_CreateEmployee obj = new CT_CreateEmployee();
             // obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
 
-         
+
+            DL_Home ObjDlHome = new DL_Home();
+            string status = ObjDlHome.FnEmployeeCheckInOut(Convert.ToInt32(Session["EmployeePKID"]));
+            ViewBag.CheckInOuStatus = status;
+
             return View(obj_CE);
         }
     }

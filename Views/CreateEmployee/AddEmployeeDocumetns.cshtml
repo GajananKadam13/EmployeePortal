@@ -61,7 +61,7 @@
                     success:
                         function (response) {
                             // Generate HTML table.
-                            debugger;
+
                             //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
                             var Listdata = JSON.parse(response)
                             var len = Listdata.length;
@@ -89,7 +89,7 @@
             document.getElementById("DocumentName").disabled = false;
             document.getElementById("EmployeeDocumentsFile").disabled = false;
 
-            debugger;
+            
             var row = $(this).closest('tr');
             var btn_idArry = $(this).attr('id');
             var btn_Name = btn_idArry.split('_')[0];
@@ -143,7 +143,7 @@
                         dataType: "html",
                         url: '/CreateEmployee/CallCommanMessageModel',
                         success: function (data) {
-                            debugger;
+                            
                             $("#CommanMessageModel").show();
                             $("#CommanMessageModel").find('.modal-title').text("Alert")
                             $("#CommanMessageModel").find('.modal-body').text("Are you sure, do you want to delete this record?");
@@ -152,10 +152,10 @@
                             });
                             $('#btnYes').click(function (e) {
                                 $("#CommanMessageModel").hide();
-                                debugger;
+                                
                                 $('#tbl_EmployeeDocuments  tr#' + btn_id + '').remove();
 
-                                debugger;
+                                
                                 $.ajax(
                                     {
                                         type: 'POST',
@@ -169,7 +169,7 @@
                                                     dataType: "html",
                                                     url: '/CreateEmployee/CallCommanMessageModel',
                                                     success: function (data) {
-                                                        debugger;
+                                                        
                                                         $("#CommanMessageModel").show();
                                                         $("#CommanMessageModel").find('.modal-title').text("Alert")
                                                         $("#CommanMessageModel").find('.modal-body').text("Record deleted successfully.");
@@ -190,7 +190,7 @@
                     });
             }
             if (btn_Name == "btnView") {
-                debugger;
+                
                 document.getElementById("DocumentName").disabled = true;
                 document.getElementById("EmployeeDocumentsFile").disabled = true;
                 
@@ -204,7 +204,7 @@
 
 
         $("#EmployeeDocumentsFile").change(function () {
-            debugger;
+            
 
            var imageNameFakePath= $("#EmployeeDocumentsFile").val();
             document.getElementById("lbl_ImgaeName").style.display = 'block';
@@ -212,7 +212,7 @@
             $("#lbl_ImgaeName").text(RemovedFakePath);
         });
         $('#btn_Submit').on('click', function () {
-            debugger;
+            
             var Counter = 0;
             if ($('#DocumentName').val() == "") {
                 $('#error_msg_DocumentName').show();
@@ -245,7 +245,7 @@
 
 
           if ($("#hdn_Submit").val() == "Submit") {
-            debugger;
+            
             if ($("#hdn_IsValid").val() == "false") {
 
             } else {
@@ -264,7 +264,7 @@
 
 
         $("#hdn_Message").val(hdn_message);
-        debugger;
+        
                 if ($("#hdn_Message").val() == "Success") {
             $.ajax(
                 {
@@ -272,7 +272,7 @@
                     dataType: "html",
                     url: '/CreateEmployee/CallCommanMessageModel',
                     success: function (data) {
-                        debugger;
+                        
                         $("#CommanMessageModel").show();
                         $("#btnNo").text("Later");
                         $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -297,7 +297,7 @@
                             dataType: "html",
                             url: '/CreateEmployee/CallCommanMessageModel',
                             success: function (data) {
-                                debugger;
+                                
                                 $("#CommanMessageModel").show();
                                 $("#btnNo").text("Close");
                                 $("#CommanMessageModel").find('.modal-title').text("Alert")
