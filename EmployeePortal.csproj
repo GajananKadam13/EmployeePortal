@@ -132,6 +132,7 @@
     <Compile Include="Models\CT_EmployeeSalary.cs" />
     <Compile Include="Models\CT_Login.cs" />
     <Compile Include="Models\CT_Parent_Employee.cs" />
+    <Compile Include="Models\CT_ResetPassword.cs" />
     <Compile Include="Models\UserRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <Content Include="Views\Shared\_CommanMessagePartial.cshtml" />
     <Content Include="Views\CreateEmployee\AddEmployeeDocumetns.cshtml" />
     <Content Include="Views\CreateEmployee\AddEmployeeSalary.cshtml" />
+    <Content Include="Views\Login\ResetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
