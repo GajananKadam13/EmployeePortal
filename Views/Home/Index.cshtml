@@ -11,8 +11,6 @@
 
         GetEmployeeAttendacneData();
         function GetEmployeeAttendacneData() {
-
-
             $.ajax(
                 {
                     type: 'GET',
@@ -42,6 +40,85 @@
                         }
                 });
         }
+
+        Get_HR_PostedNewJobs();
+        function Get_HR_PostedNewJobs() {
+            $.ajax(
+                {
+                    type: 'GET',
+                    dataType: 'JSON',
+                    url: '/Home/Get_HR_PostedNewJobs',
+                    data: {},
+                    success:
+                        function (response) {
+                            // Generate HTML table.
+
+                            //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
+                            var Listdata = JSON.parse(response)
+                            var len = Listdata.length;
+                            var txt = "";
+                            for (var i = 0; i < len; i++) {
+
+                                txt += "<tr id=" + Listdata[i].PoJob_PKID + " ><td style='display: none;'>" + Listdata[i].PoJob_PKID + "</td><td >" + Listdata[i].DepartmenName + "</td><td>" + Listdata[i].Designation + "</td><td>" + Listdata[i].Experience + "</td><td style='display: none;'>" + Listdata[i].Description + "</td> <td style='display: none;'>" + Listdata[i].Note + "</td><td>" + Listdata[i].CreatedOnFormat + "</td><td> " + ' <input type="button" id="btnView_' + Listdata[i].PoJob_PKID + '" value="View"  /> |' + ' <input type="button" id="btnApply_' + Listdata[i].PoJob_PKID + '" value="Apply"  /> ' + "</td></tr >";
+
+                            }
+                            if (txt != "") {
+                                $("#tbl_PostNewJobs").append(txt).removeClass("hidden");
+                            }
+                        },
+                    error:
+                        function (response) {
+                            alert("Error: " + response);
+                        }
+                });
+        }
+
+      
+
+
+        //------View Table----------------------------
+        $('#tbl_PostNewJobs').on('click', 'input', function () {
+            debugger;
+            var row = $(this).closest('tr');
+            var btn_idArry = $(this).attr('id');
+            var btn_Name = btn_idArry.split('_')[0];
+            var btn_id = btn_idArry.split('_')[1];
+
+           
+            if (btn_Name == "btnView") {
+                $('#myModal').modal('show');
+
+               
+                var DepartmenName = $(this).closest('tr').find("td").eq(1).html();
+                var Designation = $(this).closest('tr').find("td").eq(2).html();
+                var Experience = $(this).closest('tr').find("td").eq(3).html();
+                var Description = $(this).closest('tr').find("td").eq(4).html();
+                var Note = $(this).closest('tr').find("td").eq(5).html();
+                var CreatedOn = $(this).closest('tr').find("td").eq(5).html();
+               
+                $("#DepartmentName").text(DepartmenName);
+                $("#Designation").text(Designation);
+                $("#Experience").text(Experience);
+                $("#Description").text(Description);
+                $("#Note").text(Note);
+                $("#CreatedOn").text(CreatedOn);
+            }
+            if (btn_Name == "btnApply") {
+                ApplyRefernce();
+            }
+
+        });
+
+        function ApplyRefernce() {
+            debugger;
+            $('#modelWindowResume').modal('show');
+            $('#modelWindowResume .modal-title').html("Upload Resume");
+            $('#modelWindowResume .modal-body').html("<div class='col-md-12'><input type='file' name='file_Resume' id='file_Resume'/></div >  <br/> <div class='col-md-12'><input type='button' value='Save' class='btn btn-primary' name='btn_SubmitResume' id='btn_SubmitResume' /></div > ");
+        }
+
+
+
+        
 
     });
 </script>
@@ -207,7 +284,50 @@
                 <th>
                     Month
                 </th>
-                
+
+            </tr>
+
+        </table>
+    </div>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+ 
+
+ 
+    <div>
+        <table id="tbl_PostNewJobs" class="table">
+            <tr>
+                <th style="display:none;">
+                    PoJob_PKID
+                </th>
+                <th>
+                    DepartmenName
+                </th>
+                <th>
+                    Designation
+                </th>
+                <th>
+                    Experience
+                </th>
+                <th style="display:none;">
+                    Description
+                </th>
+                <th style="display:none;">
+                    Note
+                </th>
+                <th>
+                    CreatedOn
+                </th>
+                <th>
+                    Action
+                </th>
             </tr>
 
         </table>

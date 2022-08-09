@@ -177,6 +177,48 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
             }
         }
 
+        public List<CT_PostNewJobs> Get_HR_PostedNewJobs()
+        {
+            List<CT_PostNewJobs> CT_PostNewJobs_list = new List<CT_PostNewJobs>();
+            try
+            {
+                var oSQLConn = new
+            SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToString());
+                using (oSQLConn)
+                {
+                    using (cmd = new System.Data.SqlClient.SqlCommand("Get_HR_PostedNewJobs", oSQLConn))
+                    {
+
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        oSQLConn.Open();
+                        reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            CT_PostNewJobs obj = new CT_PostNewJobs();
+                            obj.PoJob_PKID = Convert.ToInt32(reader["PoJob_PKID"].ToString());
+                            obj.DepartmenName =reader["DepartmenName"].ToString();
+                            obj.Designation = reader["Designation"].ToString();
+                            obj.Experience  = reader["Experience"].ToString();
+                            obj.Description = reader["Description"].ToString();
+                            obj.Note = reader["Note"].ToString();
+                            obj.CreatedOn = Convert.ToDateTime(reader["CreatedOn"].ToString());
+                            obj.CreatedOnFormat = Convert.ToString(obj.CreatedOn.Date.ToString("yyyy/MM/dd"));
+                            CT_PostNewJobs_list.Add(obj);
+                        }
+                        return CT_PostNewJobs_list;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        
+
 
 
 

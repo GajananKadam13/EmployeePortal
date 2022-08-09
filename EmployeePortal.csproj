@@ -116,11 +116,14 @@
     <Compile Include="Controllers\EmployeeDetailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\PostNewVacancyController.cs" />
     <Compile Include="DataLayer\DL_Base.cs" />
     <Compile Include="DataLayer\DL_CreateEmployee.cs" />
     <Compile Include="DataLayer\DL_EmployeeDetail.cs" />
     <Compile Include="DataLayer\DL_Home.cs" />
     <Compile Include="DataLayer\DL_Login.cs" />
+    <Compile Include="DataLayer\DL_PostNewVacancy.cs" />
+    <Compile Include="DataLayer\DL_UploadResume.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -132,7 +135,9 @@
     <Compile Include="Models\CT_EmployeeSalary.cs" />
     <Compile Include="Models\CT_Login.cs" />
     <Compile Include="Models\CT_Parent_Employee.cs" />
+    <Compile Include="Models\CT_PostNewJobs.cs" />
     <Compile Include="Models\CT_ResetPassword.cs" />
+    <Compile Include="Models\CT_UploadResume.cs" />
     <Compile Include="Models\UserRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -154,6 +159,7 @@
     <Content Include="Views\CreateEmployee\AddEmployeeDocumetns.cshtml" />
     <Content Include="Views\CreateEmployee\AddEmployeeSalary.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
+    <Content Include="Views\PostNewVacancy\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -166,6 +172,7 @@
     <Folder Include="Bootstrap\" />
     <Folder Include="Filter\" />
     <Folder Include="JS\" />
+    <Folder Include="ReferenceResume\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

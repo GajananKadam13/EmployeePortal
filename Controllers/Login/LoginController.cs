@@ -81,6 +81,14 @@ namespace EmployeePortal.Controllers.Login
             CT_ResetPassword ObjResetPass = new CT_ResetPassword();
             List<CT_ResetPassword> list = new List<CT_ResetPassword>();
 
+
+            DL_Home Obj_dL_Home = new DL_Home();
+            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
+            string status = Obj_dL_Home.FnEmployeeCheckInOut(EmployeePKID);
+            //----START----For Hide and show Onlien and Offline----------
+            ViewBag.CheckInOuStatus = status;
+            //---END-----For Hide and show Onlien and Offline----------
+
             //list = objdl_Log.FnGetEmployeesForResetPassword();
             // resetList = list.ToPagedList(pageIndex, pageSize);
             list = TempData["SearchEmployeeData"] as List<CT_ResetPassword>;
@@ -101,12 +109,7 @@ namespace EmployeePortal.Controllers.Login
 
 
 
-            DL_Home Obj_dL_Home = new DL_Home();
-            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
-            string status = Obj_dL_Home.FnEmployeeCheckInOut(EmployeePKID);
-            //----START----For Hide and show Onlien and Offline----------
-            ViewBag.CheckInOuStatus = status;
-            //---END-----For Hide and show Onlien and Offline----------
+           
 
             //return View(resetList);
 
