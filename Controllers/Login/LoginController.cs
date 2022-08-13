@@ -32,6 +32,8 @@ namespace EmployeePortal.Controllers.Login
                 {
                     Session["EmployeePKID"] = dt.Rows[0]["EmployeePKID"].ToString();
                     string [] Name=dt.Rows[0]["EmployeeName"].ToString().Split('-');
+                    string EmpCompanyEmail = dt.Rows[0]["CompanyEmail"].ToString();
+                    Session["EmployeeName"] = EmpCompanyEmail;
 
                     Session["EmployeeName"] = Name[0] +' '+Name[2];
                     string Designation = Name[5];

@@ -217,7 +217,44 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
             }
         }
 
-        
+
+        //public string UploadReferenceResume()
+        //{
+        //    string returntype = "";
+        //    try
+        //    {
+        //        using (con)
+        //        {
+        //            using (cmd = new System.Data.SqlClient.SqlCommand("sp_UploadReferenceResume", con))
+        //            {
+        //                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //                cmd.Parameters.AddWithValue("@EmployeePKID", obj_CT_Log.EmployeePKID);
+        //                cmd.Parameters.AddWithValue("@ReferenceResumeName", ReferenceResumeName);
+        //                cmd.Parameters.AddWithValue("@FirstName", obj_CT_Log.FirstName);
+        //                //--------------------------------------------------------------------------
+        //                cmd.Parameters.AddWithValue("@CreatedBy", obj_CT_Log.CreatedBy);
+        //                cmd.Parameters.Add("@msg", SqlDbType.VarChar, 40);
+        //                cmd.Parameters["@msg"].Direction = ParameterDirection.Output;
+
+        //                cmd.Parameters.Add("@LastEmployeePKID", SqlDbType.Int);
+        //                cmd.Parameters["@LastEmployeePKID"].Direction = ParameterDirection.Output;
+
+        //                con.Open();
+        //                Convert.ToString(cmd.ExecuteNonQuery());
+        //                returntype = (string)cmd.Parameters["@msg"].Value;
+        //                con.Close();
+        //            }
+        //        }
+        //        return returntype;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+
+
 
 
 

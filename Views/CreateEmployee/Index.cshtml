@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>Add Employee Information</h2>
+<h2>Add Employee Information</h2> <br/></br>
 <nav aria-label="breadcrumb" style="margin: -17px -1px -1px  -38px;">
     <ol class="breadcrumb pmd-breadcrumb" style="background-color: white;">
         <li class="breadcrumb-item">
@@ -281,13 +281,13 @@
             <form id="myform" class="form-horizontal" role="form" onSubmit="mySubmitFunction()">
                 <fieldset>
                     <h5 class="card-title mb-3">Profile Picture</h5>
-                    <div class="text-center">
+                    <div class="text-center" style="marin-right:20px">
                         <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
-                        <h6>Upload a different photo...</h6>
+                        <h6></h6>
                         <input type="file" name="ProfilePictureFile" id="ProfilePictureFile" src="" class=" ProImage text-center center-block file-upload">
                         @Html.ValidationMessageFor(model => model.ProfilePictureName, "", new { @class = "text-danger" })
                         <br />
-                        <span class="text-danger" id="error_msg_ProfilePictureFile_Size" style="display:none">Image size should be Width:200px & Height:260px.</span>
+                        <span class="text-danger" id="error_msg_ProfilePictureFile_Size" style="display:none; margin-right:10px">Image size should be Width:200px & Height:260px.</span>
                     </div>
                     
                     <hr />
@@ -542,7 +542,7 @@
 
                     <div class="form-row">
                         <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" text="Submit" onclick="clickloginformbtn();" id="btn_submit" style="position: relative; left: 16px; padding: 11px 67px 11px 66px;" class="btn btn-primary">Submit</button>
+                            <button type="submit" text="Submit" onclick="clickloginformbtn();" id="btn_submit" style="position: relative; left: 16px; padding: 11px 67px 11px 66px; margin-right:20px" class="btn btn-primary">Submit</button>
                             <input type="button" style="padding:11px 67px 11px 66px;" id="btn_Reset" value="Reset" name="btn_Reset" class="btn btn-warning" />
                         </div>
                     </div>

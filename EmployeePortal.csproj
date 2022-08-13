@@ -160,6 +160,7 @@
     <Content Include="Views\CreateEmployee\AddEmployeeSalary.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\PostNewVacancy\Index.cshtml" />
+    <Content Include="Views\Shared\_ResumePartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,60 @@
+﻿@model int
+<html>
+<head>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btn_SubmitResume').on('click', function () {
+                var Counter = 0;
+                if ($('#file_Resume').val() == "") {
+                    $('#error_msg_file_Resume').show();
+                    Counter++;
+                }
+                else {
+                    $('#error_msg_file_Resume').hide();
+                }
+                
+
+                if (Counter == 0) {
+
+                }
+                else {
+                    return false;
+                }
+
+            });
+        });
+
+        $(function () {
+            $('input[type=file]').change(function () {
+                var val = $(this).val().toLowerCase(),
+                    regex = new RegExp("(.*?)\.(docx|doc|pdf|xml|bmp|ppt|xls)$");
+
+                if (!(regex.test(val))) {
+                    $(this).val('');
+                    alert('Please select correct file format');
+                }
+            });
+        });
+        
+    </script>
+
+</head>
+<body>
+
+    @using (Html.BeginForm("UploadReferenceResume", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div>
+        <div class='col-md-12'>
+            <input type='file' name='file_Resume' id='file_Resume' />
+            <span class="text-danger" id="error_msg_file_Resume" style="display:none">The Resume field is required.</span>
+        </div>
+        <br />
+        <div class='col-md-12'>
+            <input type='submit' value='Save' class='btn btn-primary' name='btn_SubmitResume' id='btn_SubmitResume' />
+        </div>
+        <input type="hidden" id="hdn_Job_PKID" value="@Model" name="hdn_Job_PKID"/>
+        
+    </div>
+    }
+</body>
+</html>

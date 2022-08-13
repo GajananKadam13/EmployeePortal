@@ -88,7 +88,7 @@ namespace EmployeePortal.Controllers
 
 
         [HttpPost]  //Add Employee Information
-        public ActionResult Index(CT_CreateEmployee Obj_CE, string gender, string MaritalStatus, HttpPostedFileBase ProfilePictureFile, string TypeofEmployee, DateTime? DateofJoining = null, DateTime? DateofBirth = null, string ddlDepartment = "", string ddlDesignation = "", string ddlReportingEmployee = "", string ddlCountry = "",string ddlRole="")
+        public ActionResult Index(CT_CreateEmployee Obj_CE, string gender, string MaritalStatus, HttpPostedFileBase ProfilePictureFile, string TypeofEmployee, DateTime? DateofJoining = null, DateTime? DateofBirth = null, string ddlDepartment = "", string ddlDesignation = "", string ddlReportingEmployee = "", string ddlCountry = "", string ddlRole = "")
         {
             Obj_CE.Department = ddlDepartment;
             Obj_CE.Designation = ddlDesignation;

@@ -6,6 +6,7 @@
 }
 
 <h2>Add Employee Experience</h2>
+<br /></br>
 <nav aria-label="breadcrumb" style="margin: -17px -1px -1px  -38px;">
     <ol class="breadcrumb pmd-breadcrumb" style="background-color: white;">
         <li class="breadcrumb-item">
@@ -33,7 +34,7 @@
             $('#StartSalary').val("");
             $('#EndSalary').val("");
             $('#Reason').val("");
-         
+
             $("#hdn_EmpExp_PKID").val(0);
         });
 
@@ -86,7 +87,7 @@
                     success:
                         function (response) {
                             // Generate HTML table.
-                            
+
                             //convertJsonToHtmlTable(JSON.parse(response), $("#tableEmpExperience"));
                             var Listdata = JSON.parse(response)
                             var len = Listdata.length;
@@ -117,7 +118,7 @@
             document.getElementById("EndSalary").disabled = false;
             document.getElementById("Reason").disabled = false;
             document.getElementById("btn_submitMain").disabled = false;
-            
+
             //var id = table.row(this).id();
             var row = $(this).closest('tr');
             //var idddd = $(row).find('td').eq(0).html();
@@ -166,7 +167,7 @@
                 if (Reason != "") {
                     $("#Reason").val(Reason);
                 }
-               
+
             }
             if (btn_Name == "btnDel") {
                 $.ajax(
@@ -179,7 +180,7 @@
 
                         //data: { id: '' },
                         success: function (data) {
-                            
+
                             //alert(data);
                             // $('#CommanMessageModel').html(data);
                             $("#CommanMessageModel").show();
@@ -193,10 +194,10 @@
                             $('#btnYes').click(function (e) {
                                 $("#CommanMessageModel").hide();
                                 //$('#tableEmpExperience tr:eq(2)').show();
-                                
+
                                 $('#tableEmpExperience  tr#' + btn_id + '').remove();
 
-                                
+
                                 $.ajax(
                                     {
                                         type: 'POST',
@@ -204,7 +205,7 @@
                                         url: '/CreateEmployee/DeleteEmployeeExperienceById',
                                         data: { EmployeeEduPKID: btn_id },
                                         success: function (data) {
-                                            
+
                                             /*window.location.href = '/CreateEmployee/AddEmployeeExperience';*/
 
                                             $.ajax(
@@ -217,7 +218,7 @@
 
                                                     //data: { id: '' },
                                                     success: function (data) {
-                                                        
+
                                                         //alert(data);
                                                         // $('#CommanMessageModel').html(data);
                                                         $("#CommanMessageModel").show();
@@ -248,7 +249,7 @@
                 document.getElementById("btn_submitMain").disabled = false;
                 document.getElementById("btn_Reset").disabled = false;
             }
-           
+
             if (btn_Name == "btnView") {
                 document.getElementById("Organization").disabled = true;
                 document.getElementById("ExperienceDesignation").disabled = true;
@@ -348,7 +349,7 @@
 
 
         if ($("#hdn_Submit").val() == "Submit") {
-            
+
             var hdn_message = '@ViewBag.Message';
             $.ajax(
                 {
@@ -369,7 +370,7 @@
                         dataType: "html",
                         url: '/CreateEmployee/CallCommanMessageModel',
                         success: function (data) {
-                            
+
                             $("#CommanMessageModel").show();
                             $("#btnNo").text("Later");
                             $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -393,7 +394,7 @@
                         dataType: "html",
                         url: '/CreateEmployee/CallCommanMessageModel',
                         success: function (data) {
-                            
+
                             $("#CommanMessageModel").show();
                             $("#btnNo").text("Close");
                             $("#CommanMessageModel").find('.modal-title').text("Alert")
@@ -420,11 +421,11 @@
 
 
     //$("#tableEmpExperience tr  input").on('click', function (e) {
-    //    
+    //
     //    //alert($(this).closest('td').parent()[0].sectionRowIndex);
     //});
     //function Edit(id) {onclick="Edit(' + Listdata[i].Exp_PKID+')"
-    //    
+    //
     //    $("#tableEmpExperience").closest('tr').find("td").eq(0).html().trim();
 
     //    //id = $(this).closest('tr').attr('id');
@@ -479,12 +480,12 @@
     <div class="">
         <div class="col-md-12" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
             <div class="pmd-tab-active-bar" style="width: 93.125px; left: 0px;"></div><ul class="nav nav-tabs" role="tablist" style="width: 325.578px;">
-    <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
-    <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
-    <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="Experience" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
-    <li class="nav-item"><a id="Documents" style="margin: -41px 19px -64px 350px;" class="nav-link" href="/CreateEmployee/AddEmployeeDocumetns" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Documents</a></li>
-    <li class="nav-item"><a id="Salary" style="margin: -41px 19px -64px 462px;" class="nav-link" href="/CreateEmployee/AddEmployeeSalary" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Salary</a></li>
-</ul>
+                <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
+                <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
+                <li class="nav-item"><a id="Experience" style="margin: -41px 19px -64px 236px;" class="nav-link" href="/CreateEmployee/AddEmployeeExperience" aria-controls="Experience" role="tab" data-toggle="tab" aria-selected="false">Experience</a></li>
+                <li class="nav-item"><a id="Documents" style="margin: -41px 19px -64px 350px;" class="nav-link" href="/CreateEmployee/AddEmployeeDocumetns" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Documents</a></li>
+                <li class="nav-item"><a id="Salary" style="margin: -41px 19px -64px 462px;" class="nav-link" href="/CreateEmployee/AddEmployeeSalary" aria-controls="salary" role="tab" data-toggle="tab" aria-selected="false">Salary</a></li>
+            </ul>
         </div>
 
         <div class="row">
