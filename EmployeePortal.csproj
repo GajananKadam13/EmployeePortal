@@ -136,6 +136,7 @@
     <Compile Include="Models\CT_Login.cs" />
     <Compile Include="Models\CT_Parent_Employee.cs" />
     <Compile Include="Models\CT_PostNewJobs.cs" />
+    <Compile Include="Models\CT_ReferanceResume.cs" />
     <Compile Include="Models\CT_ResetPassword.cs" />
     <Compile Include="Models\CT_UploadResume.cs" />
     <Compile Include="Models\UserRoleProvider.cs" />
@@ -161,6 +162,23 @@
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\PostNewVacancy\Index.cshtml" />
     <Content Include="Views\Shared\_ResumePartial.cshtml" />
+    <Content Include="Views\PostNewVacancy\ViewAppliedJob.cshtml" />
+    <Content Include="ReferenceResume\2Amol CV.pdf" />
+    <Content Include="ReferenceResume\2asasa.pdf" />
+    <Content Include="ReferenceResume\2asasasa.pdf" />
+    <Content Include="ReferenceResume\2asasasdsdsdsd.pdf" />
+    <Content Include="ReferenceResume\2dfd.pdf" />
+    <Content Include="ReferenceResume\2dsds.pdf" />
+    <Content Include="ReferenceResume\2dsdsd.pdf" />
+    <Content Include="ReferenceResume\2dsfsdfd.pdf" />
+    <Content Include="ReferenceResume\2fdsfafdfdfasdfasd.pdf" />
+    <Content Include="ReferenceResume\2rest1.pdf" />
+    <Content Include="ReferenceResume\2sasa.pdf" />
+    <Content Include="ReferenceResume\2tejas.pdf" />
+    <Content Include="ReferenceResume\2test.pdf" />
+    <Content Include="ReferenceResume\2test1.pdf" />
+    <Content Include="ReferenceResume\Gajanan Kadam.pdf" />
+    <Content Include="Views\Shared\ApproveRejectCandidateResume.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -173,7 +191,6 @@
     <Folder Include="Bootstrap\" />
     <Folder Include="Filter\" />
     <Folder Include="JS\" />
-    <Folder Include="ReferenceResume\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,92 @@
+﻿@model int
+<div id="div_AppproveRemoveCandidate">
+    <div>
+        <div class='col-md-12'>
+            <div class="">
+                <label for="fn" class="col-form-label control-label">Status</label>
+                <select id="ddlStatus" name="ddlStatus" class="form-control">
+                    <option value="" selected="">Choose ...</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Approve">Approve</option>
+                    <option value="Reject">Reject</option>
+                </select>
+            </div>
+            <span class="text-danger" id="error_msg_ddlStatus" style="display:none">The Status field is required.</span>
+        </div>
+        <br />
+        <div class='col-md-12'>
+            <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                <label for="fn" class="col-form-label control-label">Comment</label>
+                <input autocomplete="off" class="form-control text-box single-line" data-val="true" data-val-required="The Comment field is required." id="HRComment" name="HRComment" placeholder="Comment" type="text" value="">
+            </div>
+            <span class="text-danger" id="error_msg_HRComment" style="display:none">The Comment field is required.</span>
+        </div>
+        <br />
+        <div class='col-md-12'>
+            <input type='submit' value='Save' class='btn btn-primary' name='btn_SubmitResume' id='btn_SubmitResume' />
+        </div>
+        <input type="hidden" id="hdn_Ref_PKID" value="@Model" name="hdn_Ref_PKID" />
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btn_SubmitResume').on('click', function () {
+            var Counter = 0;
+
+            if ($('#ddlStatus').val() == "") {
+                $('#error_msg_ddlStatus').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_ddlStatus').hide();
+            }
+
+
+            if ($('#HRComment').val() == "") {
+                $('#error_msg_HRComment').show();
+                Counter++;
+            }
+            else {
+                $('#error_msg_HRComment').hide();
+            }
+
+            if (Counter == 0) {
+                FnSubmitApproveRejectComment()
+            }
+            else {
+                return false;
+            }
+
+        });
+    });
+
+    function FnSubmitApproveRejectComment() {
+        debugger;
+        var status = $('#ddlStatus').val();
+        var HRComment = $('#HRComment').val();
+        var Ref_PKID = $('#hdn_Ref_PKID').val();
+        $("#CommanMessageModel").hide();
+        $.ajax(
+            {
+                type: 'POST',
+                dataType: "json",
+                data: { status: status, HRComment: HRComment, Ref_PKID: Ref_PKID },
+                url: '/PostNewVacancy/SaveApproveReject',
+                success: function (data) {
+                    $("#CommanMessageModel").show();
+                    $("#CommanMessageModel").find('.modal-title').text("Alert")
+                    $("#CommanMessageModel").find('.modal-body').text("Comment Added successfully");
+
+                    $('#btnNo').text("Ok");
+                    $('#btnNo').click(function (e) {
+                        $("#CommanMessageModel").hide();
+                        window.location.href = '/PostNewVacancy/ViewAppliedJob';
+                    });
+                    $('#btnYes').hide();
+                },
+            });
+    }
+
+</script>

@@ -12,7 +12,13 @@
                 else {
                     $('#error_msg_file_Resume').hide();
                 }
-                
+                if ($('#file_Name').val() == "") {
+                    $('#error_msg_file_Name').show();
+                    Counter++;
+                }
+                else {
+                    $('#error_msg_file_Name').hide();
+                }
 
                 if (Counter == 0) {
 
@@ -49,11 +55,20 @@
             <span class="text-danger" id="error_msg_file_Resume" style="display:none">The Resume field is required.</span>
         </div>
         <br />
+        <div class="col-md-12">
+            File Name
+        </div>
+        <div class='col-md-12'>
+           
+            <input type='text' style=" padding: 10px 79px 13px 9px;" name='file_Name' id='file_Name'  placeholder="Ex.Candidate Name"/>
+            <span class="text-danger" id="error_msg_file_Name" style="display:none">File Name field is required.</span>
+        </div>
+        <br />
         <div class='col-md-12'>
             <input type='submit' value='Save' class='btn btn-primary' name='btn_SubmitResume' id='btn_SubmitResume' />
         </div>
-        <input type="hidden" id="hdn_Job_PKID" value="@Model" name="hdn_Job_PKID"/>
-        
+        <input type="hidden" id="hdn_Job_PKID" value="@Model" name="hdn_Job_PKID" />
+
     </div>
     }
 </body>

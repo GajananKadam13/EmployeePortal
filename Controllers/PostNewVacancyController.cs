@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EmployeePortal.DataLayer;
 using EmployeePortal.Models;
 using Newtonsoft.Json;
+using PagedList;
 
 namespace EmployeePortal.Controllers
 {
@@ -25,7 +26,7 @@ namespace EmployeePortal.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(CT_PostNewJobs objPost, string btn_Submit, int ?hdn_PostedJob_PKID)
+        public ActionResult Index(CT_PostNewJobs objPost, string btn_Submit, int? hdn_PostedJob_PKID)
         {
             string returnType = "";
             ViewBag.Submit = btn_Submit;
@@ -61,7 +62,7 @@ namespace EmployeePortal.Controllers
 
             return result;
         }
-       
+
 
         public ActionResult DeletePostedJobById(int PostedJob_PKID)
         {
@@ -70,6 +71,66 @@ namespace EmployeePortal.Controllers
             returnType = objDl_PostVac.DeletePostedJobById(PostedJob_PKID).ToString();
             result = this.Json(JsonConvert.SerializeObject(returnType), JsonRequestBehavior.AllowGet);
             return result;
+        }
+        public ActionResult ViewAppliedJob(int? page)
+        {
+            int pageSize = 5;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            IPagedList<CT_ReferanceResume> resetList = null;
+            CT_ReferanceResume ObjResetPass = new CT_ReferanceResume();
+            List<CT_ReferanceResume> list = new List<CT_ReferanceResume>();
+
+
+            DL_Home Obj_dL_Home = new DL_Home();
+            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
+            string status = Obj_dL_Home.FnEmployeeCheckInOut(EmployeePKID);
+            //----START----For Hide and show Onlien and Offline----------
+            ViewBag.CheckInOuStatus = status;
+            //---END-----For Hide and show Onlien and Offline----------
+
+            //list = objdl_Log.FnGetEmployeesForResetPassword();
+            // resetList = list.ToPagedList(pageIndex, pageSize);
+
+            list = TempData["SearchResumeData"] as List<CT_ReferanceResume>;
+            if (list == null)
+            {
+                list = objDl_PostVac.FnViewEmployeeAppliedJob();
+                resetList = list.ToPagedList(pageIndex, pageSize);
+                return View(resetList);
+            }
+            else
+            {
+                ViewBag.searchResume = TempData["searchResume"];
+                resetList = list.ToPagedList(pageIndex, pageSize);
+                return View(resetList);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ApproveRejectModel(int Refer_PKID)
+        {
+            return PartialView("ApproveRejectCandidateResume", Refer_PKID);
+        }
+
+        public ActionResult SaveApproveReject(string status, string HRComment, int Ref_PKID)
+        {
+            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
+            JsonResult result = new JsonResult();
+            var ReturnStatus = objDl_PostVac.FnAddApproveRejectCandidateResume(status, HRComment, EmployeePKID, Ref_PKID);
+            result = this.Json(JsonConvert.SerializeObject(ReturnStatus), JsonRequestBehavior.AllowGet);
+            return result;
+
+        }
+
+        public ActionResult SearchByResumeStatus(string searchStatus)
+        {
+            List<CT_ReferanceResume> list = new List<CT_ReferanceResume>();
+            list = objDl_PostVac.FnSearchStaus(searchStatus);
+           // Oj_CT.CT_CreateEmployeelist = list;
+            TempData["SearchResumeData"] = list;//Oj_CT.CT_CreateEmployeelist;
+            TempData["searchResume"] = searchStatus;
+            return RedirectToAction("ViewAppliedJob");
         }
 
 

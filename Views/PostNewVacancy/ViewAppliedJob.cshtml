@@ -1,0 +1,192 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<EmployeePortal.Models.CT_ReferanceResume>
+@{
+    ViewBag.Title = "ViewAppliedJob";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>View Applied Job</h2>
+<script type="text/javascript">
+    function FnApproveReject(Refer_PKID) {
+        $.ajax(
+            {
+                type: 'POST',
+                dataType: "html",
+                data: { Refer_PKID: Refer_PKID },
+                url: '/PostNewVacancy/ApproveRejectModel',
+                success: function (data) {
+                    debugger;
+                    $('#CommanMessageModel').modal('show');
+                    $('#CommanMessageModel .modal-title').html("Approve / Reject");
+                    $('#CommanMessageModel .modal-body').html(data);
+
+
+                    $('#btnNo').text("Close");
+                    $('#btnNo').click(function (e) {
+                        $("#CommanMessageModel").hide();
+                    });
+                    $('#btnYes').hide();
+
+
+                },
+            });
+    }
+    function Search() {
+
+        var searchStatus = $("#txt_Search").val();
+        $("#tbl_ViewEmployee tbody").remove();
+        $("#hdn_txt_Search").val(searchStatus);
+
+        localStorage.setItem("searchStatusKey", searchStatus);
+
+        //document.location.reload();
+        window.location.href = '/PostNewVacancy/ViewAppliedJob',
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: "html",
+                    data: { searchStatus: searchStatus },
+                    url: '/PostNewVacancy/SearchByResumeStatus',
+                    success: function (data) {
+
+                    },
+                });
+
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="hdn_txt_Search" value="@ViewBag.searchEmployee" name="hdn_txt_Search" />
+    <input type="button" id="btnSearch" value="Search" style="margin:10px 7px -47px 368px;" onclick="Search()" class="btn btn-primary" />
+
+
+    <div class="form-horizontal">
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                <input autocomplete="off" class="form-control text-box single-line" data-val="true" id="txt_Search" name="txt_Search" placeholder="Search by Status" type="text" value="">
+
+            </div>
+        </div>
+        <hr style=" margin: 10px 10px 10px -92px;" />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            <div>
+                <table class="table table-striped" style=" margin: 4px 5px -1px -92px;" id="tbl_ViewAppliedJob">
+                    <thead>
+                    <th style="display:none;" scope="col">Refer_PKID</th>
+                    <th style="display:none;" scope="col">EmployeePKID</th>
+
+                    <th style="display:none;" scope="col">PostNewJobPKID</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Resume</th>
+                    <th scope="col">Uploaded On</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">HR Comment</th>
+                    <th scope="col">Action</th>
+                    </thead>
+
+                    @if (Model != null)
+                    {
+
+
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+
+                <tr>
+                    <td style="display:none;">
+                        @Model[i].Refer_PKID
+                    </td>
+
+                    <td style="display:none;">
+                        @Model[i].EmployeePKID
+                    </td>
+
+                    <td style="display:none;">
+                        @Model[i].PostNewJobPKID
+                    </td>
+                    <td>
+                        @Model[i].EmployeeName
+                    </td>
+                    <td>
+                        @Model[i].Resume
+                    </td>
+                    <td>
+                        @Model[i].CreatedOnFormat
+                    </td>
+                    <td>
+                        @*Model[i].Status*@
+                        @if (@Model[i].Status == "In Progress")
+                        {
+                            <span style="color:darkorchid">In Progress</span>
+                        }
+                        @if (@Model[i].Status == "Approve")
+                        {
+                            <span style="color:green">Approve</span>
+                        }
+                        @if (@Model[i].Status == "Reject")
+                        {
+                            <span style="color: red">Reject</span>
+                        }
+                    </td>
+                    <td>
+                        @if (@Model[i].HRComment == "")
+                        {
+                            <span>No Comment</span>
+                        }
+                        else
+                        {
+                            @Model[i].HRComment;
+                        }
+
+                    </td>
+                    <td>
+                        <a href="~/ReferenceResume/@Model[i].Resume" class="btn pmd-btn-fab pmd-btn-flat btn-dark pmd-ripple-effect btn-sm mr-2" style=" font-weight: bold;" id="Img_EmployeeDoc_Download" download> Download File </a><label id="lbl_Img_EmployeeDoc" class="material-icons pmd-sm" style="color: red; font-weight: bold; display: none; margin: -33px 1px -6px 124px">File Name</label>|
+                        @if (@Model[i].Status == "Reject")
+                        {
+
+                        }
+                        else
+                        {
+                            <input type="button" class="btn btn-success" id="btnApproveReject" value="Approve / Reject" onclick="FnApproveReject(@Model[i].Refer_PKID)" />
+                        }
+
+                    </td>
+                </tr>
+                        }
+                    }
+
+                </table>
+
+            </div>
+            <div id="container" style="margin-left: 20px">
+                <p></p>
+                <p></p>
+                @if (Model != null)
+                {
+
+
+                    <div class="pagination" style="margin-left: 400px; ">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                        of @Model.PageCount  &nbsp; &nbsp; &nbsp; &nbsp;
+                        <p> @Html.PagedListPager(Model, page => Url.Action("ViewAppliedJob", new { page }))</p>
+                    </div>
+                }
+                <div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
+            </div>
+        </div>
+    </div>
+}
+
