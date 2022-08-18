@@ -95,8 +95,8 @@ namespace EmployeePortal.Controllers
             JsonResult result = new JsonResult();
             CT_PostNewJobs objExp = new CT_PostNewJobs();
             List<CT_PostNewJobs> listExp = new List<CT_PostNewJobs>();
-
-            listExp = Obj_dL_Home.Get_HR_PostedNewJobs();
+            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
+            listExp = Obj_dL_Home.Get_HR_PostedNewJobs(EmployeePKID);
             result = this.Json(JsonConvert.SerializeObject(listExp), JsonRequestBehavior.AllowGet);
             return result;
         }

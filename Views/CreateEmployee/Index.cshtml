@@ -446,7 +446,7 @@
                             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
                                 <label class="col-form-label control-label">Reporting Employee</label>
                                 <div class="">
-
+                                    @*@Html.DropDownList("ddlReportingEmployee", new SelectList(ViewBag.TLId, "L_ID", "L_Name"), "Choose", new { @class = "form-control" })*@
                                     <select id="ddlReportingEmployee" name="ddlReportingEmployee" class="form-control">
                                         <option value="" selected>Choose ...</option>
                                         <option value="1"> Manager</option>

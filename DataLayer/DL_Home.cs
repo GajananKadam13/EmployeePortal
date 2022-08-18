@@ -177,7 +177,7 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
             }
         }
 
-        public List<CT_PostNewJobs> Get_HR_PostedNewJobs()
+        public List<CT_PostNewJobs> Get_HR_PostedNewJobs(int EmployeePKID)
         {
             List<CT_PostNewJobs> CT_PostNewJobs_list = new List<CT_PostNewJobs>();
             try
@@ -190,6 +190,7 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
                     {
 
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@EmployeePKID", EmployeePKID);
                         oSQLConn.Open();
                         reader = cmd.ExecuteReader();
                         while (reader.Read())
@@ -203,6 +204,7 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
                             obj.Note = reader["Note"].ToString();
                             obj.CreatedOn = Convert.ToDateTime(reader["CreatedOn"].ToString());
                             obj.CreatedOnFormat = Convert.ToString(obj.CreatedOn.Date.ToString("yyyy/MM/dd"));
+                            obj.ResumeStatus = reader["ResumeStatus"].ToString();
                             CT_PostNewJobs_list.Add(obj);
                         }
                         return CT_PostNewJobs_list;

@@ -17,6 +17,8 @@ namespace EmployeePortal.Models
         public string CreatedOnFormat { get; set; }
         public int CreatedBy { get; set; }
         public string Status { get; set; }
+        public string ResumeStatus { get; set; }  //This column is related to Resume Status
         
+
     }
 }
