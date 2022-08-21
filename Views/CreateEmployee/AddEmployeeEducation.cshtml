@@ -7,15 +7,15 @@
 }
 
 
-<h2>Add Employee Education</h2>
+<h2 style="margin: 10px 10px -24px -103px;">Add Employee Education</h2>
 <br /></br>
-<nav aria-label="breadcrumb" style="margin: -17px -1px -1px  -38px;">
+<nav aria-label="breadcrumb" style="margin: -17px -1px -1px -122px;">
     <ol class="breadcrumb pmd-breadcrumb" style="background-color: white;">
         <li class="breadcrumb-item">
             <a href="AddEmployeeEducation">Education</a>
         </li>
         <li class="breadcrumb-item">Employees</li>
-        <li class="breadcrumb-item active" aria-current="page">Add Employee</li>
+        <li class="breadcrumb-item active" aria-current="page">Add Employee Education</li>
     </ol>
 </nav>
 <script type="text/javascript">
@@ -55,7 +55,7 @@
                             var len = Listdata.length;
                             var txt = "";
                             for (var i = 0; i < len; i++) {
-                                txt += "<tr id=" + Listdata[i].Edu_PKID + " ><td style='display: none;'>" + Listdata[i].Edu_PKID + "</td><td style='display: none;'>" + Listdata[i].Degree + "</td><td>" + Listdata[i].DegreeText + "</td><td style='display: none;'>" + Listdata[i].Specialization + "</td><td>" + Listdata[i].SpecializationText + "</td> <td>" + Listdata[i].PassingYearFormat + "</td>  <td>" + Listdata[i].Institute + "</td> <td>" + Listdata[i].StartDateFormat + "</td>  <td>" + Listdata[i].EndDateFormat + "</td>  <td>" + Listdata[i].Percentage + "</td><td> " + ' <input type="button" id="btnView_' + Listdata[i].Edu_PKID + '" value="View"  /> |' + ' <input type="button" id="btnEdi_' + Listdata[i].Edu_PKID + '" value="Edit"  /> |' + ' <input type="button" id="btnDel_' + Listdata[i].Edu_PKID + '" value="Delete"  /> |' + "</td></tr >";
+                                txt += "<tr id=" + Listdata[i].Edu_PKID + " ><td style='display: none;'>" + Listdata[i].Edu_PKID + "</td><td style='display: none;'>" + Listdata[i].Degree + "</td><td>" + Listdata[i].DegreeText + "</td><td style='display: none;'>" + Listdata[i].Specialization + "</td><td>" + Listdata[i].SpecializationText + "</td> <td>" + Listdata[i].PassingYearFormat + "</td>  <td>" + Listdata[i].Institute + "</td> <td>" + Listdata[i].StartDateFormat + "</td>  <td>" + Listdata[i].EndDateFormat + "</td>  <td>" + Listdata[i].Percentage + "</td><td> " + ' <input class="btn btn-info" type="button" id="btnView_' + Listdata[i].Edu_PKID + '" value="View"  /> |' + ' <input  class="btn btn-success" type="button" id="btnEdi_' + Listdata[i].Edu_PKID + '" value="Edit"  /> |' + ' <input class="btn btn-danger" type="button" id="btnDel_' + Listdata[i].Edu_PKID + '" value="Delete"  /> |' + "</td></tr >";
                             }
                             if (txt != "") {
                                 $("#tbl_EmployeeEducation").append(txt).removeClass("hidden");
@@ -648,7 +648,7 @@
 
     <input type="hidden" id="hdn_Edu_PKID" value="" name="hdn_Edu_PKID" />
     <div class="">
-        <div class="col-md-12" style="margin: 0px 6px 15px -36px; background-color: #31353D ">
+        <div class="col-md-12" style="margin: 10px 10px 10px -106px; background-color: #31353D ">
             <div class="pmd-tab-active-bar" style="width: 93.125px; left: 0px;"></div><ul class="nav nav-tabs" role="tablist" style="width: 325.578px;">
                 <li class="nav-item"><a id="About" style="margin: 0px 0px 0px -17px" class="nav-link active show" href="#about" aria-controls="about" role="tab" data-toggle="tab" aria-selected="true">About Employee</a></li>
                 <li class="nav-item"><a id="Education" class="nav-link" href="/CreateEmployee/AddEmployeeEducation" role="tab" data-toggle="tab" aria-selected="false">Education</a></li>
@@ -658,7 +658,7 @@
             </ul>
         </div>
         <div class="row">
-            <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
+            <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -95px;">
                 <form class="form-horizontal" role="form">
                     <h5 class="card-title mb-3">Education</h5>
                     <div class="form-row">

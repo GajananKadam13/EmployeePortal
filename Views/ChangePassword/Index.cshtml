@@ -1,0 +1,142 @@
+﻿@model EmployeePortal.Models.CT_ChangePassword
+@{
+    ViewBag.Title = "ChangePassword";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var PasswordChangeStatus = '@ViewBag.PasswordChangeStatus';
+        debugger;
+        if (PasswordChangeStatus != "") {
+            if (PasswordChangeStatus == "Wrong") {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        dataType: "html",
+                        url: '/CreateEmployee/CallCommanMessageModel',
+                        success: function (data) {
+
+                            $("#CommanMessageModel").show();
+                            $("#CommanMessageModel").find('.modal-title').text("Alert")
+                            $("#CommanMessageModel").find('.modal-body').text("Entered Current Password Is Wrong.");
+                            $('#btnYes').hide();
+                            $('#btnNo').text("Ok");
+                            $('#btnNo').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                              
+                            });
+
+                        },
+                    });
+            }
+        }
+            if (PasswordChangeStatus != "") {
+                if (PasswordChangeStatus == "Success") {
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            dataType: "html",
+                            url: '/CreateEmployee/CallCommanMessageModel',
+                            success: function (data) {
+
+                                $("#CommanMessageModel").show();
+                                $("#CommanMessageModel").find('.modal-title').text("Alert")
+                                $("#CommanMessageModel").find('.modal-body').text("Password Changed Successfully, Please Login Again.");
+                                $('#btnYes').hide();
+                                $('#btnNo').text("Ok");
+                                $('#btnNo').click(function (e) {
+                                    $("#CommanMessageModel").hide();
+                                    window.location.href = '/Login/Logout';
+                                });
+
+                            },
+                        });
+                }
+    
+
+
+
+        }
+         /*----------------------------------------------------*/
+        var CheckInOuStatus = '@ViewBag.CheckInOuStatus';
+        var InOut = CheckInOuStatus.split("_");
+        var In =InOut[0];
+        var Out =InOut[1];
+        if (In =="CheckIn") {
+            $('.GreenOnline').show();
+            $('.GreenOffline').hide();
+            $("#FunctionCheckInStatus").hide();
+        }
+        if (Out =="CheckOut") {
+            $('.GreenOnline').show();
+            $('.GreenOffline').hide();
+        }
+        if (In == "NotCheckIn" && Out == "NotCheckOut") {
+
+            $('.GreenOnline').hide();
+            $('.GreenOffline').show();
+        }
+     /*----------------------------------------------------*/
+
+    });
+</script>
+
+<h2 style="margin: 10px 10px 10px -98px;">Change Password</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="margin: -4px 8px 8px -94px; ">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-6 offset-md-3">
+                <span class="anchor" id="formChangePassword"></span>
+                @*<hr class="mb-5">*@
+                <div class="card card-outline-secondary">
+
+                    <div class="card card-outline-secondary">
+                        <div class="card-header">
+                            <h3 class="mb-0">Change Your Password</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" role="form" autocomplete="off">
+                                <div class="form-group">
+                                    <label for="inputPasswordOld">Current Password</label>
+                                    @*<input type="password" class="form-control" id="inputPasswordOld" required="">*@
+                                    @Html.EditorFor(model => model.CurrentPassword, new { htmlAttributes = new { @class = "form-control",@required = "", @id = "CurrentPassword", @placeholder = "Current Password", @autocomplete = "off" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew">New Password</label>
+                                    @*<input type="password" class="form-control" id="inputPasswordNew" required="">*@
+                                    @Html.EditorFor(model => model.NewPassword, new { htmlAttributes = new { @class = "form-control", @required = "", @id = "NewPassword", @placeholder = "New Password", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+                                    <span class="form-text small text-muted">
+                                        The password must be 8-20 characters, and must <em>not</em> contain spaces.
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNewVerify">Confirm Password</label>
+                                    @*<input type="password" class="form-control" id="inputPasswordNewVerify" required="">*@
+                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @required = "", @id = "ConfirmPassword", @placeholder = "Confirm Password", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    <span class="form-text small text-muted">
+                                        To confirm, type the new password again.
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" id="btn_Save" style="padding: 11px 67px 11px 66px;" class="btn btn-primary btn-lg float-right">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

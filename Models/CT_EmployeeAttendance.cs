@@ -13,5 +13,7 @@ namespace EmployeePortal.Models
         public string Weekday { get; set; }
         public string LogoutTime { get; set; }
         public string Month { get; set; }
+        public string Duration { get; set; }
+        
     }
 }

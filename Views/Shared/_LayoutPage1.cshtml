@@ -30,8 +30,8 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
-             /*---------------------------------------*/
-        debugger;
+             /*------ Layeout---------------------------------*/
+            debugger;
         var CheckInOuStatus = '@ViewBag.CheckInOuStatus';
         var InOut = CheckInOuStatus.split("_");
         var In =InOut[0];
@@ -39,16 +39,25 @@
         if (In =="CheckIn") {
             $('.GreenOnline').show();
             $('.GreenOffline').hide();
+            $('.GreenOfflineCircle').hide();
+            
+         
+            
             $("#FunctionCheckInStatus").hide();
         }
         if (Out =="CheckOut") {
             $('.GreenOnline').show();
-            $('.GreenOffline').hide();
+           $('.GreenOffline').hide();
+           $('.GreenOfflineCircle').hide();
+            
         }
         if (In == "NotCheckIn" && Out == "NotCheckOut") {
 
             $('.GreenOnline').hide();
             $('.GreenOffline').show();
+            $('.GreenOfflineCircle').show();
+           
+            
         }
 
         var EmpCheckInTime = '@ViewBag.EmpCheckInTime';
@@ -220,6 +229,22 @@
 
 
 
+            $(".ChangePasswordMainSideBar").click(function () {
+                localStorage.removeItem("Dashboardactive");
+                localStorage.removeItem("Dashboarddisplay");
+
+                localStorage.removeItem("Employeesactive");
+                localStorage.removeItem("Employeesdisplay");
+
+
+                localStorage.removeItem("Accountactive");
+                localStorage.removeItem("Accountdisplay");
+
+                localStorage.removeItem("ResetPasswordactive");
+                localStorage.removeItem("ResetPassworddisplay");
+            });
+
+
 
 
             $(document).ready(function () {
@@ -240,6 +265,14 @@
             });
             $("#btnLogout").click(function () {
                 window.location.href = '/Login/Logout';
+                return false;
+            })
+            $("#btnLogoutDown").click(function () {
+                window.location.href = '/Login/Logout';
+                return false;
+            })
+            $("#btnCalender").click(function () {
+                window.location.href = '/MonthlyCalender/Index';
                 return false;
             })
 
@@ -296,7 +329,7 @@
 
             <!-- Search Form -->
             <form class="col-md-6 col-lg-4 d-none d-md-block ml-lg-5 ml-md-2">
-                <div class="input-group pmd-search">
+                <div style="display:none;" class="input-group pmd-search">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">
                             <i class="material-icons md-dark pmd-icon-sm">search</i>
@@ -309,16 +342,16 @@
             <!-- Right Menu -->
 
             <div class="nav-item dropdown hide">
-                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action" aria-expanded="true"> Action <b class="caret"></b></a>
-                <div class="dropdown-menu hide">
+                <a href="#" data-toggle="dropdown" style="margin: 8px 14px 0px 864px; background-color: #3a3a3a; color: whitesmoke; font-weight: bold; " class="nav-link dropdown-toggle user-action" aria-expanded="true"> Action <b class="caret"></b></a>
+                <div class="dropdown-menu hide" style="margin :8px  14px 0px 796px;">
                     <a href="/EmployeeDetail?EmployeePKID=@Session["EmployeePKID"]" class="dropdown-item"><i class="fa-solid fa-user"></i> Profile</a>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-calendar-days"></i> Calendar</a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> Settings</a>
+                    <a id="btnCalender" href="" class="dropdown-item"><i class="fa-solid fa-calendar-days"></i> Calendar</a>
+                    @*<a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> Settings</a>*@
                     <div class="dropdown-divider"></div>
-                    <a href="" id="btnLogout" class="dropdown-item"><i class="fa-solid fa-outlet"></i> Logout</a>
+                    <a href="" id="btnLogout" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
                     @*href="Home/CheckIn?EmployeePKID=@Session["EmployeePKID"]&CheckInOutStatus='CheckIn'"*@
                     <a href="" id="FunctionCheckInStatus" class="dropdown-item"><i style="color:green" class="fa-solid fa-right-to-bracket"></i> Check In</a>
-                    <a href="" id="FunctionCheckOutStatus" class="dropdown-item"><i style="color:Red" class="glyphicon glyphicon-log-out"></i> Check Out</a>
+                    <a href="" id="FunctionCheckOutStatus" class="dropdown-item"><i style="color:Red" class="fa-solid fa-right-to-bracket"></i> Check Out</a>
                 </div>
             </div>
         </nav>
@@ -349,13 +382,21 @@
                             </strong>
                         </span>
                         <span class=" GeneralExtraColor">@Session["Designation"]</span>  @*/user-role/*@
-                        <span class="user-status GeneralExtraColor">
-                            <i style='color: green' class="fa fa-circle GreenOnline"></i>
-                            <span  class="GeneralExtraColor GreenOnline">Online</span>
-                            <i style='color: red' class="fa fa-circle GreenOffline"></i>
-                            <span class="GeneralExtraColor GreenOffline">Offline</span>
+                    <span class="user-status GeneralExtraColor">
+                       
+                        <span style="display: none;" class="GeneralExtraColor GreenOnline"> <i style='color: green;' class="fa fa-circle "></i>Online</span>
 
+                        @*<i style='color: green;display:none;' class="fa fa-circle GreenOnline"></i>
+        <span style="display: none;" class="GeneralExtraColor GreenOnline">Online</span>*@
+                        @*<i style='color: red ;display:none;' id="GreenOfflineCircle" class="fa fa-circle GreenOfflineCircle"></i>
+        <span style="display: none;" id="GreenOffline" class="GeneralExtraColor GreenOffline">Offline</span>*@
+
+                        <span style="display: none;" id="GreenOffline" class="GeneralExtraColor GreenOffline">
+                            <i style='color: red ;' class="fa fa-circle "></i>Offline
                         </span>
+
+
+                    </span>
                     </div>
                 </div>
                 <!-- sidebar-header  -->
@@ -386,51 +427,51 @@
                             <span>General</span>
                         </li>
                         @*<li class="sidebar-dropdown">
-                                <a href="#">
-                                    <i class="fa fa-tachometer-alt GeneralExtraColor"></i>
-                                    <span class="GeneralExtraColor">Dashboard</span>
-                                    <span class="badge badge-pill badge-warning ">New</span>
-                                </a>
-                                <div class="sidebar-submenu">
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                Dashboard 1
-                                                <span class="badge badge-pill badge-success ">Pro</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dashboard 2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Dashboard 3</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="sidebar-dropdown">
-                                <a href="#">
-                                    <i class="fa fa-shopping-cart GeneralExtraColor"></i>
-                                    <span class="GeneralExtraColor">E-commerce</span>
-                                    <span class="badge badge-pill badge-danger">3</span>
-                                </a>
-                                <div class="sidebar-submenu">
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                Products
+            <a href="#">
+                <i class="fa fa-tachometer-alt GeneralExtraColor"></i>
+                <span class="GeneralExtraColor">Dashboard</span>
+                <span class="badge badge-pill badge-warning ">New</span>
+            </a>
+            <div class="sidebar-submenu">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Dashboard 1
+                            <span class="badge badge-pill badge-success ">Pro</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">Dashboard 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Dashboard 3</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="sidebar-dropdown">
+            <a href="#">
+                <i class="fa fa-shopping-cart GeneralExtraColor"></i>
+                <span class="GeneralExtraColor">E-commerce</span>
+                <span class="badge badge-pill badge-danger">3</span>
+            </a>
+            <div class="sidebar-submenu">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Products
 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Orders</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Credit cart</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>*@
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">Orders</a>
+                    </li>
+                    <li>
+                        <a href="#">Credit cart</a>
+                    </li>
+                </ul>
+            </div>
+        </li>*@
                         <li class="sidebar-dropdown DashboardMainSideBar">
                             <a href="#">
                                 <!--i class="far fa-gem GeneralExtraColor"></i-->
@@ -470,8 +511,8 @@
                                     </li>
 
                                     @*<li>
-            <a href="#">Forms</a>
-        </li>*@
+                        <a href="#">Forms</a>
+                    </li>*@
                                 </ul>
                             </div>
                         </li>
@@ -502,74 +543,88 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="sidebar-dropdown  ChangePasswordMainSideBar">
+                            <a href="/ChangePassword/Index">
+                                <i class="fa fa-wrench"></i>
+                                <span class="GeneralExtraColor">Change Password</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-dropdown  MonthlyCalenderMainSideBar">
+                            <a href="/MonthlyCalender/Index">
+                                <i class="fa fa-calendar"></i>
+                                <span class="GeneralExtraColor">Calender</span>
+                            </a>
+
+                        </li>
 
                         @*<li class="sidebar-dropdown">
-                                <a href="#">
-                                    <i class="fa fa-chart-line GeneralExtraColor"></i>
-                                    <span class="GeneralExtraColor">Charts</span>
-                                </a>
-                                <div class="sidebar-submenu">
-                                    <ul>
-                                        <li>
-                                            <a href="#">Pie chart</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Line chart</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Bar chart</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Histogram</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="sidebar-dropdown">
-                                <a href="#">
-                                    <i class="fa fa-globe GeneralExtraColor"></i>
-                                    <span class="GeneralExtraColor">Maps</span>
-                                </a>
-                                <div class="sidebar-submenu">
-                                    <ul>
-                                        <li>
-                                            <a href="#">Google maps</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Open street map</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="header-menu">
-                                <span class="GeneralExtraColor">Extra</span>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-book GeneralExtraColor"></i>
-                                    <span class="GeneralExtraColor">Documentation</span>
-                                    <span class="badge badge-pill badge-primary">Beta</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-calendar GeneralExtraColor"></i>
-                                    <span class="GeneralExtraColor">Calendar</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-folder GeneralExtraColor"></i>
-                                    <span class="GeneralExtraColor">Examples</span>
-                                </a>
-                            </li>*@
+            <a href="#">
+                <i class="fa fa-chart-line GeneralExtraColor"></i>
+                <span class="GeneralExtraColor">Charts</span>
+            </a>
+            <div class="sidebar-submenu">
+                <ul>
+                    <li>
+                        <a href="#">Pie chart</a>
+                    </li>
+                    <li>
+                        <a href="#">Line chart</a>
+                    </li>
+                    <li>
+                        <a href="#">Bar chart</a>
+                    </li>
+                    <li>
+                        <a href="#">Histogram</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="sidebar-dropdown">
+            <a href="#">
+                <i class="fa fa-globe GeneralExtraColor"></i>
+                <span class="GeneralExtraColor">Maps</span>
+            </a>
+            <div class="sidebar-submenu">
+                <ul>
+                    <li>
+                        <a href="#">Google maps</a>
+                    </li>
+                    <li>
+                        <a href="#">Open street map</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="header-menu">
+            <span class="GeneralExtraColor">Extra</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-book GeneralExtraColor"></i>
+                <span class="GeneralExtraColor">Documentation</span>
+                <span class="badge badge-pill badge-primary">Beta</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-calendar GeneralExtraColor"></i>
+                <span class="GeneralExtraColor">Calendar</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-folder GeneralExtraColor"></i>
+                <span class="GeneralExtraColor">Examples</span>
+            </a>
+        </li>*@
                     </ul>
                 </div>
                 <!-- sidebar-menu  -->
             </div>
             <!-- sidebar-content  -->
             <div class="sidebar-footer">
-                <a href="#">
+                @*<a href="#">
                     <i class="fa fa-bell"></i>
                     <span class="badge badge-pill badge-warning notification">3</span>
                 </a>
@@ -580,15 +635,17 @@
                 <a href="#">
                     <i class="fa fa-cog"></i>
                     <span class="badge-sonar"></span>
-                </a>
-                <a href="#">
-                    <i class="fa fa-power-off"></i>
+                </a>*@
+                <a id="btnLogoutDown" href="">
+                    <i class="fa fa-power-off">
+                    </i>
+                    @*<a href="" id="btnLogout" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>*@
                 </a>
             </div>
         </nav>
         <!-- sidebar-wrapper  -->
         <main class="page-content">
-            <div style=" margin: 48px 0px 0px 48px;" class="container-fluid">
+            <div style=" margin: 13px 0px 0px 48px;" class="container-fluid">
                 @*<h2>Pro Sidebar</h2>
                     <hr>
                     <div class="row">

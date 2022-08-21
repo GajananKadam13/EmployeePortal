@@ -415,6 +415,7 @@ namespace EmployeePortal.DataLayer
                             obj.CreatedBy = Convert.ToInt32(reader["CreatedBy"].ToString());
                             obj.Status = reader["Status"].ToString();
                             obj.Password = reader["Password"].ToString();
+                            obj.Role = reader["Role"].ToString();
 
 
                             //-----------------------------------------------------------------------------------------------
@@ -1296,8 +1297,7 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
                         CT_CreateEmployee Obj_CreateEmployee = new CT_CreateEmployee();
 
                         Obj_CreateEmployee.EmployeePKID = Convert.ToInt32(rdr["EmployeePKID"].ToString());
-                        Obj_CreateEmployee.FirstName = rdr["FirstName"].ToString();
-                        Obj_CreateEmployee.Designation = rdr["Designation"].ToString();
+                        Obj_CreateEmployee.FirstName = rdr["ReporteeName"].ToString();
                         ObjCreateEmployeeModelList.Add(Obj_CreateEmployee);
                     }
                     con.Close();

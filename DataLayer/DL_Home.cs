@@ -161,13 +161,57 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
                             obj.Weekday = reader["Weekday"].ToString();
                             obj.LogoutTime = reader["LogoutTime"].ToString();
                             obj.Month = reader["Month"].ToString();
-
+                            obj.Duration = reader["Duration"].ToString();
+                            
 
                             CT_EmployeeAttendance_list.Add(obj);
                         }
                         return CT_EmployeeAttendance_list;
                     }
                     
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public List<CT_EmployeeAttendance> FnGetEmployeeAttendanceEveryMonth(int EmployeePKID, int MonthNumber)
+        {
+            List<CT_EmployeeAttendance> CT_EmployeeAttendance_list = new List<CT_EmployeeAttendance>();
+            try
+            {
+                var oSQLConn = new
+            SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToString());
+                using (oSQLConn)
+                {
+                    using (cmd = new System.Data.SqlClient.SqlCommand("sp_GetEmployeeAttendanceEveryMonth", oSQLConn))
+                    {
+
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@EmployeePKID", EmployeePKID);
+                        cmd.Parameters.AddWithValue("@MonthNumber", MonthNumber);
+                        oSQLConn.Open();
+                        reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            CT_EmployeeAttendance obj = new CT_EmployeeAttendance();
+                            obj.Att_PKID = Convert.ToInt32(reader["Att_PKID"].ToString());
+                            obj.EmployeePKID = Convert.ToInt32(reader["EmployeePKID"].ToString());
+                            obj.LogInTime = reader["LogInTime"].ToString();
+                            obj.Weekday = reader["Weekday"].ToString();
+                            obj.LogoutTime = reader["LogoutTime"].ToString();
+                            obj.Month = reader["Month"].ToString();
+                            obj.Duration = reader["Duration"].ToString();
+
+
+                            CT_EmployeeAttendance_list.Add(obj);
+                        }
+                        return CT_EmployeeAttendance_list;
+                    }
+
                 }
             }
             catch (Exception ex)

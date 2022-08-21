@@ -112,12 +112,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChangePasswordController.cs" />
     <Compile Include="Controllers\CreateEmployeeController.cs" />
     <Compile Include="Controllers\EmployeeDetailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
+    <Compile Include="Controllers\MonthlyCalenderController.cs" />
     <Compile Include="Controllers\PostNewVacancyController.cs" />
     <Compile Include="DataLayer\DL_Base.cs" />
+    <Compile Include="DataLayer\DL_ChangePassword.cs" />
     <Compile Include="DataLayer\DL_CreateEmployee.cs" />
     <Compile Include="DataLayer\DL_EmployeeDetail.cs" />
     <Compile Include="DataLayer\DL_Home.cs" />
@@ -127,6 +130,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CT_ChangePassword.cs" />
     <Compile Include="Models\CT_CreateEmployee.cs" />
     <Compile Include="Models\CT_EmployeeAttendance.cs" />
     <Compile Include="Models\CT_EmployeeDocuments.cs" />
@@ -179,6 +183,8 @@
     <Content Include="ReferenceResume\2test1.pdf" />
     <Content Include="ReferenceResume\Gajanan Kadam.pdf" />
     <Content Include="Views\Shared\ApproveRejectCandidateResume.cshtml" />
+    <Content Include="Views\ChangePassword\Index.cshtml" />
+    <Content Include="Views\MonthlyCalender\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

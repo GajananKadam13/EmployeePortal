@@ -80,7 +80,7 @@
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
                                 @*<input type="password" class="form-control" placeholder="password">*@
-                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder = "Password", @class = "form-control" } })
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder = "Password",@type = "password", @class = "form-control" } })
 
                             </div>
                             <div class="input-group form-group">

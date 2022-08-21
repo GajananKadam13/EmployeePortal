@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>View Applied Job</h2>
+<h2 style=" margin: 10px 10px -3px -90px;">View Applied Job</h2>
 <script type="text/javascript">
     function FnApproveReject(Refer_PKID) {
         $.ajax(
@@ -15,7 +15,7 @@
                 data: { Refer_PKID: Refer_PKID },
                 url: '/PostNewVacancy/ApproveRejectModel',
                 success: function (data) {
-                    debugger;
+                    
                     $('#CommanMessageModel').modal('show');
                     $('#CommanMessageModel .modal-title').html("Approve / Reject");
                     $('#CommanMessageModel .modal-body').html(data);
@@ -60,13 +60,13 @@
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="hdn_txt_Search" value="@ViewBag.searchEmployee" name="hdn_txt_Search" />
-    <input type="button" id="btnSearch" value="Search" style="margin:10px 7px -47px 368px;" onclick="Search()" class="btn btn-primary" />
+    <input type="button" id="btnSearch" value="Search" style="margin: 10px 7px -47px 264px;" onclick="Search()" class="btn btn-primary" />
 
 
     <div class="form-horizontal">
         <div class="col-12 col-sm-6 col-md-3">
             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
-                <input autocomplete="off" class="form-control text-box single-line" data-val="true" id="txt_Search" name="txt_Search" placeholder="Search by Status" type="text" value="">
+                <input autocomplete="off" class="form-control text-box single-line" data-val="true" style="margin-left: -106px;" id="txt_Search" name="txt_Search" placeholder="Search by Status" type="text" value="">
 
             </div>
         </div>

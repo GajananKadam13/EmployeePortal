@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-
+<h2  style=" margin: 10px 10px -3px -90px;">Post New Vacancy</h2>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -228,7 +228,7 @@
             document.getElementById("Note").disabled = false;
             document.getElementById("Description").disabled = false;
 
-            debugger;
+            
             var row = $(this).closest('tr');
             var btn_idArry = $(this).attr('id');
             var btn_Name = btn_idArry.split('_')[0];
@@ -357,9 +357,9 @@
     <div class="">
 
         <div class="row">
-            <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -30px;">
+            <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -96px;">
                 <form class="form-horizontal" role="form">
-                    <h5 class="card-title mb-3">Post New Vacancy</h5>
+                    @*<h5 class="card-title mb-3">Post New Vacancy</h5>*@
                     <hr style=" margin: 10px 10px 10px -62px;" />
                     <div class="form-row">
                         <div class="col-12 col-sm-6 col-md-3">

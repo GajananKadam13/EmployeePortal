@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -54,6 +55,22 @@ namespace EmployeePortal.Controllers
 
 
             }
+
+            if (obj.ProfilePictureName != null)
+            {
+                ViewBag.ProfilePictureName = obj.ProfilePictureName;
+            }
+            if (obj.DateOfBirth != null)
+            {
+                obj.DateOfBirth = Convert.ToDateTime(obj.DateOfBirth.ToString());
+                ViewBag.DateOfBirth = Convert.ToString(obj.DateOfBirth.Date.ToString("yyyy/MM/dd"));
+            }
+            if (obj.DateofJoining != null)
+            {
+                obj.DateofJoining = Convert.ToDateTime(obj.DateofJoining.ToString());
+                ViewBag.DateofJoining = Convert.ToString(obj.DateofJoining.Date.ToString("yyyy/MM/dd"));
+            }
+           
             if (obj.MaritalStatus != "")
             {
                 ViewBag.MaritalStatus = obj.MaritalStatus;
@@ -67,19 +84,51 @@ namespace EmployeePortal.Controllers
                 ViewBag.Department = obj.Department;
             }
 
-            //if (obj.Password != null)
-            //{
-            //    
-            //    //ModelState["Password"].Errors.Clear();
-            //    //obj.ConfirmPassword = Obj_CE.Password;
-            //}
+            if (obj.Designation != "")
+            {
+                ViewBag.Designation = obj.Designation;
+            }
+            if (obj.ReportingEmployee != "")
+            {
+                ViewBag.ReportingEmployee = obj.ReportingEmployee;
+            }
+            if (obj.TypeofEmployee != "")
+            {
+                ViewBag.TypeofEmployee = obj.TypeofEmployee;
+            }
+            if (obj.Role != "")
+            {
+                ViewBag.Role = obj.Role;
+            }
+            if (obj.Country != "")
+            {
+                ViewBag.Country = obj.Country;
+            }
+            if (obj.Description != "")
+            {
+                ViewBag.Description = obj.Description;
+            }
 
-            //ModelState["Password"].Errors.Clear();
+            //-------------
+            List<CT_CreateEmployee> objemp = objdl_CreateUser.FnForfecth_EmployeeReportee.ToList();
+            ViewBag.ReporteeEmployee = objemp;
 
-            //Obj_CE
+            //-----------------------------
 
-            //--------For Hide and show Onlien and Offline----------
-            DL_Home ObjDlHome = new DL_Home();
+
+         //if (obj.Password != null)
+         //{
+         //    
+         //    //ModelState["Password"].Errors.Clear();
+         //    //obj.ConfirmPassword = Obj_CE.Password;
+         //}
+
+         //ModelState["Password"].Errors.Clear();
+
+         //Obj_CE
+
+         //--------For Hide and show Onlien and Offline----------
+         DL_Home ObjDlHome = new DL_Home();
             string status = ObjDlHome.FnEmployeeCheckInOut( Convert.ToInt32(Session["EmployeePKID"]));
             ViewBag.CheckInOuStatus = status;
 
@@ -88,7 +137,7 @@ namespace EmployeePortal.Controllers
 
 
         [HttpPost]  //Add Employee Information
-        public ActionResult Index(CT_CreateEmployee Obj_CE, string gender, string MaritalStatus, HttpPostedFileBase ProfilePictureFile, string TypeofEmployee, DateTime? DateofJoining = null, DateTime? DateofBirth = null, string ddlDepartment = "", string ddlDesignation = "", string ddlReportingEmployee = "", string ddlCountry = "", string ddlRole = "")
+        public ActionResult Index(CT_CreateEmployee Obj_CE, string gender, string MaritalStatus, HttpPostedFileBase ProfilePictureFile, string TypeofEmployee, DateTime? DateofJoining = null, DateTime? DateofBirth = null, string ddlDepartment = "", string ddlDesignation = "", string ddlReportingEmployee = "", string ddlCountry = "", string ddlRole = "",string hdn_ProfilePictureName = "")
         {
             Obj_CE.Department = ddlDepartment;
             Obj_CE.Designation = ddlDesignation;
@@ -117,8 +166,8 @@ namespace EmployeePortal.Controllers
                 ModelState["Role"].Errors.Clear();
             }
 
-            
 
+            //-----For Insert  --START
             if (ProfilePictureFile != null)
             {
                 if (ProfilePictureFile.FileName != "")
@@ -127,7 +176,15 @@ namespace EmployeePortal.Controllers
                     ModelState["ProfilePictureName"].Errors.Clear();
                 }
             }
+            //End
 
+            //For Update --START
+            if(ProfilePictureFile == null && hdn_ProfilePictureName!="")
+            {
+                Obj_CE.ProfilePictureName = hdn_ProfilePictureName;
+                ModelState["ProfilePictureName"].Errors.Clear();
+            }
+            //End
 
             if (ModelState.IsValid)
             {
@@ -169,7 +226,16 @@ namespace EmployeePortal.Controllers
                 {
                     Obj_CE.CreatedBy = 0;//Convert.ToInt32(Session["EmployeePKID"]);
                 }
+
+              
+                //if(Session["LastEmployeeID"] !=null)
+                //{
+                //    int EmployeePKID = Convert.ToInt32(Session["LastEmployeeID"]);
+                //    Obj_CE.EmployeePKID = EmployeePKID;
+                //}
+
                 
+
                 string returnValue = objdl_CreateUser.FnCreateEmployee(Obj_CE);
                 string[] arrayVal = returnValue.Split('_');
                 string status = arrayVal[0];
@@ -179,6 +245,10 @@ namespace EmployeePortal.Controllers
                     Session["LastEmployeeID"] = LastEmployeeID;
                     ViewBag.Message = "Success";
                 }
+                if (status == "Update")
+                {
+                    ViewBag.Message = "Update";
+                }
             }
             return View();
         }
@@ -186,6 +256,12 @@ namespace EmployeePortal.Controllers
         [HttpGet]
         public ActionResult AddEmployeeEducation(string hdn_Message)
         {
+            //--------For Hide and show Onlien and Offline----------
+            DL_Home ObjDlHome = new DL_Home();
+            string status = ObjDlHome.FnEmployeeCheckInOut(Convert.ToInt32(Session["EmployeePKID"]));
+            ViewBag.CheckInOuStatus = status;
+            //-------------------------------
+
             CT_EmployeeEducation obj = new CT_EmployeeEducation();
             List<CT_EmployeeEducation> list = new List<CT_EmployeeEducation>();
             if (TempData["EmployeeEducation"] != null)
@@ -383,7 +459,12 @@ namespace EmployeePortal.Controllers
         //------START-----AddEmployeeExperience-----------------------------------
         public ActionResult AddEmployeeExperience(string hdn_Message)
         {
-
+            DL_Home Obj_dL_Home = new DL_Home();
+            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
+            string status = Obj_dL_Home.FnEmployeeCheckInOut(EmployeePKID);
+            //----START----For Hide and show Onlien and Offline----------
+            ViewBag.CheckInOuStatus = status;
+            //---END-----For Hide and show Onlien and Offline----------
             return View();
         }
 
@@ -505,6 +586,12 @@ namespace EmployeePortal.Controllers
         ////------START--------AddEmployeeDocumetns--------
         public ActionResult AddEmployeeDocumetns(string hdn_Message)
         {
+            DL_Home Obj_dL_Home = new DL_Home();
+            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
+            string status = Obj_dL_Home.FnEmployeeCheckInOut(EmployeePKID);
+            //----START----For Hide and show Onlien and Offline----------
+            ViewBag.CheckInOuStatus = status;
+            //---END-----For Hide and show Onlien and Offline----------
             CT_EmployeeDocuments Obj_EDo = new CT_EmployeeDocuments();
             return View();
         }
@@ -603,6 +690,12 @@ namespace EmployeePortal.Controllers
         ////------START--------AddEmployeeSalary--------
         public ActionResult AddEmployeeSalary(string hdn_Message)
         {
+            DL_Home Obj_dL_Home = new DL_Home();
+            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
+            string status = Obj_dL_Home.FnEmployeeCheckInOut(EmployeePKID);
+            //----START----For Hide and show Onlien and Offline----------
+            ViewBag.CheckInOuStatus = status;
+            //---END-----For Hide and show Onlien and Offline----------
             CT_EmployeeSalary Obj_EDo = new CT_EmployeeSalary();
             return View();
         }

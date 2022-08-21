@@ -1,0 +1,122 @@
+﻿@using PagedList.Mvc
+@model  PagedList.IPagedList<EmployeePortal.Models.CT_EmployeeAttendance>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2   style="margin: 10px 10px 10px -98px;">Monthly Attendance Calender</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#btn_Prev').on('click', function () {
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: "html",
+                    url: '/MonthlyCalender/GetPreviousMonth',
+                    success: function (data) {
+                        window.location.href = '/MonthlyCalender/Index';
+                    },
+
+                });
+        });
+
+        $('#btn_Next').on('click', function () {
+            $.ajax(
+                {
+                    type: 'POST',
+                    dataType: "html",
+                    url: '/MonthlyCalender/GetNextMonth',
+                    success: function (data) {
+                        window.location.href = '/MonthlyCalender/Index';
+                    },
+
+                });
+        });
+
+        
+       
+    });
+</script>
+
+@using (Html.BeginForm("Index", "MonthlyCalender", new { id = "MonthlyCalender" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div style=" margin: 7px -1px -30px -97px;"><input class="btn btn-success" type="button" id="btn_Prev" name="btn_Prev" value="Previous Month"/></div>
+    <div style=" margin: -1px 5px 0px 1392px;"><input class="btn btn-success" type="button" id="btn_Next" name="btn_Prev" value="Next Month"/></div>
+    <div style="margin: -4px 8px 8px -94px; ">
+        <div style="margin: 10px 10px 10px -10px;">
+            <div>
+                <table id="tbl_Attendacne" class="table">
+                    <tr>
+                        <th style="display:none;">
+                            Att_PKID
+                        </th>
+                        <th style="display:none;">
+                            EmployeePKID
+                        </th>
+                        <th>
+                            Log In Time
+                        </th>
+                        <th>
+                            Weekday
+                        </th>
+                        <th>
+                            Log Out Time
+                        </th>
+                        <th>
+                            Month
+                        </th>
+
+                        <th>
+                            Duration
+                        </th>
+
+                    </tr>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td style="display:none;">
+                                @Model[i].Att_PKID
+                            </td>
+                            <td style="display:none;">
+                                @Model[i].EmployeePKID
+                            </td>
+                            <td>
+                                @Model[i].LogInTime
+                            </td>
+                            <td>
+                                @Model[i].Weekday
+                            </td>
+                            <td>
+                                @Model[i].LogoutTime
+                            </td>
+                            <td>
+                                @Model[i].Month
+                            </td>
+                            <td>
+                                @Model[i].Duration
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+                <div id="container" style="margin-left: 20px">
+                    <p></p>
+                    <p></p>
+
+                    <div class="pagination" style="margin-left: 400px; ">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                        of @Model.PageCount  &nbsp; &nbsp; &nbsp; &nbsp;
+                        <p> @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))</p>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

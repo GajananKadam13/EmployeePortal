@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>View Employee</h2>
+<h2 style=" margin: 10px 10px 10px -88px;">View Employee</h2>
 <style>
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -83,14 +83,14 @@
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="hdn_txt_Search" value="@ViewBag.searchEmployee" name="hdn_txt_Search" />
-    <input type="button" id="btnSearch" value="Search" style="margin:10px 7px -47px 368px;" onclick="Search()" class="btn btn-primary" />
+    <input type="button" id="btnSearch" value="Search" style="margin: 10px 7px -47px 263px;"  onclick="Search()" class="btn btn-primary" />
     <input type="hidden" id="hdn_Message" value="@ViewBag.Message" name="hdn_Message" />
     <input type="hidden" id="hdn_Submit" value="@ViewBag.Submit" name="hdn_Submit" />
 
     <div class="form-horizontal">
         <div class="col-12 col-sm-6 col-md-3">
             <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
-                <input autocomplete="off" class="form-control text-box single-line" data-val="true" id="txt_Search" style="margin-left:4px" name="txt_Search" placeholder="Search by EmailId" type="text" value="">
+                <input autocomplete="off" class="form-control text-box single-line" data-val="true" id="txt_Search" style="margin-left:-106px" name="txt_Search" placeholder="Search by EmailId" type="text" value="">
 
             </div>
         </div>
