@@ -1,0 +1,151 @@
+﻿@model EmployeePortal.Models.CT_Leave
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2 style=" margin: 10px 10px -3px -90px;">HR Approve / Reject Leaves</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
+         var ReturnStatus = '@ViewBag.returnStatus';
+        if (ReturnStatus == "Success" || ReturnStatus == "Rejected") {
+
+                $.ajax(
+                    {
+                        type: 'POST',
+                        dataType: "html",
+                        url: '/CreateEmployee/CallCommanMessageModel',
+                        success: function (data) {
+
+                            $("#CommanMessageModel").show();
+                            $("#btnNo").text("Ok");
+                            $("#CommanMessageModel").find('.modal-title').text("Alert")
+                            $("#CommanMessageModel").find('.modal-body').text("Your response submited successfully.");
+
+                            $('#btnNo').click(function (e) {
+                                $("#CommanMessageModel").hide();
+                            });
+                            //$('#btnYes').click(function (e) {
+                            //    $("#CommanMessageModel").hide();
+                            //    window.location.href = '/CreateEmployee/AddEmployeeSalary';
+                            //});
+                            $('#btnYes').hide();
+                        },
+                    });
+
+        }
+
+        GetEmployeeApplyLeaveApproveRejectHR();
+        function GetEmployeeApplyLeaveApproveRejectHR() {
+            $.ajax(
+                {
+                    type: 'GET',
+                    dataType: 'JSON',
+                    url: '/HRApproveRejectLeaves/GetEmployeeApplyLeaveApproveRejectHR',
+                    data: {},
+                    success:
+                        function (response) {
+                            var Listdata = JSON.parse(response)
+                            var len = Listdata.length;
+                            var txt = "";
+                            for (var i = 0; i < len; i++) {
+
+                                txt += "<tr id=" + Listdata[i].LeavePKID + " ><td style='display: none;'>" + Listdata[i].LeavePKID + "</td><td style='display: none;'>" + Listdata[i].EmployeePKID + "</td><td>" + Listdata[i].Leavetype + "</td><td>" + Listdata[i].FromdateFormat + "</td><td>" + Listdata[i].TodateFormat + "</td><td style='display: none;'>" + Listdata[i].ContactDetails + "</td><td style='display: none;'>" + Listdata[i].Reason + "</td><td>" + Listdata[i].CreatedOnFormat + "</td><td >" + Listdata[i].ManagerApproveRejectStatus + "</td><td style='display: none;'>" + Listdata[i].ManagerApproveRejectComment + "</td><td>" + Listdata[i].HRApproveRejectStatus + "</td><td style='display: none;'>" + Listdata[i].HRApproveRejectComment + "</td><td>" + Listdata[i].EmployeeName +"</td><td>" + ' <input  class="btn btn-info" type="button" id="btnView_' + Listdata[i].LeavePKID + '" value="View"  /> ' + "</td></tr >";
+                            }
+                            if (txt != "") {
+                                $("#tbl_EmployeeApplyLeaveApproveRejectHR").append(txt).removeClass("hidden");
+                            }
+                        },
+                    error:
+                        function (response) {
+                            alert("Error: " + response);
+                        }
+                });
+        }
+
+
+
+        //------View Table----------------------------
+        $('#tbl_EmployeeApplyLeaveApproveRejectHR').on('click', 'input', function () {
+            debugger;
+            var row = $(this).closest('tr');
+            var btn_idArry = $(this).attr('id');
+            var btn_Name = btn_idArry.split('_')[0];
+            var btn_id = btn_idArry.split('_')[1];
+
+
+            if (btn_Name == "btnView") {
+                ViewApproveRejectLeaves(btn_id);
+            }
+        });
+    });
+
+    function ViewApproveRejectLeaves(btn_id) {
+        $.ajax(
+            {
+                type: 'POST',
+                dataType: 'html',
+                data: { LeavePKID: btn_id },
+                url: '/HRApproveRejectLeaves/CallAproveRejectPartialHR',
+                success:
+                    function (response) {
+                        $('#ApproveRejectLeavesModal').modal('show');
+                        $('#ApproveRejectLeavesModal .modal-title').html("Approve / Reject Leaves");
+                        $('#ApproveRejectLeavesModal .modal-body').html(response);
+                    },
+                error:
+                    function (response) {
+                        alert("Error: " + response);
+                    }
+            });
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" id="hdn_Message" value="@ViewBag.Message" name="hdn_Message" />
+    <input type="hidden" id="hdn_Submit" value="@ViewBag.Submit" name="hdn_Submit" />
+    <input type="hidden" id="hdn_LeavePKID" value="" name="hdn_LeavePKID" />
+
+    <div class="">
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-1" style=" margin: 7px -10px -3px -95px;">
+                <form class="form-horizontal" role="form">
+                    <br />
+                    @*----------*@
+                    <div>
+                        <table class="table " id="tbl_EmployeeApplyLeaveApproveRejectHR">
+                            <tr>
+                                @*<thead>*@
+                                <th style="display:none;" scope="col">LeavePKID</th>
+                                <th style="display:none;" scope="col">EmployeePKID</th>
+                                <th scope="col">Leave Type</th>
+                                <th scope="col">From Date</th>
+                                <th scope="col">To Date</th>
+                                <th style="display:none;" scope="col">Contact Details</th>
+                                <th style="display:none;" scope="col">Reason</th>
+                                <th scope="col">Created On</th>
+                                <th scope="col">Manager Status</th>
+                                <th style="display:none;" scope="col">Manager Comment</th>
+                                <th scope="col">HR Status</th>
+                                <th style="display:none;" scope="col">HR Comment</th>
+                                <th scope="col">Employee Name</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    @*-------------*@
+
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+}

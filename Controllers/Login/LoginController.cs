@@ -37,7 +37,8 @@ namespace EmployeePortal.Controllers.Login
 
                     Session["EmployeeName"] = Name[0] +' '+Name[2];
                     string Designation = Name[5];
-                    if(Designation =="1")
+                    Session["Role"] = dt.Rows[0]["Role"].ToString();
+                    if (Designation =="1")
                     {
                         Session["Designation"] = "HR";
                     }

@@ -1,0 +1,126 @@
+﻿@model int
+
+@{
+
+
+    var EmployeePKID = @ViewBag.EmployeePKID;
+    var LeaveType = @ViewBag.LeaveType;
+    var FromDate = @ViewBag.FromDate;
+    var ToDate = @ViewBag.ToDate;
+    var ContactDetails = @ViewBag.ContactDetails;
+    var Reason = @ViewBag.Reason;
+    var CreatedOn = @ViewBag.CreatedOn;
+    var ManagerApproveRejectStatus = @ViewBag.ManagerApproveRejectStatus;
+    var ManagerApproveRejectComment = @ViewBag.ManagerApproveRejectComment;
+    var HRApproveRejectStatus = @ViewBag.HRApproveRejectStatus;
+    var HRApproveRejectComment = @ViewBag.HRApproveRejectComment;
+}
+
+
+<html>
+<head>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.LeaveType').text('@LeaveType')
+            $('.FromDate').text('@FromDate')
+            $('.ToDate').text('@ToDate')
+            $('.ContactDetails').text('@ContactDetails')
+            $('.Reason').text('@Reason')
+            $('.CreatedOn').text('@CreatedOn')
+            $('.ManagerStatus').text('@ManagerApproveRejectStatus')
+            $('.ManagerComment').text('@ManagerApproveRejectComment')
+            $('.HRStatus').text('@HRApproveRejectStatus')
+            $('.HRComment').text('@HRApproveRejectComment')
+
+
+
+            $('#btn_SubmitApproveReject').on('click', function () {
+                var Counter = 0;
+                if ($('#Comment').val() == "") {
+                    $('#error_msg_Comment').show();
+                    Counter++;
+                }
+                else {
+                    $('#error_msg_Comment').hide();
+                }
+                if ($('#ddlApproveReject').val() == "") {
+                    $('#error_msg_ddlApproveReject').show();
+                    Counter++;
+                }
+                else {
+                    $('#error_msg_ddlApproveReject').hide();
+                }
+
+                if (Counter == 0) {
+
+                }
+                else {
+                    return false;
+                }
+
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    @using (Html.BeginForm("ApproveRejectLeavHR", "HRApproveRejectLeaves", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div>
+            <div class="form-row">
+                <div class="col-md-12">
+                    <h6>Leave type : <span class="LeaveType" id="LeaveType"></span> &nbsp;&nbsp;&nbsp;  | &nbsp;&nbsp;&nbsp; From Date : <span class="FromDate" id="FromDate"></span> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; To Date : <span class="ToDate" id="ToDate"></span> &nbsp;&nbsp;&nbsp; </h6><br />
+
+                    <h6>Contact Details : <span class="ContactDetails" id="ContactDetails"></span> &nbsp;&nbsp;&nbsp;  | &nbsp;&nbsp;&nbsp; Applied On : <span class="CreatedOn" id="CreatedOn"></span> </h6> <br />
+
+                    <h6>Reason : <span class="Reason" id="Reason"></span></h6><br />
+
+                    <h6>Manager Status : <span class="ManagerStatus" id="ManagerStatus"></span> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Manager Comment : <span class="ManagerComment" id="ManagerComment"></span></h6><br />
+
+                    <h6>HR Status : <span class="HRStatus" id="HRStatus"></span> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; HR Comment : <span class="HRComment" id="HRComment"></span></h6><br />
+                </div>
+            </div>
+
+            <hr />
+            <div class="form-row">
+                <div class="col-12 col-sm-6 ">
+                    <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                        <label class="control-label" for="Comment"> Comment</label>
+                        <input class="form-control text-box single-line" id="Comment" name="Comment" placeholder="Comment" type="text" value="">
+                        <span class="text-danger" id="error_msg_Comment" style="display:none">The Comment field is required.</span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 ">
+                    <div class="form-group pmd-textfield pmd-textfield-floating-label pmd-textfield-floating-label-completed">
+                        <label class=" control-label">Approve / Reject</label>
+                        <div class="">
+                            <select id="ddlApproveReject" name="ddlApproveReject" class="form-control">
+                                <option value="" selected="">Choose ...</option>
+                                <option value="Approve"> Approve</option>
+                                <option value="Reject"> Reject</option>
+                            </select>
+                        </div>
+                        <span class="text-danger" id="error_msg_ddlApproveReject" style="display:none">The Approve / Reject field is required.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class='col-md-12'>
+                    @if (HRApproveRejectStatus != "Approve")
+                    {
+                        <input type='submit' value='Save' class='btn btn-primary' name='btn_SubmitApproveReject' id='btn_SubmitApproveReject' />
+                    }
+
+                </div>
+            </div>
+
+            <input type="hidden" id="hdn_LeavePKID" value="@Model" name="hdn_LeavePKID" />
+        </div>
+
+
+    }
+</body>
+</html>

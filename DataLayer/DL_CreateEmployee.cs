@@ -1307,5 +1307,33 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
             }
         }
 
+
+        public IEnumerable<CT_CreateEmployee> FnForfecth_AllEmployee
+        {
+            get
+            {
+                List<CT_CreateEmployee> ObjCreateEmployeeModelList = new List<CT_CreateEmployee>();
+
+                using (con)
+                {
+                    SqlCommand cmd = new SqlCommand("spFetchAllEmployee", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        CT_CreateEmployee Obj_CreateEmployee = new CT_CreateEmployee();
+
+                        Obj_CreateEmployee.EmployeePKID = Convert.ToInt32(rdr["EmployeePKID"].ToString());
+                        Obj_CreateEmployee.FirstName = rdr["ReporteeName"].ToString();
+                        ObjCreateEmployeeModelList.Add(Obj_CreateEmployee);
+                    }
+                    con.Close();
+                }
+
+                return ObjCreateEmployeeModelList;
+            }
+        }
+
     }
 }

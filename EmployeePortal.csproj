@@ -112,6 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ApproveRejectLeavesController.cs" />
+    <Compile Include="Controllers\HRApproveRejectLeavesController.cs" />
+    <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\ChangePasswordController.cs" />
     <Compile Include="Controllers\CreateEmployeeController.cs" />
     <Compile Include="Controllers\EmployeeDetailController.cs" />
@@ -119,17 +122,23 @@
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\MonthlyCalenderController.cs" />
     <Compile Include="Controllers\PostNewVacancyController.cs" />
+    <Compile Include="Controllers\TotalBalanceLeaveEmployeeController.cs" />
+    <Compile Include="DataLayer\DL_ApproveRejectLeaves.cs" />
+    <Compile Include="DataLayer\DL_ApproveRejectLeavesHR.cs" />
     <Compile Include="DataLayer\DL_Base.cs" />
     <Compile Include="DataLayer\DL_ChangePassword.cs" />
     <Compile Include="DataLayer\DL_CreateEmployee.cs" />
     <Compile Include="DataLayer\DL_EmployeeDetail.cs" />
     <Compile Include="DataLayer\DL_Home.cs" />
+    <Compile Include="DataLayer\DL_Leave.cs" />
     <Compile Include="DataLayer\DL_Login.cs" />
     <Compile Include="DataLayer\DL_PostNewVacancy.cs" />
+    <Compile Include="DataLayer\DL_TotalBalanceLeaveEmployee.cs" />
     <Compile Include="DataLayer\DL_UploadResume.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CT_AddBalanceLeave.cs" />
     <Compile Include="Models\CT_ChangePassword.cs" />
     <Compile Include="Models\CT_CreateEmployee.cs" />
     <Compile Include="Models\CT_EmployeeAttendance.cs" />
@@ -137,6 +146,7 @@
     <Compile Include="Models\CT_EmployeeEducation.cs" />
     <Compile Include="Models\CT_EmployeeExperience.cs" />
     <Compile Include="Models\CT_EmployeeSalary.cs" />
+    <Compile Include="Models\CT_Leave.cs" />
     <Compile Include="Models\CT_Login.cs" />
     <Compile Include="Models\CT_Parent_Employee.cs" />
     <Compile Include="Models\CT_PostNewJobs.cs" />
@@ -185,6 +195,13 @@
     <Content Include="Views\Shared\ApproveRejectCandidateResume.cshtml" />
     <Content Include="Views\ChangePassword\Index.cshtml" />
     <Content Include="Views\MonthlyCalender\Index.cshtml" />
+    <Content Include="Views\Leave\Index.cshtml" />
+    <Content Include="Views\Leave\AddLeave.cshtml" />
+    <Content Include="Views\ApproveRejectLeaves\Index.cshtml" />
+    <Content Include="Views\Shared\_ApproveRejPartial.cshtml" />
+    <Content Include="Views\HRApproveRejectLeaves\Index.cshtml" />
+    <Content Include="Views\Shared\_ApproveRejPartialHR.cshtml" />
+    <Content Include="Views\TotalBalanceLeaveEmployee\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -197,6 +214,7 @@
     <Folder Include="Bootstrap\" />
     <Folder Include="Filter\" />
     <Folder Include="JS\" />
+    <Folder Include="Views\ApplyLeave\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
