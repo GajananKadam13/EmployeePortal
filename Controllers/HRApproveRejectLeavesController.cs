@@ -16,6 +16,11 @@ namespace EmployeePortal.Controllers
         // GET: HRApproveRejectLeaves
         public ActionResult Index()
         {
+            DL_Home Obj_dL_Home = new DL_Home();
+            int EmployeePKID = Convert.ToInt32(Session["EmployeePKID"]);
+            string status = Obj_dL_Home.FnEmployeeCheckInOut(EmployeePKID);
+            //----START----For Hide and show Onlien and Offline----------
+            ViewBag.CheckInOuStatus = status;
             ViewBag.returnStatus = TempData["returnStatus"];
             return View();
         }

@@ -8,9 +8,6 @@
 
 <link href="~/CSS/Home2.css" rel="stylesheet" />
 
-
-
-
 <head>
     <meta name="viewport" content="width=device-width" />
     @*<title>@ViewBag.Title</title>*@
@@ -563,186 +560,241 @@
                 </ul>
             </div>
         </li>*@
-                        <li class="sidebar-dropdown DashboardMainSideBar">
-                            <a href="#">
-                                <!--i class="far fa-gem GeneralExtraColor"></i-->
-                                <i class="fa-solid fa-gauge"></i>
-                                <span class="GeneralExtraColor">Dashboard</span>
-                            </a>
-                            <div class="sidebar-submenu DashboardSubSideBar">
-                                <ul>
-                                    <li>
-                                        <a href="/Home/Index"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Dashboard</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="sidebar-dropdown EmployeesMainSideBar">
-                            <a href="#">
-                                <i class="fa-solid fa-person"></i>
-                                <span class="GeneralExtraColor">Employees</span>
-                            </a>
-                            <div class="sidebar-submenu EmployeesSubSideBar">
-                                <ul>
-                                    <li>
-                                        @*<a href="#">General</a>*@
-                                        <a href="/CreateEmployee/Index"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Create Employee</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="/CreateEmployee/ViewEmployee"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">View Employee List</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="/CreateEmployee/ViewEmployee"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Employee Detail</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="/PostNewVacancy/Index"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Post New Vacancy</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="/PostNewVacancy/ViewAppliedJob"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">View Applied Job</span></a>
-                                    </li>
+                        @if (HttpContext.Current.Session["Role"].ToString() == "1" || HttpContext.Current.Session["Role"].ToString() == "2" || HttpContext.Current.Session["Role"].ToString() == "3" || HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
 
-                                    @*<li>
-                        <a href="#">Forms</a>
-                    </li>*@
-                                </ul>
-                            </div>
+                            <li class="sidebar-dropdown DashboardMainSideBar">
+                                <a href="#">
+                                    <!--i class="far fa-gem GeneralExtraColor"></i-->
+                                    <i class="fa-solid fa-gauge"></i>
+                                    <span class="GeneralExtraColor">Dashboard</span>
+                                </a>
+                                <div class="sidebar-submenu DashboardSubSideBar">
+                                    <ul>
+                                        <li>
+                                            <a href="/Home/Index"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Dashboard</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "1" || HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown EmployeesMainSideBar">
+                                <a href="#">
+                                    <i class="fa-solid fa-person"></i>
+                                    <span class="GeneralExtraColor">Employees</span>
+                                </a>
+                                <div class="sidebar-submenu EmployeesSubSideBar">
+                                    <ul>
+                                        <li>
+                                            @*<a href="#">General</a>*@
+                                            <a href="/CreateEmployee/Index"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Create Employee</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/CreateEmployee/ViewEmployee"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">View Employee List</span></a>
+                                        </li>
+                                        @*<li>
+                            <a href="/CreateEmployee/ViewEmployee"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Employee Detail</span></a>
+                        </li>*@
+                                        @*<li>
+                            <a href="/PostNewVacancy/Index"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Post New Vacancy</span></a>
                         </li>
-                        <li class="sidebar-dropdown AccountMainSideBar">
-                            <a href="#">
-                                <i class="fa-solid fa-building-columns"></i>
-                                <span class="GeneralExtraColor">Account</span>
-                            </a>
-                            <div class="sidebar-submenu AccountSubSideBar">
-                                <ul>
-                                    <li>
-                                        <a href="/EmployeeDetail?EmployeePKID=@Session["EmployeePKID"]"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">View Profile</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        <li>
+                            <a href="/PostNewVacancy/ViewAppliedJob"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">View Applied Job</span></a>
+                        </li>*@
 
-                        <li class="sidebar-dropdown ResetPasswordMainSideBar">
-                            <a href="#">
-                                <i class="fa-solid fa-key"></i>
-                                <span class="GeneralExtraColor">Reset Password</span>
-                            </a>
-                            <div class="sidebar-submenu ResetPasswordSubSideBar">
-                                <ul>
-                                    <li>
-                                        <a href="/Login/ResetPassword"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Reset Password</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="sidebar-dropdown  ChangePasswordMainSideBar">
-                            <a href="/ChangePassword/Index">
-                                <i class="fa fa-wrench"></i>
-                                <span class="GeneralExtraColor">Change Password</span>
-                            </a>
+                                        @*<li>
+                            <a href="#">Forms</a>
+                        </li>*@
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "1" || HttpContext.Current.Session["Role"].ToString() == "2" || HttpContext.Current.Session["Role"].ToString() == "3" || HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown AccountMainSideBar">
+                                <a href="#">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                    <span class="GeneralExtraColor">Account</span>
+                                </a>
+                                <div class="sidebar-submenu AccountSubSideBar">
+                                    <ul>
+                                        <li>
+                                            <a href="/EmployeeDetail?EmployeePKID=@Session["EmployeePKID"]"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">View Profile</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "1" || HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown ResetPasswordMainSideBar">
+                                <a href="#">
+                                    <i class="fa-solid fa-key"></i>
+                                    <span class="GeneralExtraColor">Reset Password</span>
+                                </a>
+                                <div class="sidebar-submenu ResetPasswordSubSideBar">
+                                    <ul>
+                                        <li>
+                                            <a href="/Login/ResetPassword"><i aria-hidden="true"></i><span class="hidden-xs hidden-sm">Reset Password</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "1" || HttpContext.Current.Session["Role"].ToString() == "2" || HttpContext.Current.Session["Role"].ToString() == "3" || HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown  ChangePasswordMainSideBar">
+                                <a href="/ChangePassword/Index">
+                                    <i class="fa fa-wrench"></i>
+                                    <span class="GeneralExtraColor">Change Password</span>
+                                </a>
 
-                        </li>
-                        <li class="sidebar-dropdown  MonthlyCalenderMainSideBar">
-                            <a href="/MonthlyCalender/Index">
-                                <i class="fa fa-calendar"></i>
-                                <span class="GeneralExtraColor">Calender</span>
-                            </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "2" || HttpContext.Current.Session["Role"].ToString() == "3" || HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown  MonthlyCalenderMainSideBar">
+                                <a href="/MonthlyCalender/Index">
+                                    <i class="fa fa-calendar"></i>
+                                    <span class="GeneralExtraColor">Calender</span>
+                                </a>
 
-                        </li>
-                        <li class="sidebar-dropdown  ApplyLeaveMainSideBar">
-                            <a href="/Leave/Index">
-                                <i class="fa fa-plane"></i>
-                                <span class="GeneralExtraColor">Apply Leave</span>
-                            </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "2" || HttpContext.Current.Session["Role"].ToString() == "3" || HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown  ApplyLeaveMainSideBar">
+                                <a href="/Leave/Index">
+                                    <i class="fa fa-plane"></i>
+                                    <span class="GeneralExtraColor">Apply Leave</span>
+                                </a>
 
-                        </li>
-                        <li class="sidebar-dropdown  BalanceLeaveMainSideBar">
-                            <a href="/TotalBalanceLeaveEmployee/Index">
-                                <i class="fa fa-hourglass-half"></i>
-                                <span class="GeneralExtraColor">Balance Leave</span>
-                            </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "2" || HttpContext.Current.Session["Role"].ToString() == "3" || HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
 
-                        </li>
-                        <li class="sidebar-dropdown  AddBalanceLeaveMainSideBar">
-                            <a href="/Leave/AddLeave">
-                                <i class="fa fa-shopping-basket"></i>
-                                <span class="GeneralExtraColor">Add Balance Leave</span>
-                            </a>
+                            <li class="sidebar-dropdown  BalanceLeaveMainSideBar">
+                                <a href="/TotalBalanceLeaveEmployee/Index">
+                                    <i class="fa fa-hourglass-half"></i>
+                                    <span class="GeneralExtraColor">Balance Leave</span>
+                                </a>
 
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown  AddBalanceLeaveMainSideBar">
+                                <a href="/Leave/AddLeave">
+                                    <i class="fa fa-shopping-basket"></i>
+                                    <span class="GeneralExtraColor">Add Balance Leave</span>
+                                </a>
+
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "2")
+                        {
+                            <li class="sidebar-dropdown  ApproveRejectLeavesMainSideBar">
+                                <a href="/ApproveRejectLeaves/Index">
+                                    <i class="fa fa-envelope"></i>
+                                    <span class="GeneralExtraColor">Approve/Reject Leaves</span>
+                                </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown  HRApproveRejectLeavesMainSideBar">
+                                <a href="/HRApproveRejectLeaves/Index">
+                                    <i class="fa fa-users"></i>
+                                    <span class="GeneralExtraColor">Approve/Reject Leaves</span>
+                                </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown  HRPostNewVacancyMainSideBar">
+                                <a href="/PostNewVacancy/Index">
+                                    <i class="fa fa-american-sign-language-interpreting"></i>
+                                    <span class="GeneralExtraColor">Post New Vacancy</span>
+                                </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["Role"].ToString() == "4")
+                        {
+                            <li class="sidebar-dropdown  ViewAppliedJobMainSideBar">
+                                <a href="/PostNewVacancy/ViewAppliedJob">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="GeneralExtraColor">View Applied Job</span>
+                                </a>
+                            </li>
+                        }
+
+
+
+
+                            @*<li class="sidebar-dropdown">
+                <a href="#">
+                    <i class="fa fa-chart-line GeneralExtraColor"></i>
+                    <span class="GeneralExtraColor">Charts</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="#">Pie chart</a>
                         </li>
-                        <li class="sidebar-dropdown  ApproveRejectLeavesMainSideBar">
-                            <a href="/ApproveRejectLeaves/Index">
-                                <i class="fa fa-envelope"></i>
-                                <span class="GeneralExtraColor">Approve/Reject Leaves</span>
-                            </a>
+                        <li>
+                            <a href="#">Line chart</a>
                         </li>
-                        <li class="sidebar-dropdown  HRApproveRejectLeavesMainSideBar">
-                            <a href="/HRApproveRejectLeaves/Index">
-                                <i class="fa fa-users"></i>
-                                <span class="GeneralExtraColor">HR Approve / Reject Leaves</span>
-                            </a>
+                        <li>
+                            <a href="#">Bar chart</a>
                         </li>
-                        
-                        @*<li class="sidebar-dropdown">
-            <a href="#">
-                <i class="fa fa-chart-line GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Charts</span>
-            </a>
-            <div class="sidebar-submenu">
-                <ul>
-                    <li>
-                        <a href="#">Pie chart</a>
-                    </li>
-                    <li>
-                        <a href="#">Line chart</a>
-                    </li>
-                    <li>
-                        <a href="#">Bar chart</a>
-                    </li>
-                    <li>
-                        <a href="#">Histogram</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="sidebar-dropdown">
-            <a href="#">
-                <i class="fa fa-globe GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Maps</span>
-            </a>
-            <div class="sidebar-submenu">
-                <ul>
-                    <li>
-                        <a href="#">Google maps</a>
-                    </li>
-                    <li>
-                        <a href="#">Open street map</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="header-menu">
-            <span class="GeneralExtraColor">Extra</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-book GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Documentation</span>
-                <span class="badge badge-pill badge-primary">Beta</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-calendar GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Calendar</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-folder GeneralExtraColor"></i>
-                <span class="GeneralExtraColor">Examples</span>
-            </a>
-        </li>*@
+                        <li>
+                            <a href="#">Histogram</a>
+                        </li>
                     </ul>
+                </div>
+            </li>
+            <li class="sidebar-dropdown">
+                <a href="#">
+                    <i class="fa fa-globe GeneralExtraColor"></i>
+                    <span class="GeneralExtraColor">Maps</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="#">Google maps</a>
+                        </li>
+                        <li>
+                            <a href="#">Open street map</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="header-menu">
+                <span class="GeneralExtraColor">Extra</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-book GeneralExtraColor"></i>
+                    <span class="GeneralExtraColor">Documentation</span>
+                    <span class="badge badge-pill badge-primary">Beta</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-calendar GeneralExtraColor"></i>
+                    <span class="GeneralExtraColor">Calendar</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-folder GeneralExtraColor"></i>
+                    <span class="GeneralExtraColor">Examples</span>
+                </a>
+            </li>*@
+                        </ul>
                 </div>
                 <!-- sidebar-menu  -->
             </div>

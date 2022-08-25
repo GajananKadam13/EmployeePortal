@@ -177,9 +177,9 @@
                         @Model[i].Status
                     </td>*@
                     <td>
-                        @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = Model[i].EmployeePKID }, null) |
-                        @Html.ActionLink("Edit", "EditEmployeeByIdForEdit", new { EmployeePKID = Model[i].EmployeePKID }) |
-                        <input type="button" id="btnDelete" value="Delete" onclick="someFunction(@Model[i].EmployeePKID)" /> |
+                        @Html.ActionLink("View", "Index", "EmployeeDetail", new { EmployeePKID = Model[i].EmployeePKID },new { @class = "btn btn-info" }) | @*--remoed null----*@
+                        @Html.ActionLink("Edit", "EditEmployeeByIdForEdit", new { EmployeePKID = Model[i].EmployeePKID },new { @class = "btn btn-success" }) |
+                        <input type="button" class="btn btn-warning" id="btnDelete" value="Delete" onclick="someFunction(@Model[i].EmployeePKID)" /> |
                     </td>
                 </tr>
                     }
@@ -259,7 +259,28 @@
                                 url: '/CreateEmployee/DeleteEmployeeById',
                                 data: { EmployeePKID: EmployeePKID },
                                 success: function (data) {
-                                    
+
+                                    /*---------------*/
+                                        $.ajax(
+                                            {
+                                                type: 'POST',
+                                                dataType: "html",
+                                                url: '/CreateEmployee/CallCommanMessageModel',
+                                                success: function (data) {
+
+                                                    $("#CommanMessageModel").show();
+                                                    $("#CommanMessageModel").find('.modal-title').text("Alert")
+                                                    $("#CommanMessageModel").find('.modal-body').text("Record deleted successfully.");
+                                                    $("#btnNo").text("Close");
+                                                    $("#btnYes").hide();
+                                                    $('#btnNo').click(function (e) {
+                                                        $("#CommanMessageModel").hide();
+                                                        window.location.href = '/CreateEmployee/ViewEmployee';
+                                                    });
+
+                                                },
+                                            });
+                                    /*------------------*/
 
                                 },
                             });

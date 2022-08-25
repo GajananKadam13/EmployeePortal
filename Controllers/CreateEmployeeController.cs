@@ -166,6 +166,9 @@ namespace EmployeePortal.Controllers
                 ModelState["Role"].Errors.Clear();
             }
 
+            ModelState["EmployeePKID"].Errors.Clear();
+            
+
 
             //-----For Insert  --START
             if (ProfilePictureFile != null)
@@ -249,7 +252,11 @@ namespace EmployeePortal.Controllers
                 {
                     ViewBag.Message = "Update";
                 }
+
+                
             }
+            List<CT_CreateEmployee> objemp = objdl_CreateUser.FnForfecth_EmployeeReportee.ToList();
+            ViewBag.ReporteeEmployee = objemp;
             return View();
         }
 
@@ -434,10 +441,19 @@ namespace EmployeePortal.Controllers
         
         public ActionResult DeleteEmployeeById(int EmployeePKID)
         {
+            //string returnType = "";
+            //returnType = objdl_CreateUser.FnDeleteEmployeeById(EmployeePKID).ToString();
+            //return RedirectToAction("Index", returnType);
+
+            //----
+
+
             string returnType = "";
-            //ViewBag.userdetails = objdl_CreateUser.FnGetEmployees();
-            returnType = objdl_CreateUser.FnDeleteEmployeeById(EmployeePKID).ToString();
-            return RedirectToAction("Index", returnType);
+            JsonResult result = new JsonResult();
+            returnType =objdl_CreateUser.FnDeleteEmployeeById(EmployeePKID).ToString();
+            result = this.Json(JsonConvert.SerializeObject(returnType), JsonRequestBehavior.AllowGet);
+            return result;
+
         }
 
         public ActionResult CallCommanMessageModel()

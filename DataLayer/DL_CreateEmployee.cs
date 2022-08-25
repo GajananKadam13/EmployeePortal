@@ -1285,12 +1285,15 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
             get
             {
                 List<CT_CreateEmployee> ObjCreateEmployeeModelList = new List<CT_CreateEmployee>();
-
-                using (con)
+                var oSQLConn = new
+SqlConnection(
+System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToString()
+);
+                using (oSQLConn)
                 {
-                    SqlCommand cmd = new SqlCommand("spFetchEmployeeReportee", con);
+                    SqlCommand cmd = new SqlCommand("spFetchEmployeeReportee", oSQLConn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
+                    oSQLConn.Open();
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
@@ -1300,7 +1303,7 @@ System.Configuration.ConfigurationManager.ConnectionStrings["Con_EMP_PORT"].ToSt
                         Obj_CreateEmployee.FirstName = rdr["ReporteeName"].ToString();
                         ObjCreateEmployeeModelList.Add(Obj_CreateEmployee);
                     }
-                    con.Close();
+                    oSQLConn.Close();
                 }
 
                 return ObjCreateEmployeeModelList;
