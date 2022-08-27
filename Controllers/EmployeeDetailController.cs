@@ -84,6 +84,25 @@ namespace EmployeePortal.Controllers
             // obj = objdl_CreateUser.FnGetEmployeesById(EmployeePKID);
 
 
+            //-----------Role-------------
+            if(obj_CE.Role == "1")
+            {
+                obj_CE.Role = "Admin";
+            }
+            if (obj_CE.Role == "2")
+            {
+                obj_CE.Role = "Employee";
+            }
+            if (obj_CE.Role == "3")
+            {
+                obj_CE.Role = "Manager";
+            }
+            if (obj_CE.Role == "4")
+            {
+                obj_CE.Role = "HR";
+            }
+
+
             DL_Home ObjDlHome = new DL_Home();
             string status = ObjDlHome.FnEmployeeCheckInOut(Convert.ToInt32(Session["EmployeePKID"]));
             ViewBag.CheckInOuStatus = status;

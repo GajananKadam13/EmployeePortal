@@ -234,13 +234,14 @@ namespace EmployeePortal.DataLayer
                                 obj.CreatedBy = Convert.ToInt32(reader["CreatedBy"].ToString());
                                 obj.Status = reader["Status"].ToString();
                                 obj.Password = reader["Password"].ToString();
+                                obj.Role = reader["Role"].ToString();
 
 
 
-                                //-----------------------------------------------------------------------------------------------
+                            //-----------------------------------------------------------------------------------------------
 
-                                
-                            }
+
+                        }
 
                         reader.NextResult();
                         while (reader.Read())
