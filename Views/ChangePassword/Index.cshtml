@@ -6,7 +6,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var PasswordChangeStatus = '@ViewBag.PasswordChangeStatus';
-        debugger;
+        
         if (PasswordChangeStatus != "") {
             if (PasswordChangeStatus == "Wrong") {
                 $.ajax(

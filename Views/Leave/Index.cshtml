@@ -17,7 +17,7 @@
                     dataType: "html",
                     url: '/Leave/CheckTotalLeaveBalance',
                     success: function (data) {
-                        debugger;
+                        
                         var TotalLeave=JSON.parse(data);
                         $("#TotalBalanceLeave").val(TotalLeave);
 
@@ -86,7 +86,7 @@
 
         //------View Table----------------------------
         $('#tbl_EmployeeApplyLeave').on('click', 'input', function () {
-            debugger;
+            
             var row = $(this).closest('tr');
             var btn_idArry = $(this).attr('id');
             var btn_Name = btn_idArry.split('_')[0];
