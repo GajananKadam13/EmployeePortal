@@ -62,7 +62,7 @@
                             var txt = "";
                             for (var i = 0; i < len; i++) {
 
-                                txt += "<tr id=" + Listdata[i].LeavePKID + " ><td style='display: none;'>" + Listdata[i].LeavePKID + "</td><td style='display: none;'>" + Listdata[i].EmployeePKID + "</td><td>" + Listdata[i].Leavetype + "</td><td>" + Listdata[i].FromdateFormat + "</td><td>" + Listdata[i].TodateFormat + "</td><td>" + Listdata[i].ContactDetails + "</td><td style='display: none;'>" + Listdata[i].Reason + "</td><td>" + Listdata[i].CreatedOnFormat + "</td><td >" + Listdata[i].ManagerApproveRejectStatus + "</td><td style='display: none;'>" + Listdata[i].ManagerApproveRejectComment + "</td><td style='display: none;'>" + Listdata[i].HRApproveRejectStatus + "</td><td style='display: none;'>" + Listdata[i].HRApproveRejectComment + "</td><td>" + ' <input  class="btn btn-info" type="button" id="btnView_' + Listdata[i].LeavePKID + '" value="View"  /> |' + ' <input class="btn btn-success" type="button" id="btnEdi_' + Listdata[i].LeavePKID + '" value="Edit"  /> |' + ' <input class="btn btn-danger" type="button" id="btnDel_' + Listdata[i].LeavePKID + '" value="Delete"  /> ' + "</td></tr >";
+                                txt += "<tr id=" + Listdata[i].LeavePKID + " ><td style='display: none;'>" + Listdata[i].LeavePKID + "</td><td style='display: none;'>" + Listdata[i].EmployeePKID + "</td><td>" + Listdata[i].Leavetype + "</td><td>" + Listdata[i].FromdateFormat + "</td><td>" + Listdata[i].TodateFormat + "</td><td>" + Listdata[i].ContactDetails + "</td><td style='display: none;'>" + Listdata[i].Reason + "</td><td>" + Listdata[i].CreatedOnFormat + "</td><td >" + Listdata[i].ManagerApproveRejectStatus + "</td><td style='display: none;'>" + Listdata[i].ManagerApproveRejectComment + "</td><td>" + Listdata[i].HRApproveRejectStatus + "</td><td style='display: none;'>" + Listdata[i].HRApproveRejectComment + "</td><td>" + ' <input  class="btn btn-info" type="button" id="btnView_' + Listdata[i].LeavePKID + '" value="View"  /> |' + ' <input class="btn btn-success" type="button" id="btnEdi_' + Listdata[i].LeavePKID + '" value="Edit"  /> |' + ' <input class="btn btn-danger" type="button" id="btnDel_' + Listdata[i].LeavePKID + '" value="Delete"  /> ' + "</td></tr >";
                             }
                             if (txt != "") {
                                 $("#tbl_EmployeeApplyLeave").append(txt).removeClass("hidden");
@@ -397,7 +397,7 @@
                                 <th scope="col">Created On</th>
                                 <th scope="col">Manager Status</th>
                                 <th style="display:none;" scope="col">Manager Comment</th>
-                                <th style="display:none;" scope="col">HR Status</th>
+                                <th scope="col">HR Status</th>
                                 <th style="display:none;" scope="col">HR Comment</th>
                                 <th scope="col">Action</th>
                             </tr>

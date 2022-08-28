@@ -105,8 +105,8 @@
                     $("#DocumentName").val(DocumentName);
                     $("#Img_EmployeeDoc").attr("src", "/UploadsDocuments/" + DocumentName + "");
                     $("#lbl_Img_EmployeeDoc").text(DocumentName);
-                    document.getElementById("lbl_Img_EmployeeDoc").style.display = 'block';
-                    document.getElementById("Img_EmployeeDoc").style.display = 'block';
+                    document.getElementById("lbl_Img_EmployeeDoc").style.display = 'none';  //block  // Becuase of this image does dilyaed on view button
+                    document.getElementById("Img_EmployeeDoc").style.display = 'none';  //block
 
                     $("#Img_EmployeeDoc_Download").attr("href", "/UploadsDocuments/" + DocumentName);
                     document.getElementById("Img_EmployeeDoc_Download").style.display = 'block';
